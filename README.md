@@ -70,7 +70,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 
 
-\[Ver issues](https://github.com/thelimacosta/Projeto-2/issues)
+\[Ver issues](https://github.com/LopesLuna/Projeto-2/issues)
 
 
 
