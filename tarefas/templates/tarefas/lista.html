@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Tarefas</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        th { background-color: #f0f0f0; }
+        .status-pendente { color: #b8860b; }
+        .status-em_andamento { color: #1e6fd9; }
+        .status-concluida { color: #2e8b57; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+
+    {% if tarefas %}
+    <table>
+        <tr>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Status</th>
+            <th>Responsável</th>
+            <th>Criada em</th>
+        </tr>
+        {% for tarefa in tarefas %}
+        <tr>
+            <td>{{ tarefa.titulo }}</td>
+            <td>{{ tarefa.descricao }}</td>
+            <td class="status-{{ tarefa.status }}">{{ tarefa.get_status_display }}</td>
+            <td>{{ tarefa.responsavel }}</td>
+            <td>{{ tarefa.data_criacao|date:"d/m/Y H:i" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Nenhuma tarefa cadastrada ainda.</p>
+    {% endif %}
+</body>
+</html>
