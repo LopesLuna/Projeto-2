@@ -1,102 +1,51 @@
-\# Projeto de Tarefas — Grupo 13 (Projetos 2)
+# Projeto de Tarefas — Grupo 13 (Projetos 2)
 
-
-
-\## Descrição do projeto
-
-
+## Descrição do projeto
 
 Sistema de gerenciamento de tarefas, desenvolvido em Django como parte da disciplina de Projetos 2.
 
+## Tecnologias utilizadas
 
+- Python
+- Django
+- SQLite (banco de dados local)
 
-\## Tecnologias utilizadas
+## Como rodar o projeto
 
+### Pré-requisitos
 
+- Python 3.x instalado
 
-\- Python
-
-\- Django
-
-\- SQLite (banco de dados local)
-
-
-
-\## Como rodar o projeto
-
-
-
-\### Pré-requisitos
-
-
-
-\- Python 3.x instalado
-
-
-
-\### Passos
-
-
+### Passos
 
 ```
-
 git clone https://github.com/thelimacosta/Projeto-2.git
-
 cd Projeto-2
-
 python -m venv venv
-
-venv\\Scripts\\activate
-
+venv\Scripts\activate
 pip install -r requirements.txt
-
 python manage.py migrate
-
 python manage.py runserver
-
 ```
-
-
 
 Depois, acesse http://127.0.0.1:8000/
 
-
-
-\## Issue Tracker
-
-
+## Issue Tracker
 
 Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
+[Ver issues](https://github.com/thelimacosta/Projeto-2/issues)
 
+![Issues](docs/issues.png)
 
-\[Ver issues](https://github.com/LopesLuna/Projeto-2/issues)
+## Entregas
 
+### Entrega 01
 
+### Entrega 02
 
-!\[Issues](docs/issues.png)
-
-
-
-\## Entregas
-
-
-
-\### Entrega 01
-
-
-
-\### Entrega 02
-
-
-
-\## Equipe
-
-
+## Equipe
 
 | Nome completo | E-mail School |
-
 |---|---|
-
 | Matheus Costa | mplc@cesar.school |
-
