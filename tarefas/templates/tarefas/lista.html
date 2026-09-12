@@ -12,10 +12,12 @@
         .status-pendente { color: #b8860b; }
         .status-em_andamento { color: #1e6fd9; }
         .status-concluida { color: #2e8b57; }
+        .btn-nova { display: inline-block; margin-top: 12px; padding: 8px 16px; background: #2e6fd9; color: white; text-decoration: none; border-radius: 4px; }
     </style>
 </head>
 <body>
     <h1>Lista de Tarefas</h1>
+    <a class="btn-nova" href="{% url 'criar_tarefa' %}">+ Nova Tarefa</a>
 
     {% if tarefas %}
     <table>

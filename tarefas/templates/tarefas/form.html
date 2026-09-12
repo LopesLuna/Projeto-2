@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Tarefa</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 40px auto; }
+        h1 { color: #333; }
+        label { display: block; margin-top: 12px; font-weight: bold; }
+        input, textarea, select { width: 100%; padding: 6px; margin-top: 4px; box-sizing: border-box; }
+        button { margin-top: 20px; padding: 8px 16px; background: #2e6fd9; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        a { display: inline-block; margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <h1>Nova Tarefa</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Título</label>
+        <input type="text" name="titulo" required>
+
+        <label>Descrição</label>
+        <textarea name="descricao" rows="3"></textarea>
+
+        <label>Status</label>
+        <select name="status">
+            <option value="pendente">Pendente</option>
+            <option value="em_andamento">Em andamento</option>
+            <option value="concluida">Concluída</option>
+        </select>
+
+        <label>Responsável</label>
+        <input type="text" name="responsavel">
+
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{% url 'lista_tarefas' %}">Voltar para a lista</a>
+</body>
+</html>
