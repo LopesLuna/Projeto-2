@@ -79,4 +79,4 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 | [Nome do membro 4] | [email] |
 | Matheus Costa | mplc@cesar.school |
 | [Nome do membro 6] | [email] |
-| [Nome do membro 7] | [email] |
+| Rodrigo Fernandes | rfvb@cesar.school |
