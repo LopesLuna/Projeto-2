@@ -65,6 +65,10 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 - Screencast de uso: https://youtu.be/3Cm4KoyMyjQ
 - Screencast do código: https://youtu.be/5OAqTvpYoJA
 
+**Quadro da Sprint 02:**
+
+![Sprint 02](docs/sprint02.png)
+
 ## Equipe
 
 | Nome completo | E-mail School |
