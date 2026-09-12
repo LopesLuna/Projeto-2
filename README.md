@@ -73,4 +73,10 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 | Nome completo | E-mail School |
 |---|---|
+| [Nome do membro 1] | [email] |
+| [Nome do membro 2] | [email] |
+| [Nome do membro 3] | [email] |
+| [Nome do membro 4] | [email] |
 | Matheus Costa | mplc@cesar.school |
+| [Nome do membro 6] | [email] |
+| [Nome do membro 7] | [email] |
