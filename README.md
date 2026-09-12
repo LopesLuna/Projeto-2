@@ -38,6 +38,10 @@ A aplicação está publicada em produção no Render:
 
 Basta acessar o link acima para ver o sistema funcionando (nenhuma instalação necessária).
 
+## Screencasts
+
+- **Uso do sistema:** https://youtu.be/3Cm4KoyMyjQ
+
 ## Issue Tracker
 
 Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
@@ -52,11 +56,12 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 ### Entrega 02
 
-**Descrição:** Implementação da infraestrutura básica da aplicação Django (model, view, template e rotas de tarefas), deploy em produção no Render, e configuração do Issue Tracker no GitHub.
+**Descrição:** Implementação da infraestrutura básica da aplicação Django (model, view, template e rotas de tarefas, incluindo cadastro de novas tarefas), deploy em produção no Render, e configuração do Issue Tracker no GitHub.
 
 **Artefatos / screenshots:**
 
 - Deploy: https://projeto-2-tarefas.onrender.com
+- Screencast de uso: https://youtu.be/3Cm4KoyMyjQ
 
 ## Equipe
 
