@@ -41,6 +41,7 @@ Basta acessar o link acima para ver o sistema funcionando (nenhuma instalação 
 ## Screencasts
 
 - **Uso do sistema:** https://youtu.be/3Cm4KoyMyjQ
+- **Explicação do código:** https://youtu.be/5OAqTvpYoJA
 
 ## Issue Tracker
 
@@ -62,6 +63,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 - Deploy: https://projeto-2-tarefas.onrender.com
 - Screencast de uso: https://youtu.be/3Cm4KoyMyjQ
+- Screencast do código: https://youtu.be/5OAqTvpYoJA
 
 ## Equipe
 
