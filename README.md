@@ -74,9 +74,9 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 | Nome completo | E-mail School |
 |---|---|
 | [Nome do membro 1] | [email] |
-| [João Bezerra] | [email] |
-| [José Ernesto] | [email] |
-| [Mariana Luna] | [email] |
+| João Bezerra | [email] |
+| José Ernesto | [email] |
+| Mariana Luna | [email] |
 | Matheus Costa | mplc@cesar.school |
-| [Pedro Correia] | [email] |
+| Pedro Correia | [email] |
 | Rodrigo Fernandes | rfvb@cesar.school |
