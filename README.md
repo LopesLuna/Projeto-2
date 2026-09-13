@@ -73,7 +73,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 | Nome completo | E-mail School |
 |---|---|
-| [Nome do membro 1] | [email] |
+| Cauê Juvino | [email] |
 | João Bezerra | [email] |
 | José Ernesto | [email] |
 | Mariana Luna | [email] |
