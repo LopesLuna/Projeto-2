@@ -140,7 +140,7 @@ Propõe ser uma solução de hospedagem de núvem para PMEs do setor de varejo, 
 Você cadastra as informações demandadas da sua empresa para auxílios personalizados.
 <img width="652" height="460" alt="image" src="https://github.com/user-attachments/assets/0f43f5d7-222e-47d4-a85c-9124310a4740" />
 
-Também é possível escolher saber mais sobre seus serviços, tendo assim, mais liberdade de navegar pelas disponibilidades do site. 
+Também é possível escolher saber mais sobre seus serviços, tendo assim, mais liberdade de navegar pelas disponibilidades do site.
 <img width="1090" height="460" alt="image" src="https://github.com/user-attachments/assets/cd75d82f-279a-434d-844b-09a5236cd686" />
 
 ### 2.6.3 Pontos fortes:
