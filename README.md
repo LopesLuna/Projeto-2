@@ -54,7 +54,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 ## Entregas
 
 ### Entrega 01
-
+**Descrição:** Análise de competidores e ambiente de desenvolvimento.
 ### Entrega 02
 
 **Descrição:** Implementação da infraestrutura básica da aplicação Django (model, view, template e rotas de tarefas, incluindo cadastro de novas tarefas), deploy em produção no Render, e configuração do Issue Tracker no GitHub.
