@@ -18,7 +18,6 @@ Sistema de gerenciamento de tarefas, desenvolvido em Django como parte da discip
 
 ### Passos
 
-```
 git clone https://github.com/LopesLuna/Projeto-2.git
 cd Projeto-2
 python -m venv venv
@@ -26,7 +25,6 @@ venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
-```
 
 Depois, acesse http://127.0.0.1:8000/
 
@@ -38,45 +36,25 @@ A aplicação está publicada em produção no Render:
 
 Basta acessar o link acima para ver o sistema funcionando (nenhuma instalação necessária).
 
-## Screencasts
-
-- **Uso do sistema:** https://youtu.be/3Cm4KoyMyjQ
-- **Explicação do código:** https://youtu.be/5OAqTvpYoJA
-
-## Issue Tracker
-
-Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
-
-[Ver issues](https://github.com/LopesLuna/Projeto-2/issues)
-
-![Issues](docs/issues.png)
-
 ## Entregas
 
 ### Entrega 01
+**Descrição:** Análise de competidores e ambiente de desenvolvimento.
 
 ### Entrega 02
 
 **Descrição:** Implementação da infraestrutura básica da aplicação Django (model, view, template e rotas de tarefas, incluindo cadastro de novas tarefas), deploy em produção no Render, e configuração do Issue Tracker no GitHub.
 
-**Artefatos / screenshots:**
-
-- Deploy: https://projeto-2-tarefas.onrender.com
-- Screencast de uso: https://youtu.be/3Cm4KoyMyjQ
-- Screencast do código: https://youtu.be/5OAqTvpYoJA
-
-**Quadro da Sprint 02:**
-
-![Sprint 02](docs/sprint02.png)
+Artefatos, screencasts e evidências: [infraestrutura_render.md](infraestrutura_render.md)
 
 ## Equipe
 
 | Nome completo | E-mail School |
 |---|---|
-| [Nome do membro 1] | [email] |
-| [Nome do membro 2] | [email] |
-| [Nome do membro 3] | [email] |
-| [Nome do membro 4] | [email] |
+| Cauê Juvino | [email] |
+| João Bezerra | [email] |
+| José Ernesto | [email] |
+| Mariana Luna | [email] |
 | Matheus Costa | mplc@cesar.school |
-| [Nome do membro 6] | [email] |
-| [Nome do membro 7] | [email] |
+| Pedro Correia | [email] |
+| Rodrigo Fernandes | rfvb@cesar.school |
