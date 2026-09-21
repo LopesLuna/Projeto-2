@@ -51,10 +51,10 @@ Artefatos, screencasts e evidências: [infraestrutura_render.md](infraestrutura_
 
 | Nome completo | E-mail School |
 |---|---|
-| Cauê Juvino | [email] |
-| João Bezerra | [email] |
-| José Ernesto | [email] |
-| Mariana Luna | [email] |
+| Cauê Juvino | ceja@cesar.school |
+| João Bezerra | jbbn@cesar.school |
+| Jose Ernesto | jetd@cesar.school |
+| Mariana Luna | maall@cesar.school |
 | Matheus Costa | mplc@cesar.school |
-| Pedro Correia | [email] |
+| Pedro Correia | pca2@cesar.school |
 | Rodrigo Fernandes | rfvb@cesar.school |
