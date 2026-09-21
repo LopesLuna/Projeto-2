@@ -43,7 +43,7 @@ Basta acessar o link acima para ver o sistema funcionando (nenhuma instalação 
 
 ### Entrega 02
 
-**Descrição:** Implementação da infraestrutura básica da aplicação Django (model, view, template e rotas de tarefas, incluindo cadastro de novas tarefas), deploy em produção no Render, e configuração do Issue Tracker no GitHub.
+**Descrição:** Implementação da infraestrutura básica da aplicação Django (model, view, template e rotas de tarefas, incluindo cadastro de novas tarefas), páginas institucionais (Home/Sobre, Equipe e Fale Conosco com formulário de sugestões), deploy em produção no Render, e configuração do Issue Tracker no GitHub.
 
 Artefatos, screencasts e evidências: [infraestrutura_render.md](infraestrutura_render.md)
 
