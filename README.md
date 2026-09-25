@@ -1,14 +1,27 @@
-# Projeto de Tarefas — Grupo 13 (Projetos 2)
+# 🪡 Stitch - Plataforma ESG para PMEs do setor têxtil
 
-## Descrição do projeto
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
+![Django](https://img.shields.io/badge/Django-Framework-092E20?style=for-the-badge&logo=django)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Render-336791?style=for-the-badge&logo=postgresql)
+![Deploy](https://img.shields.io/badge/Deploy-Render-46E3B7?style=for-the-badge&logo=render)
 
-Sistema de gerenciamento de tarefas, desenvolvido em Django como parte da disciplina de Projetos 2.
+> **Stitch** é uma plataforma web conscientizadora e prática desenvolvida para guiar pequenas e médias empresas (PMEs) na implementação e acompanhamento de práticas **ESG** (*Environmental, Social, and Governance*) nos seus negócios.
 
-## Tecnologias utilizadas
+---
+## 💡 Sobre o Projeto
 
-- Python
-- Django
-- SQLite (banco de dados local)
+O projeto **Stitch** nasceu no contexto de democratizar o acesso a conceitos e práticas sustentáveis para PMEs. Através de uma interface acessível e intuitiva, as empresas conseguem compreender os pilares do ESG, gerir tarefas sustentáveis e promover impacto positivo de forma real.
+
+---
+## 🛠️ Tecnologias Utilizadas
+
+- **Linguagem:** Python 3.x
+- **Framework Web:** Django
+- **Banco de Dados:** 
+  - *Desenvolvimento:* SQLite3
+  - *Produção:* PostgreSQL (Render)
+- **Servidor & Static Files:** Gunicorn, WhiteNoise e Dj-Database-Url
+- **Hospedagem / Deploy:** Render
 
 ## Como rodar o projeto
 
@@ -39,7 +52,9 @@ Basta acessar o link acima para ver o sistema funcionando (nenhuma instalação 
 ## Entregas
 
 ### Entrega 01
-**Descrição:** Análise de competidores e ambiente de desenvolvimento.
+Análise de competidores e configuração inicial do ambiente de desenvolvimento.
+
+Screencasts das análises e relatório: [Relatório_de_Análise_de_Competidores.md](Relatório_de_Análise_de_Competidores.md)
 
 ### Entrega 02
 
