@@ -53,7 +53,7 @@ Basta acessar o link acima para ver o sistema funcionando (nenhuma instalação 
 
 ### Entrega 01
 Análise de competidores e configuração inicial do ambiente de desenvolvimento.
-[Analise_de_Competidores.md](Analise_de_Competidores.md)
+[Relatório_de_Análise_de_Competidores.md](Relatório_de_Análise_de_Competidores.md)
 
 ### Entrega 02
 
