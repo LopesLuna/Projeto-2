@@ -13,11 +13,15 @@
 O projeto **Stitch** nasceu no contexto de democratizar o acesso a conceitos e práticas sustentáveis para PMEs. Através de uma interface acessível e intuitiva, as empresas conseguem compreender os pilares do ESG, gerir tarefas sustentáveis e promover impacto positivo de forma real.
 
 ---
-## Tecnologias utilizadas
+## 🛠️ Tecnologias Utilizadas
 
-- Python
-- Django
-- SQLite (banco de dados local)
+- **Linguagem:** Python 3.x
+- **Framework Web:** Django
+- **Banco de Dados:** 
+  - *Desenvolvimento:* SQLite3
+  - *Produção:* PostgreSQL (Render)
+- **Servidor & Static Files:** Gunicorn, WhiteNoise e Dj-Database-Url
+- **Hospedagem / Deploy:** Render
 
 ## Como rodar o projeto
 
