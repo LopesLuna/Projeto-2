@@ -52,7 +52,7 @@ Basta acessar o link acima para ver o sistema funcionando (nenhuma instalação 
 ## Entregas
 
 ### Entrega 01
-**Descrição:** Análise de competidores e ambiente de desenvolvimento.
+Análise de competidores e configuração inicial do ambiente de desenvolvimento.
 
 ### Entrega 02
 
