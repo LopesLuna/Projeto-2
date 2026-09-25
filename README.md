@@ -1,4 +1,4 @@
-# 🌿 Stitch - Plataforma ESG para PMEs do setor têxtil
+# 🪡 Stitch - Plataforma ESG para PMEs do setor têxtil
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
 ![Django](https://img.shields.io/badge/Django-Framework-092E20?style=for-the-badge&logo=django)
