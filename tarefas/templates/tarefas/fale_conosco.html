@@ -1,0 +1,30 @@
+{% extends 'tarefas/base.html' %}
+{% block title %}Fale Conosco — Projeto 2{% endblock %}
+{% block content %}
+<h1>Fale Conosco</h1>
+<p>Envie sugestões, comentários ou reporte falhas na aplicação.</p>
+
+{% if enviado %}
+<p style="color: #2e8b57; font-weight: bold;">Mensagem enviada com sucesso! Obrigado pelo contato.</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <label>Nome</label>
+    <input type="text" name="nome" required>
+
+    <label>E-mail</label>
+    <input type="email" name="email" required>
+
+    <label>Telefone</label>
+    <input type="text" name="telefone">
+
+    <label>Assunto</label>
+    <input type="text" name="assunto" required>
+
+    <label>Mensagem</label>
+    <textarea name="mensagem" rows="4" required></textarea>
+
+    <button class="btn" type="submit">Enviar</button>
+</form>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'tarefas/base.html' %}
+{% block title %}Home — Projeto 2{% endblock %}
+{% block content %}
+<h1>Sistema de Gerenciamento de Tarefas</h1>
+
+<h2>Sobre o Projeto</h2>
+<p><strong>Cliente:</strong> Disciplina de Projetos 2 — CESAR School</p>
+<p><strong>Projeto:</strong> Sistema de gerenciamento de tarefas, desenvolvido em Django, permitindo cadastrar e listar tarefas de forma simples e organizada. O sistema foi construído como parte da disciplina de Projetos 2, aplicando na prática conceitos de desenvolvimento web, versionamento colaborativo, deploy em produção e boas práticas de engenharia de software.</p>
+
+<a class="btn" href="{% url 'lista_tarefas' %}">Ver Tarefas</a>
+{% endblock %}
