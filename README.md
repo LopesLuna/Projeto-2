@@ -8,7 +8,11 @@
 > **Stitch** é uma plataforma web conscientizadora e prática desenvolvida para guiar pequenas e médias empresas (PMEs) na implementação e acompanhamento de práticas **ESG** (*Environmental, Social, and Governance*) nos seus negócios.
 
 ---
+## 💡 Sobre o Projeto
 
+O projeto **Stitch** nasceu no contexto de democratizar o acesso a conceitos e práticas sustentáveis para PMEs. Através de uma interface acessível e intuitiva, as empresas conseguem compreender os pilares do ESG, gerir tarefas sustentáveis e promover impacto positivo de forma real.
+
+---
 ## Tecnologias utilizadas
 
 - Python
