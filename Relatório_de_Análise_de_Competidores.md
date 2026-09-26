@@ -164,17 +164,31 @@ Além do design bem feito e coeso, a plataforma distribui diversos meios de apoi
 ### 2.7.4 Pontos fracos:
 Fragmentação estadual, tendo diferentes sites para cada estado, pode ser um ponto de confusão. Alta demanda em diferentes temporadas do ano.
 
-# 3. Benchmark
-   
-| Critério / Recurso | CESAR | DigitalOcean | Sophos | Ciandt | Sankhya | Sebrae | Tivit |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Acesso Self-Service (Criação de Conta Rápida)** | ✗ | ✔︎ | ✗ | ✗ | ✗ | ✔︎ | ✗ |
-| **Exibe Preços / Valores Explícitos no Site** | ✗ | ✔︎ | ✗ | ✗ | ✗ | ✔︎ | ✗ |
-| **Oferece Serviços de Educação / Cursos** | ✔︎ | ✗ | ✗ | ✗ | ✗ | ✔︎ | ✗ |
-| **Desenvolvimento de Projetos Sob Medida (P&D)** | ✔︎ | ✗ | ✗ | ✔︎ | ✗ | ✗ | ✔︎ |
-| **Atendimento via Canais Diretos (Chat / WhatsApp / IA)** | ✗ | ✗ | ✗ | ✗ | ✔︎ | ✔︎ | ✗ |
-| **Foco em PMEs, MEIs e Pequenos Negócios** | ✗ | ✔︎ | ✗ | ✗ | ✗ | ✔︎ | ✗ |
-| **Design / UI Minimalista e Moderno** | ✔︎ | ✔︎ | ✗ | ✔︎ | ✗ | ✗ | ✗ |
-| **Interface Otimizada para Dispositivos Móveis** | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✔︎ | ✔︎ |
-# 4. Requisitos obtidos
-(listar pelo menos 4 requisitos NÃO TRIVIAIS que possam ser adicionados ao seu projeto. Podem ser coisas positivas (que você quer adicionar) ou coisas negativas que você identificou (que seu produto não pode ter)
+### 3. Benchmark
+A tabela abaixo resume, lado a lado, os recursos e características mais relevantes identificados nos 7 produtos analisados. Ela serve de referência rápida para comparar o que cada concorrente oferece (ou não) em relação a acesso, transparência, atendimento, público-alvo e experiência de uso — servindo de base para os requisitos que o Stitch deve (ou não deve) seguir.
+
+| Critério / Recurso                                        | CESAR | DigitalOcean | Sophos | Ciandt | Sankhya | Sebrae | Tivit |
+| --------------------------------------------------------- | ----- | ------------ | ------ | ------ | ------- | ------ | ----- |
+| **Acesso Self-Service (Criação de Conta Rápida)**         | ✗     | ✔︎           | ✗      | ✗      | ✗       | ✔︎     | ✗     |
+| **Exibe Preços / Valores Explícitos no Site**              | ✗     | ✔︎           | ✗      | ✗      | ✗       | ✔︎     | ✗     |
+| **Oferece Serviços de Educação / Cursos**                  | ✔︎    | ✗            | ✗      | ✗      | ✗       | ✔︎     | ✗     |
+| **Desenvolvimento de Projetos Sob Medida (P&D)**           | ✔︎    | ✗            | ✗      | ✔︎     | ✗       | ✗      | ✔︎    |
+| **Atendimento via Canais Diretos (Chat / WhatsApp / IA)**  | ✗     | ✗            | ✗      | ✗      | ✔︎      | ✔︎     | ✗     |
+| **Foco em PMEs, MEIs e Pequenos Negócios**                 | ✗     | ✔︎           | ✗      | ✗      | ✗       | ✔︎     | ✗     |
+| **Design / UI Minimalista e Moderno**                      | ✔︎    | ✔︎           | ✗      | ✔︎     | ✗       | ✗      | ✗     |
+| **Interface Otimizada para Dispositivos Móveis**           | ✔︎    | ✔︎           | ✔︎     | ✔︎     | ✔︎      | ✔︎     | ✔︎    |
+
+### 4. Requisitos obtidos
+
+A partir da análise acima, identificamos os seguintes requisitos não triviais para o Stitch:
+
+1. **Acesso direto à simulação, sem cadastro comercial prévio:** ao contrário de Sankhya, CI&T e Sophos — que escondem o funcionamento real do produto atrás de um formulário de "fale com especialista" — o Stitch deve permitir que qualquer empresa comece a simulação de ESG imediatamente, sem precisar agendar uma reunião comercial.
+
+2. **Transparência sobre como a pontuação é calculada:** nenhum dos concorrentes analisados explica publicamente sua metodologia ou critérios de avaliação. O Stitch deve mostrar, junto de cada resultado, a fonte/dado real que embasa aquela pontuação — reforçando confiança e evitando a percepção de "caixa-preta".
+
+3. **Poucos cliques até o valor central do produto:** o ponto fraco identificado no site do CESAR (muitas categorias e subpáginas) e do Sankhya (navegação fragmentada por módulo) mostra o risco de afastar o usuário antes de ele alcançar a simulação. O Stitch deve levar o visitante da Home até o início da simulação em no máximo 1-2 cliques.
+
+4. **CTAs (botões) específicos, nunca genéricos:** o CI&T perde previsibilidade ao usar "Saiba mais" em quase todos os botões, deixando o usuário sem saber pra onde vai. Todos os botões do Stitch devem indicar a ação exata (ex: "Iniciar simulação", "Ver meu resultado"), não termos vagos.
+
+5. **Interface responsiva por padrão:** todos os 7 concorrentes analisados têm boa adaptação mobile — isso confirma que é um requisito mínimo esperado pelo mercado, não um diferencial. O Stitch precisa garantir que a simulação funcione bem tanto no desktop quanto no celular, já que muitos donos de PME acessam o site fora do computador de trabalho.
+
