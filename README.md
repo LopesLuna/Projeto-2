@@ -1,68 +1,100 @@
-# 🪡 Stitch - Plataforma ESG para PMEs do setor têxtil
+# 🧵 Stitch
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
-![Django](https://img.shields.io/badge/Django-Framework-092E20?style=for-the-badge&logo=django)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Render-336791?style=for-the-badge&logo=postgresql)
-![Deploy](https://img.shields.io/badge/Deploy-Render-46E3B7?style=for-the-badge&logo=render)
-
-> **Stitch** é uma plataforma web conscientizadora e prática desenvolvida para guiar pequenas e médias empresas (PMEs) na implementação e acompanhamento de práticas **ESG** (*Environmental, Social, and Governance*) nos seus negócios.
+> **Desafio:** Como aumentar a percepção de valor e impulsionar a aplicação de práticas ESG nas pequenas e médias empresas (PMEs) do setor têxtil?
 
 ---
-## 💡 Sobre o Projeto
 
-O projeto **Stitch** nasceu no contexto de democratizar o acesso a conceitos e práticas sustentáveis para PMEs. Através de uma interface acessível e intuitiva, as empresas conseguem compreender os pilares do ESG, gerir tarefas sustentáveis e promover impacto positivo de forma real.
+## 📌 Visão Geral do Projeto
+
+**Stitch** é uma plataforma voltada para pequenas e médias empresas do setor têxtil que querem entender e melhorar sua atuação em ESG (*Environmental, Social and Governance*).
+
+Através de uma simulação interativa, a empresa responde a perguntas sobre sua situação real e a cenários hipotéticos, recebendo uma pontuação em quatro frentes — **Impacto Ambiental**, **Condições Trabalhistas**, **Governança/Transparência** e **Reputação/Financeiro** — cada uma embasada em dados reais do setor (Sebrae, União Europeia, Repórter Brasil, entre outras fontes), com o objetivo de mostrar onde a empresa já está bem e onde ela pode evoluir.
 
 ---
-## 🛠️ Tecnologias Utilizadas
 
-- **Linguagem:** Python 3.x
-- **Framework Web:** Django
-- **Banco de Dados:** 
-  - *Desenvolvimento:* SQLite3
-  - *Produção:* PostgreSQL (Render)
-- **Servidor & Static Files:** Gunicorn, WhiteNoise e Dj-Database-Url
-- **Hospedagem / Deploy:** Render
+## ⚠️ Dores e Barreiras das PMEs Têxteis
 
-## Como rodar o projeto
+- **Falta de conhecimento:** muitas empresas já praticam ações sustentáveis no dia a dia, mas não sabem nomeá-las ou mensurá-las como ESG.
+- **Percepção de custo:** ESG costuma ser visto como um gasto extra, e não como um investimento com retorno.
+- **Greenwashing e desconfiança:** dificuldade em comprovar práticas sustentáveis de forma transparente.
+- **Impactos concretos do setor:** da geração de resíduo têxtil a condições de trabalho na cadeia de confecção — riscos que afetam reputação, contratos e acesso a crédito quando ignorados.
 
-### Pré-requisitos
+---
 
-- Python 3.x instalado
+## 🎯 Objetivos do Projeto
 
-### Passos
+- [x] Traduzir e desmistificar os pilares do ESG em linguagem simples, aplicada à realidade do setor têxtil.
+- [x] Ajudar empresas a reconhecer e mensurar práticas que já realizam no cotidiano.
+- [x] Embasar cada resultado da simulação com dados reais e verificados (não gerados por IA).
+- [ ] Evidenciar o retorno da adoção de ESG em reputação, acesso a capital e novos contratos.
 
-git clone https://github.com/LopesLuna/Projeto-2.git
-cd Projeto-2
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
+---
 
-Depois, acesse http://127.0.0.1:8000/
+## 🛠️ Tecnologias e Ferramentas
 
-## Deploy
+- **Backend:** Python, Django
+- **Banco de dados:** PostgreSQL (produção, via Render) / SQLite (ambiente local)
+- **Frontend:** HTML, CSS
+- **Deploy:** Render
+- **Gestão:** Jira, GitHub Issues
+- **Design:** Figma
 
-A aplicação está publicada em produção no Render:
+---
 
-**URL de acesso:** https://projeto-2-tarefas.onrender.com
+## Entrega 01
 
-Basta acessar o link acima para ver o sistema funcionando (nenhuma instalação necessária).
+- [Documento de análise de competidores](https://github.com/LopesLuna/Projeto-2/blob/main/Relat%C3%B3rio%20de%20An%C3%A1lise%20de%20Competidores.md) (benchmark de marcas de moda sustentável)
 
-## Entregas
+---
 
-### Entrega 01
-Análise de competidores e configuração inicial do ambiente de desenvolvimento.
+## Entrega 02
 
-Screencasts das análises e relatório: [Relatório_de_Análise_de_Competidores.md](Relatório_de_Análise_de_Competidores.md)
+### Infraestrutura
 
-### Entrega 02
+- Aplicação Django com páginas Home, Equipe e Fale Conosco
+- Banco de dados migrado de SQLite para PostgreSQL
 
-**Descrição:** Implementação da infraestrutura básica da aplicação Django (model, view, template e rotas de tarefas, incluindo cadastro de novas tarefas), páginas institucionais (Home/Sobre, Equipe e Fale Conosco com formulário de sugestões), deploy em produção no Render, e configuração do Issue Tracker no GitHub.
+### Link do Site
 
-Artefatos, screencasts e evidências: [infraestrutura_render.md](infraestrutura_render.md)
+[Acessar o Stitch](https://projeto-2-tarefas.onrender.com)
 
-## Equipe
+### Screencast de uso do sistema
+
+[Link para o vídeo](https://youtu.be/3Cm4KoyMyjQ)
+
+### Screencast de explicação do código Django
+
+[Link para o vídeo](https://youtu.be/5OAqTvpYoJA)
+
+### Issue/Bug Tracker
+
+Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
+
+[Ver issues](https://github.com/LopesLuna/Projeto-2/issues)
+
+![Issues](docs/issues.png)
+
+### Quadro da Sprint 02
+
+![Sprint 02](docs/sprint02.png)
+
+---
+
+## Entrega 03
+
+*(a preencher)*
+
+---
+
+## Entrega 04
+
+*(a preencher)*
+
+---
+
+## ✒️ Equipe
+
+### Ciência da Computação
 
 | Nome completo | E-mail School |
 |---|---|
@@ -73,3 +105,14 @@ Artefatos, screencasts e evidências: [infraestrutura_render.md](infraestrutura_
 | Matheus Costa | mplc@cesar.school |
 | Pedro Correia | pca2@cesar.school |
 | Rodrigo Fernandes | rfvb@cesar.school |
+
+### Design
+
+| Nome completo | E-mail School |
+|---|---|
+| Henri Kleiner | hkk@cesar.school |
+| Lis Bettini | lpbm@cesar.school |
+| Olívia Nóbrega | onb@cesar.school |
+| Elis Melo | easmm@cesar.school |
+| Guilherme Quintas | gqs@cesar.school |
+| Matheus Enrico | mevsr@cesar.school |
