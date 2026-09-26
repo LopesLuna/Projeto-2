@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Projeto 2 — Grupo 13{% endblock %}</title>
+    <title>{% block title %}Stitch — Projeto 2, Grupo 13{% endblock %}</title>
     <style>
         body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 0 20px 40px; color: #222; }
         nav { display: flex; gap: 20px; padding: 16px 0; border-bottom: 2px solid #eee; margin-bottom: 24px; }
@@ -26,7 +26,6 @@
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'equipe' %}">Equipe</a>
         <a href="{% url 'fale_conosco' %}">Fale Conosco</a>
-        <a href="{% url 'lista_tarefas' %}">Tarefas</a>
     </nav>
 
     {% block content %}{% endblock %}
