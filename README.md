@@ -43,7 +43,7 @@ Através de uma simulação interativa, a empresa responde a perguntas sobre sua
 
 ## Entrega 01
 
-- [Documento de análise de competidores](https://github.com/LopesLuna/Projeto-2/blob/main/Relat%C3%B3rio%20de%20An%C3%A1lise%20de%20Competidores.md) (benchmark de marcas de moda sustentável)
+- [Documento de análise de competidores](https://github.com/LopesLuna/Projeto-2/blob/main/Relat%C3%B3rio_de_An%C3%A1lise_de_Competidores.md) (benchmark de marcas de moda sustentável)
 
 ---
 
