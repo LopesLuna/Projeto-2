@@ -1,0 +1,3 @@
+[submodule "ESG-Simulator"]
+	path = ESG-Simulator
+	url = https://github.com/thelimacosta/ESG-Simulator.git
