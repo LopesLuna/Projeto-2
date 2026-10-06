@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Trama — diagnóstico ESG para o setor têxtil</title>
+<style>
+/* =========================================================================
+   TRAMA — DIAGNÓSTICO ESG TÊXTIL
+   Autodiagnóstico interativo em formato de cartas: perguntas reais sobre a
+   situação da empresa + cenários hipotéticos, com dado real de referência
+   depois de cada resposta. HTML + CSS + JS puros, um único arquivo.
+   ========================================================================= */
+
+:root{
+  --void:        #171310;
+  --void-2:      #1E1913;
+  --panel:       #2A2219;
+  --panel-line:  #3C3122;
+  --paper:       #F1E9D8;
+  --paper-edge:  #DDCBA6;
+  --ink:         #2B2318;
+  --ink-soft:    #6a5c46;
+  --thread:      #C1683A;
+  --thread-dim:  #8a4c2c;
+  --accept:      #4C8B5B;
+  --reject:      #B4523F;
+  --neutral:     #B8944D;
+  --text:        #ECE3D2;
+  --text-dim:    #A69880;
+
+  --bar-90: #1B5E20;
+  --bar-70: #4CAF50;
+  --bar-50: #FFEB3B;
+  --bar-30: #FF9800;
+  --bar-0:  #F44336;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono:  "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 50% -10%, #2a2117 0%, var(--void) 55%),
+    var(--void);
+  color: var(--text);
+  font-family: var(--sans);
+  overflow:hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+.grid-veil{
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(193,104,58,0.05) 0 2px, transparent 2px 14px),
+    repeating-linear-gradient(-45deg, rgba(193,104,58,0.05) 0 2px, transparent 2px 14px);
+  opacity:0.5;
+}
+
+#app{ position:relative; z-index:1; height:100%; display:flex; flex-direction:column; }
+
+/* ---------------------------------------------------------------- HEADER */
+.topbar{ display:flex; align-items:center; justify-content:space-between; padding: 14px 20px 8px; flex: 0 0 auto; }
+.brand{ display:flex; align-items:baseline; gap:10px; }
+.brand-mark{ font-family: var(--serif); font-size: 20px; letter-spacing: 0.02em; color: var(--thread); }
+.brand-sub{ font-size: 11px; color: var(--text-dim); font-family: var(--mono); }
+.progress-plaque{
+  font-family: var(--mono); background: var(--panel); border: 1px solid var(--panel-line);
+  border-radius: 3px; padding: 6px 14px; font-size: 13px; color: var(--thread); letter-spacing: 0.04em;
+}
+.topbar-actions{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.icon-btn{
+  background: var(--panel); border: 1px solid var(--panel-line); color: var(--text-dim);
+  border-radius: 3px; padding: 6px 10px; font-family: var(--mono); font-size: 11px; cursor:pointer;
+}
+.icon-btn:hover{ color: var(--text); border-color: var(--thread-dim); }
+.icon-btn:focus-visible, button:focus-visible, .card:focus-visible{ outline: 2px solid var(--thread); outline-offset: 2px; }
+
+.progress-track{ height:3px; background:var(--panel-line); margin: 0 20px; border-radius: 2px; overflow:hidden; flex:0 0 auto; }
+.progress-fill{ height:100%; background: var(--thread); transition: width .4s ease; }
+
+/* ---------------------------------------------------------------- STAGE */
+.stage-wrap{ flex: 1 1 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; min-height:0; padding: 10px 16px; overflow-y:auto; }
+
+.character-tag{ text-align:center; margin-bottom: 6px; flex: 0 0 auto; }
+.character-tag .emoji{ font-size: 28px; display:block; }
+.character-tag .name{ font-family: var(--serif); font-size: 15px; color: var(--text); margin-top:2px; }
+.character-tag .role{ font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing:0.04em; }
+
+.card-stage{ position: relative; width: min(400px, 94vw); flex: 0 0 auto; }
+
+.card{
+  position:relative; background: var(--paper); color: var(--ink);
+  border-radius: 10px; box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 2px 0 var(--paper-edge) inset;
+  padding: 62px 24px 22px; display:flex; flex-direction:column; min-height: 220px;
+}
+.card.entering{ animation: cardIn 0.4s cubic-bezier(.2,.8,.2,1); }
+@keyframes cardIn{ from{ opacity:0; transform: translateY(18px) scale(0.97); } to{ opacity:1; transform: translateY(0) scale(1); } }
+
+.card .tab{
+  position:absolute; top:0; left: 18px; right: 18px; height: 44px; background: var(--ink);
+  border-radius: 0 0 8px 8px; color: var(--paper); display:flex; align-items:center; gap:10px;
+  padding: 0 14px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.03em;
+}
+.card .tab .tab-emoji{ font-size:17px; }
+.card .tab .tab-text b{ display:block; font-family: var(--serif); font-size:13px; letter-spacing:0; }
+
+.card .quote{ flex:1; display:flex; align-items:center; font-family: var(--serif); font-size: 17px; line-height: 1.45; color: var(--ink); }
+
+.card .kind-flag{
+  position:absolute; top:50px; right: 14px; font-family: var(--mono); font-size:9px; letter-spacing:0.08em;
+  border: 1px solid var(--thread-dim); color: var(--thread-dim); padding: 2px 6px; border-radius: 2px; text-transform: uppercase;
+  background: var(--paper);
+}
+.card .kind-flag.hip{ color: var(--thread); border-color: var(--thread); }
+
+/* ------------------------------------------------------------- OPTIONS */
+.options-stack{ width: min(400px, 94vw); display:flex; flex-direction:column; gap: 8px; margin-top: 14px; flex: 0 0 auto; }
+.option-btn{
+  font-family: var(--sans); font-size: 14px; text-align:left; padding: 12px 16px; border-radius: 6px;
+  border: 1px solid var(--panel-line); background: var(--panel); color: var(--text); cursor:pointer;
+  transition: filter .15s ease, transform .1s ease;
+}
+.option-btn:hover{ filter: brightness(1.18); }
+.option-btn:active{ transform: scale(0.99); }
+.option-btn.tone-good{ border-color: rgba(76,139,91,0.5); }
+.option-btn.tone-good::before{ content:"● "; color: var(--accept); }
+.option-btn.tone-mid::before{ content:"● "; color: var(--neutral); }
+.option-btn.tone-bad{ border-color: rgba(180,82,63,0.5); }
+.option-btn.tone-bad::before{ content:"● "; color: var(--reject); }
+
+/* ------------------------------------------------------------ REVEAL */
+.reveal-card{
+  width: min(400px, 94vw); background: var(--panel); border: 1px solid var(--thread-dim);
+  border-radius: 10px; padding: 18px 20px; margin-top: 14px; flex: 0 0 auto;
+}
+.reveal-card .r-eyebrow{ font-family: var(--mono); font-size: 10px; color: var(--thread); letter-spacing: 0.06em; margin-bottom: 8px; }
+.reveal-card .r-body{ font-size: 13.5px; line-height: 1.6; color: var(--text); }
+.reveal-card .r-cta{ margin-top: 14px; text-align:right; }
+
+/* --------------------------------------------------------------- DASH */
+.dashboard{ flex: 0 0 auto; display:flex; gap: 10px; padding: 12px 16px 16px; overflow-x:auto; }
+.gauge{ flex: 1 1 0; min-width: 100px; background: var(--panel); border: 1px solid var(--panel-line); border-radius: 6px; padding: 8px 10px; }
+.gauge-head{ display:flex; align-items:center; justify-content:space-between; font-family: var(--mono); font-size: 10px; color: var(--text-dim); margin-bottom:6px; }
+.gauge-head .g-icon{ font-size: 13px; }
+.gauge-head .g-val{ color: var(--text); font-weight:600; }
+.gauge-track{ height: 8px; border-radius: 4px; background: #16110c; overflow:hidden; border: 1px solid var(--panel-line); }
+.gauge-fill{ height:100%; transition: width .5s ease, background-color .5s ease; }
+
+/* ------------------------------------------------------------- DRAWERS */
+.drawer-backdrop{ position:fixed; inset:0; background: rgba(10,7,4,0.6); z-index: 20; opacity:0; pointer-events:none; transition: opacity .25s ease; }
+.drawer-backdrop.open{ opacity:1; pointer-events:auto; }
+.drawer{
+  position:fixed; top:0; right:0; bottom:0; width: min(340px, 88vw); background: var(--void-2);
+  border-left: 1px solid var(--panel-line); z-index: 21; transform: translateX(100%); transition: transform .3s ease;
+  display:flex; flex-direction:column; padding: 20px;
+}
+.drawer.open{ transform: translateX(0); }
+.drawer h2{ font-family: var(--serif); font-size:18px; color: var(--thread); margin:0 0 14px; }
+.drawer-close{ align-self:flex-end; background:none; border:none; color: var(--text-dim); font-family: var(--mono); font-size:12px; cursor:pointer; margin-bottom:6px; }
+.drawer-list{ overflow-y:auto; flex:1; }
+.hist-item{ border-bottom: 1px solid var(--panel-line); padding: 10px 0; }
+.hist-item .h-pillar{ font-family: var(--mono); font-size:10px; color: var(--thread); letter-spacing:0.05em; }
+.hist-item .h-text{ font-size: 13px; color: var(--text); margin-top: 2px; }
+.hist-item .h-answer{ font-size: 12px; color: var(--text-dim); margin-top: 3px; }
+
+/* --------------------------------------------------------- FULLSCREENS */
+.fullscreen{ position:fixed; inset:0; z-index: 40; display:flex; align-items:center; justify-content:center;
+  background: radial-gradient(circle at 50% 20%, #2a2117 0%, var(--void) 60%), var(--void); padding: 24px; text-align:center; overflow-y:auto; }
+.fullscreen.hidden{ display:none; }
+.panel-box{ max-width: 560px; width:100%; }
+.panel-box .kicker{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 10px; }
+.panel-box h1{ font-family: var(--serif); font-size: 32px; color: var(--thread); margin: 0 0 14px; line-height:1.15; }
+.panel-box h1.tier-low{ color: var(--reject); }
+.panel-box h1.tier-mid{ color: var(--neutral); }
+.panel-box h1.tier-high{ color: var(--accept); }
+.panel-box p.lede{ font-size: 15px; line-height:1.6; color: var(--text); margin: 0 0 18px; }
+.score-row{ display:flex; justify-content:center; align-items:baseline; gap: 8px; margin-bottom: 22px; }
+.score-row .s-num{ font-family: var(--serif); font-size: 48px; color: var(--thread); }
+.score-row .s-max{ font-family: var(--mono); font-size: 16px; color: var(--text-dim); }
+.input-row{ margin-bottom: 22px; }
+.input-row input{
+  font-family: var(--serif); font-size: 18px; background: var(--panel); border: 1px solid var(--panel-line);
+  color: var(--text); padding: 10px 16px; border-radius: 6px; width: min(320px, 80%); text-align:center;
+}
+.primary-btn{ font-family: var(--serif); font-size: 16px; background: var(--thread); color: #1c1108; border: none; padding: 12px 30px; border-radius: 5px; cursor:pointer; letter-spacing: 0.02em; }
+.primary-btn:hover{ filter: brightness(1.08); }
+.ghost-btn{ font-family: var(--mono); font-size: 12px; background:none; border: 1px solid var(--panel-line); color: var(--text-dim); padding: 10px 18px; border-radius: 5px; cursor:pointer; margin-left:10px; }
+.rules-list{ text-align:left; font-size:13px; line-height:1.7; color: var(--text-dim); margin: 0 0 24px; }
+.rules-list b{ color: var(--text); }
+
+.result-box{ text-align:left; background: var(--panel); border:1px solid var(--panel-line); border-radius:8px; padding:18px 20px; margin: 0 0 22px; }
+.result-box h3{ font-family: var(--serif); color: var(--thread); margin:0 0 10px; font-size:15px; }
+.result-box p{ font-size:13.5px; line-height:1.65; color: var(--text); margin: 0 0 14px; }
+.result-ind{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; font-family: var(--mono); font-size:12px; }
+.result-ind span{ background: var(--void-2); border:1px solid var(--panel-line); border-radius:4px; padding:5px 9px; }
+
+@media (max-width: 420px){
+  .panel-box h1{ font-size: 26px; }
+  .card{ padding: 56px 18px 18px; }
+  .card .quote{ font-size: 15.5px; }
+  .dashboard{ flex-wrap: wrap; }
+  .gauge{ min-width: 44%; }
+}
+</style>
+</head>
+<body>
+<div class="grid-veil"></div>
+
+<!-- ============================================================ START -->
+<div class="fullscreen" id="screen-start">
+  <div class="panel-box">
+    <div class="kicker">DIAGNÓSTICO ESG — SETOR TÊXTIL</div>
+    <h1>Trama</h1>
+    <p class="lede">Um autodiagnóstico rápido pra entender onde sua empresa está em ESG hoje — e o que ela ganha (ou perde) ao levar isso mais a sério. São 29 cartas: algumas perguntam sobre a sua situação real, outras colocam um cenário hipotético pra você decidir. No fim, cada resposta vira uma nota.</p>
+    <div class="input-row">
+      <input type="text" id="company-name-input" placeholder="Nome da sua empresa (opcional)" maxlength="60">
+    </div>
+    <ul class="rules-list">
+      <li><b>🌱 Ambiental · 👥 Trabalhista · 📋 Governança · 💰 Reputação/Financeiro</b> — 4 pilares, todos começam em 50.</li>
+      <li>Perguntas <b>reais</b>: responda com a prática atual da sua empresa.</li>
+      <li>Cenários <b>hipotéticos</b>: decida como sua empresa agiria.</li>
+      <li>Depois de cada resposta, mostramos um dado real do setor pra comparação.</li>
+    </ul>
+    <button class="primary-btn" id="btn-start">Começar diagnóstico</button>
+  </div>
+</div>
+
+<!-- ============================================================= GAME -->
+<div id="app" style="display:none;">
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-mark">Trama</span>
+      <span class="brand-sub" id="brand-sub">diagnóstico em curso</span>
+    </div>
+    <div class="progress-plaque" id="progress-plaque">1 / 29</div>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="btn-history">RESPOSTAS</button>
+    </div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+
+  <div class="stage-wrap" id="stage-wrap">
+    <div class="character-tag" id="character-tag">
+      <span class="emoji" id="tag-emoji">🌱</span>
+      <span class="name" id="tag-name">—</span>
+      <span class="role" id="tag-role">—</span>
+    </div>
+    <div class="card-stage" id="card-stage"></div>
+    <div class="options-stack" id="options-stack"></div>
+    <div class="reveal-card" id="reveal-card" style="display:none;">
+      <div class="r-eyebrow">VOCÊ SABIA?</div>
+      <div class="r-body" id="reveal-body"></div>
+      <div class="r-cta"><button class="primary-btn" id="btn-continue">Continuar</button></div>
+    </div>
+  </div>
+
+  <div class="dashboard" id="dashboard"></div>
+</div>
+
+<!-- ============================================================= DRAWER -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<div class="drawer" id="drawer-history">
+  <button class="drawer-close" data-close-drawer>fechar ✕</button>
+  <h2>Suas respostas</h2>
+  <div class="drawer-list" id="history-list"></div>
+</div>
+
+<!-- ============================================================== END -->
+<div class="fullscreen hidden" id="screen-end">
+  <div class="panel-box">
+    <div class="kicker" id="end-kicker">RESULTADO DO DIAGNÓSTICO</div>
+    <h1 id="end-title">—</h1>
+    <div class="score-row"><span class="s-num" id="end-score">0</span><span class="s-max">/ 100</span></div>
+    <p class="lede" id="end-short">—</p>
+
+    <div class="result-box">
+      <h3 id="cs-empresa">EMPRESA: —</h3>
+      <div class="result-ind" id="result-ind"></div>
+      <p id="end-long">—</p>
+      <h3>Considerações</h3>
+      <p id="end-considerations">—</p>
+    </div>
+
+    <button class="primary-btn" id="btn-restart">Refazer diagnóstico</button>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================================
+   1. PILARES E PERSONAGENS
+   ========================================================================= */
+
+var IND_KEYS = ["amb","tra","gov","rep"];
+var IND_META = {
+  amb: { label:"Ambiental",             icon:"🌱" },
+  tra: { label:"Trabalhista",           icon:"👥" },
+  gov: { label:"Governança",            icon:"📋" },
+  rep: { label:"Reputação/Financeiro",  icon:"💰" }
+};
+
+var CHARACTERS = {
+  ana:    { name:"Ana",     role:"Consultora Ambiental",        emoji:"🌱" },
+  rafael: { name:"Rafael",  role:"Auditor Trabalhista",         emoji:"👥" },
+  carla:  { name:"Carla",   role:"Consultora de Governança",    emoji:"📋" },
+  pedro:  { name:"Pedro",   role:"Consultor de Negócios ESG",   emoji:"💰" },
+  marina: { name:"Marina",  role:"Jornalista de Moda",          emoji:"📰" }
+};
+
+/* =========================================================================
+   2. BANCO DE PERGUNTAS (29: 16 reais + 13 hipotéticas)
+   ========================================================================= */
+
+var QUESTIONS = [
+
+  /* ---------------------------------------------------------- AMBIENTAL */
+  { id:"amb_agua", pillar:"amb", type:"real", char:"ana",
+    text:"A empresa trata a água usada no processo de tingimento antes de descartá-la?",
+    options:[
+      { label:"Sim, integralmente", effects:{ amb:13 } },
+      { label:"Parcialmente", effects:{ amb:4 } },
+      { label:"Não trata", effects:{ amb:-12 } }
+    ],
+    dado:"Caso local: um estudo sobre as lavanderias de jeans de Toritama-PE mostrou alto consumo de água, efluentes poluentes e resíduos sólidos, com muitas empresas apresentando sistemas de tratamento insuficientes (fonte: IBEAS, 2016). O modelo de fast fashion também é associado ao consumo excessivo de água no setor têxtil (Thorisdottir & Johannsdottir, 2020)." },
+
+  { id:"amb_retalhos", pillar:"amb", type:"real", char:"ana",
+    text:"Existe algum sistema de reaproveitamento de retalhos e resíduos têxteis da produção?",
+    options:[
+      { label:"Sim, com destinação definida", effects:{ amb:11 } },
+      { label:"Às vezes", effects:{ amb:3 } },
+      { label:"Não, descartamos como lixo comum", effects:{ amb:-9 } }
+    ],
+    dado:"Uma nova regra da União Europeia expôs o desperdício de 4 milhões de toneladas de resíduos têxteis produzidos no Brasil por ano; o país ainda não tem legislação equivalente para disciplinar a destinação de estoques excedentes (fonte: Fashion Network Brasil)." },
+
+  { id:"amb_monitora", pillar:"amb", type:"real", char:"ana",
+    text:"A empresa monitora o consumo de água e energia por lote de produção?",
+    options:[
+      { label:"Sim, com metas de redução", effects:{ amb:10 } },
+      { label:"Monitora mas sem metas", effects:{ amb:3 } },
+      { label:"Não monitora", effects:{ amb:-8 } }
+    ],
+    dado:"O setor têxtil brasileiro aumentou sua produção em 18% entre 2000 e 2024, enquanto as emissões diretas de CO₂ caíram mais de 70% no período — puxado por produção local e cadeias mais curtas (fonte: TopSociety)." },
+
+  { id:"amb_certificacao", pillar:"amb", type:"real", char:"ana",
+    text:"Os insumos usados (corantes, tecidos) têm alguma certificação ambiental (ex. OEKO-TEX, algodão orgânico)?",
+    options:[
+      { label:"Sim, parte relevante da produção", effects:{ amb:11 } },
+      { label:"Só em linhas específicas", effects:{ amb:4 } },
+      { label:"Não usamos insumos certificados", effects:{ amb:-9 } }
+    ],
+    dado:"A indústria têxtil usa mais de 15 mil produtos químicos diferentes na fabricação de roupas, e o impacto tóxico de processos como tingimento e alvejamento normalmente fica de fora das avaliações de ciclo de vida por falta de dados padronizados (fonte: Int J Life Cycle Assess)." },
+
+  { id:"amb_reciclagem", pillar:"amb", type:"hip", char:"ana",
+    text:"Cenário: instalar um sistema de reciclagem de água no tingimento exige um investimento alto agora, com retorno em alguns anos. Sua empresa aceitaria investir?",
+    options:[
+      { label:"Aceitar investir", effects:{ amb:12, rep:-5 } },
+      { label:"Recusar", effects:{ amb:-10, rep:4 } }
+    ],
+    dado:"Um estudo no Canal da Mancha encontrou microplásticos no trato digestivo de 36,5% de 504 peixes examinados — evidência da dispersão de poluição plástica em ecossistemas marinhos, com componentes bastante presentes na indústria da moda (fonte: ScienceDirect / Marine Pollution Bulletin)." },
+
+  { id:"amb_embalagem", pillar:"amb", type:"hip", char:"pedro",
+    text:"Cenário: trocar embalagens plásticas por papel reciclado aumenta o custo por peça. Sua empresa faria essa troca?",
+    options:[
+      { label:"Aceitar a troca", effects:{ amb:8, rep:-3 } },
+      { label:"Manter o plástico", effects:{ amb:-6, rep:3 } }
+    ],
+    dado:"Em 2021, o setor de produtos têxteis foi a principal indústria de moda na produção de embalagens no Brasil (8,5% do total), num contexto em que 37,1% de toda embalagem produzida no país ainda é plástico (fonte: ABVTEX)." },
+
+  { id:"amb_corantes", pillar:"amb", type:"hip", char:"ana",
+    text:"Cenário: migrar parte da produção para corantes naturais é mais caro e mais lento que usar corantes sintéticos. Sua empresa migraria?",
+    options:[
+      { label:"Aceitar migrar", effects:{ amb:10, rep:-4 } },
+      { label:"Manter corantes sintéticos", effects:{ amb:-8, rep:3 } }
+    ],
+    dado:"Os corantes convencionais fazem parte de um universo de mais de 15 mil produtos químicos usados na fabricação têxtil, cujo impacto tóxico normalmente fica fora das avaliações de ciclo de vida (fonte: Int J Life Cycle Assess)." },
+
+  /* -------------------------------------------------------- TRABALHISTA */
+  { id:"tra_seguranca", pillar:"tra", type:"real", char:"rafael",
+    text:"A produção conta com equipamentos de proteção adequados e treinamento de segurança?",
+    options:[
+      { label:"Sim, completo", effects:{ tra:14 } },
+      { label:"Parcial", effects:{ tra:3 } },
+      { label:"Não há programa formal", effects:{ tra:-15 } }
+    ],
+    dado:"Em 2004, ano do único levantamento nacional sobre o perfil epidemiológico dos trabalhadores têxteis (SESI), o setor têxtil brasileiro teve 46% mais acidentes de trabalho do que a média geral dos segurados pelo INSS (fonte: Revista Brasileira de Epidemiologia, 2021)." },
+
+  { id:"tra_denuncia", pillar:"tra", type:"real", char:"rafael",
+    text:"Existe canal formal de denúncia de assédio ou discriminação, com investigação garantida?",
+    options:[
+      { label:"Sim", effects:{ tra:13 } },
+      { label:"Existe mas pouco divulgado", effects:{ tra:2 } },
+      { label:"Não existe", effects:{ tra:-14 } }
+    ],
+    dado:"A pesquisa nacional \"Trabalho Sem Assédio 2025\" (Think Eva + LinkedIn, +3 mil respondentes) mostra que 35% das mulheres já sofreram assédio sexual no trabalho, mas só 10% recorreram a canais de denúncia. Desde março de 2023, a Lei nº 14.457/2022 tornou obrigatório um canal de denúncia anônimo em empresas com mais de 20 funcionários." },
+
+  { id:"tra_salario", pillar:"tra", type:"real", char:"rafael",
+    text:"Os salários da produção estão acima do piso da convenção coletiva do setor?",
+    options:[
+      { label:"Acima", effects:{ tra:11 } },
+      { label:"Na média", effects:{ tra:4 } },
+      { label:"Abaixo ou no limite", effects:{ tra:-10 } }
+    ],
+    dado:"Dado ainda em aberto — o grupo não encontrou uma fonte específica de Pernambuco confiável o suficiente pra citar aqui. Vale conferir os valores atualizados direto com o SINDITÊXTIL-PE." },
+
+  { id:"tra_capacitacao", pillar:"tra", type:"real", char:"rafael",
+    text:"A empresa oferece capacitação técnica contínua para a equipe de produção?",
+    options:[
+      { label:"Sim, regularmente", effects:{ tra:10 } },
+      { label:"Esporadicamente", effects:{ tra:3 } },
+      { label:"Não oferece", effects:{ tra:-8 } }
+    ],
+    dado:"Exemplos do setor: o Riachuelo LAB (\"Mãos da Moda\") oferece treinamento, mentoria e apoio financeiro (até R$ 30 mil por parceria) a grupos artesanais; em Recife, o Sebrae apoiou a Moda Mangue Biojoias a capacitar 20 mulheres da comunidade (fontes: Exame / Agência Sebrae PE)." },
+
+  { id:"tra_terceirizacao", pillar:"tra", type:"real", char:"rafael",
+    text:"A produção é feita internamente ou parte dela é terceirizada para oficinas de costura externas? Se sim, essas oficinas são auditadas?",
+    options:[
+      { label:"Produção interna, sem terceirização", effects:{ tra:12 } },
+      { label:"Terceirizamos e auditamos as oficinas", effects:{ tra:8 } },
+      { label:"Terceirizamos sem auditoria formal", effects:{ tra:-16 } }
+    ],
+    dado:"Entre 2010 e 2023, mais da metade dos resgates de trabalho escravo de migrantes internacionais no Brasil (902 pessoas, principalmente da Bolívia, Paraguai, Haiti, Venezuela e Peru) aconteceram na confecção têxtil em São Paulo, quase sempre em oficinas de costura terceirizadas que fornecem para grandes marcas (fonte: Dossiê Trabalho Escravo e Migração Internacional, Repórter Brasil, 2024)." },
+
+  { id:"tra_ergonomia", pillar:"tra", type:"hip", char:"rafael",
+    text:"Cenário: reformar a ergonomia das bancadas de trabalho tem custo alto agora, mas reduz afastamentos no longo prazo. Sua empresa investiria?",
+    options:[
+      { label:"Aceitar investir", effects:{ tra:10, rep:-4 } },
+      { label:"Recusar", effects:{ tra:-8, rep:3 } }
+    ],
+    dado:"Estudos sobre acidentes de trabalho no setor têxtil brasileiro apontam a repetitividade e a má ergonomia das estações de costura como fatores centrais de afastamento (fonte: Rev Bras Epidemiologia, 2021)." },
+
+  { id:"tra_horasextras", pillar:"tra", type:"hip", char:"rafael",
+    text:"Cenário: num pico de demanda, sua empresa contrataria temporários extras ou pressionaria a equipe atual com horas extras?",
+    options:[
+      { label:"Contratar temporários", effects:{ tra:9, rep:-3 } },
+      { label:"Pressionar a equipe atual", effects:{ tra:-11, rep:4 } }
+    ],
+    dado:"Levantamentos sobre saúde ocupacional no setor têxtil associam jornadas excessivas e trabalho repetitivo intenso a maior desgaste físico e psicológico dos trabalhadores (fonte: UFES, pesquisa sobre ergonomia e ergologia na indústria têxtil)." },
+
+  { id:"tra_auditoria", pillar:"tra", type:"hip", char:"rafael",
+    text:"Cenário: contratar uma auditoria trabalhista externa pra revisar contratos e condições de trabalho tem custo, mas reduz riscos. Sua empresa contrataria?",
+    options:[
+      { label:"Aceitar contratar", effects:{ tra:9, rep:-3 } },
+      { label:"Recusar", effects:{ tra:-7, rep:2 } }
+    ],
+    dado:"A Lei nº 14.457/2022 já exige que empresas com mais de 20 funcionários tenham normas internas e canais formais sobre assédio e outras violências no trabalho — uma auditoria externa ajuda a identificar lacunas antes que virem passivo trabalhista." },
+
+  /* ------------------------------------------------------- GOVERNANÇA */
+  { id:"gov_rastreio", pillar:"gov", type:"real", char:"carla",
+    text:"A empresa rastreia a origem da matéria-prima até o fornecedor original?",
+    options:[
+      { label:"Sim, cadeia totalmente rastreável", effects:{ gov:12 } },
+      { label:"Parcialmente", effects:{ gov:4 } },
+      { label:"Não sabemos a origem exata", effects:{ gov:-10 } }
+    ],
+    dado:"Exemplo do setor: a Incofios, fabricante catarinense de fios de algodão, trabalha com algodão certificado e usa QR Code para rastrear a origem do material (fonte: TopSociety)." },
+
+  { id:"gov_conduta", pillar:"gov", type:"real", char:"carla",
+    text:"Existe um código de conduta ou política anticorrupção formalizada?",
+    options:[
+      { label:"Sim, documentado e divulgado", effects:{ gov:10 } },
+      { label:"Existe informalmente", effects:{ gov:3 } },
+      { label:"Não existe", effects:{ gov:-9 } }
+    ],
+    dado:"Entre os benefícios de ESG mais citados para PMEs estão redução de custos, acesso a incentivos e financiamentos, atração de investimentos e mitigação de riscos — e um código de conduta formal costuma ser pré-requisito básico nesses processos (fonte: Sindimetal Maringá)." },
+
+  { id:"gov_relatorio", pillar:"gov", type:"real", char:"carla",
+    text:"A empresa publica algum relatório de sustentabilidade ou de impacto, mesmo que simples?",
+    options:[
+      { label:"Sim, anualmente", effects:{ gov:11 } },
+      { label:"Já publicou uma vez", effects:{ gov:5 } },
+      { label:"Nunca publicou", effects:{ gov:-8 } }
+    ],
+    dado:"O Sebrae relata que mais de 16,4 mil pequenos negócios já aderiram à plataforma \"Crescimento Sustentável\", que usa IA para diagnóstico e consultoria em ESG (fonte: Agência Sebrae, jul/2026)." },
+
+  { id:"gov_fornecedores", pillar:"gov", type:"real", char:"carla",
+    text:"Os fornecedores são auditados quanto a práticas trabalhistas e ambientais?",
+    options:[
+      { label:"Sim, todos", effects:{ gov:12 } },
+      { label:"Só os principais", effects:{ gov:5 } },
+      { label:"Não auditamos", effects:{ gov:-11 } }
+    ],
+    dado:"O Grupo Globo, em parceria com o Sebrae, capacitou 26 micro e pequenas empresas fornecedoras com mais de 400 horas de treinamento em práticas ESG — sinal de que grandes contratantes já cobram esses padrões de pequenos fornecedores na cadeia (fonte: Agência Sebrae RJ)." },
+
+  { id:"gov_publicar", pillar:"gov", type:"hip", char:"carla",
+    text:"Cenário: publicar um relatório público detalhando toda a cadeia produtiva pode expor eventuais falhas da empresa. Sua empresa publicaria?",
+    options:[
+      { label:"Aceitar publicar", effects:{ gov:11, rep:3 } },
+      { label:"Recusar", effects:{ gov:-6, rep:2 } }
+    ],
+    dado:"O antídoto recomendado contra o greenwashing é justamente usar dados reais, ser transparente e evitar exageros — trabalhar o ESG de forma contínua, não como ação isolada de marketing (fonte: podcast Twist ESG)." },
+
+  { id:"gov_brecha", pillar:"gov", type:"hip", char:"pedro",
+    text:"Cenário: existe uma brecha fiscal legal pra reduzir impostos. Sua empresa aproveitaria, ou seguiria o caminho mais transparente pagando tudo em dia?",
+    options:[
+      { label:"Aproveitar a brecha", effects:{ rep:6, gov:-12 } },
+      { label:"Caminho transparente", effects:{ rep:-3, gov:10 } }
+    ],
+    dado:"Entre os principais benefícios do ESG para PMEs estão redução de custos, acesso a incentivos e financiamentos, e mitigação de riscos — uma reputação fiscal sólida costuma pesar mais no médio prazo do que a economia pontual de uma brecha (fonte: Sindimetal Maringá)." },
+
+  { id:"gov_fornecedor_caro", pillar:"gov", type:"hip", char:"carla",
+    text:"Cenário: trocar um fornecedor mais barato (sem rastreabilidade) por um certificado, porém mais caro. Sua empresa trocaria?",
+    options:[
+      { label:"Trocar", effects:{ gov:11, rep:-5 } },
+      { label:"Manter o atual", effects:{ gov:-8, rep:4 } }
+    ],
+    dado:"Mais da metade dos resgates de trabalho escravo de migrantes no Brasil entre 2010-2023 aconteceram em oficinas têxteis terceirizadas sem auditoria — a falta de rastreabilidade de fornecedores é um dos maiores riscos ocultos do setor (fonte: Repórter Brasil, 2024)." },
+
+  /* --------------------------------------------------- REPUTAÇÃO/FINANC. */
+  { id:"rep_ganhoperda", pillar:"rep", type:"real", char:"pedro",
+    text:"A empresa já ganhou ou perdeu contratos/clientes por causa de práticas ESG (ou falta delas)?",
+    options:[
+      { label:"Já ganhamos por isso", effects:{ rep:12 } },
+      { label:"Já perdemos por isso", effects:{ rep:-11 } },
+      { label:"Nunca impactou visivelmente", effects:{ rep:2 } }
+    ],
+    dado:"Caso real: o Grupo Globo passou a exigir e capacitar seus pequenos fornecedores em práticas ESG (parceria com o Sebrae) — sinal de que grandes contratantes já filtram fornecedores por isso (fonte: Agência Sebrae RJ)." },
+
+  { id:"rep_credito", pillar:"rep", type:"real", char:"pedro",
+    text:"Vocês têm acesso a linhas de crédito, editais ou parcerias que exigem comprovação de práticas sustentáveis?",
+    options:[
+      { label:"Sim, já acessamos", effects:{ rep:11 } },
+      { label:"Conhecemos mas nunca acessamos", effects:{ rep:2 } },
+      { label:"Não conhecemos essas opções", effects:{ rep:-7 } }
+    ],
+    dado:"Entre os principais benefícios do ESG para pequenas e médias empresas estão redução de custos, acesso a incentivos e financiamentos, atração de investimentos e mitigação de riscos (fonte: Sindimetal Maringá)." },
+
+  { id:"rep_orcamento", pillar:"rep", type:"real", char:"pedro",
+    text:"Existe algum orçamento — mesmo pequeno — dedicado a iniciativas de ESG?",
+    options:[
+      { label:"Sim, formalizado", effects:{ rep:9 } },
+      { label:"Investimos pontualmente", effects:{ rep:3 } },
+      { label:"Não há orçamento para isso", effects:{ rep:-7 } }
+    ],
+    dado:"O Sebrae-PE reforça que ESG não é exclusividade de grandes empresas — pequenos negócios também podem aplicar práticas ambientais, sociais e de governança de forma simples, ganhando reputação e competitividade (fonte: vídeo Sebrae Pernambuco)." },
+
+  { id:"rep_monitora", pillar:"rep", type:"real", char:"pedro",
+    text:"A empresa monitora sua reputação (redes sociais, avaliações) em temas socioambientais?",
+    options:[
+      { label:"Sim, ativamente", effects:{ rep:9 } },
+      { label:"De vez em quando", effects:{ rep:3 } },
+      { label:"Não monitoramos", effects:{ rep:-8 } }
+    ],
+    dado:"Greenwashing — usar discurso sustentável sem prática real — prejudica a confiança do consumidor, afeta negativamente marcas genuinamente éticas e vem sendo cada vez mais alvo de regulamentação (fonte: Sizebay)." },
+
+  { id:"rep_certificacao", pillar:"rep", type:"hip", char:"pedro",
+    text:"Cenário: buscar uma certificação de sustentabilidade exige investimento alto, mas abre portas comerciais. Sua empresa buscaria?",
+    options:[
+      { label:"Aceitar buscar", effects:{ rep:12, gov:0 } },
+      { label:"Recusar", effects:{ rep:-6 } }
+    ],
+    dado:"\"Feito no Brasil\" está se consolidando como estratégia de ESG para marcas de moda — reduz emissões de transporte e abre espaço comercial; a Incofios, por exemplo, usa algodão certificado e QR Code de rastreio (fonte: TopSociety)." },
+
+  { id:"rep_transparencia_custos", pillar:"rep", type:"hip", char:"pedro",
+    text:"Cenário: adotar transparência radical de custos (mostrar ao cliente quanto vai para cada etapa da produção, incluindo o pagamento do artesão/costureira) expõe a margem da empresa. Sua empresa adotaria?",
+    options:[
+      { label:"Aceitar adotar", effects:{ rep:13, gov:5 } },
+      { label:"Recusar", effects:{ rep:-3 } }
+    ],
+    dado:"Benchmark do setor: a Catarina Mina foi pioneira em expor o custo real de cada peça e o percentual pago à artesã — um contraponto direto ao greenwashing, que mascara impactos reais em vez de mostrá-los (fontes: podcast Twist ESG / Sizebay)." },
+
+  { id:"rep_reportagem", pillar:"rep", type:"hip", char:"marina",
+    text:"Cenário: uma reportagem aponta condições de trabalho ruins em um fornecedor da sua cadeia. Sua empresa investigaria e corrigiria publicamente, ou ignoraria o caso?",
+    options:[
+      { label:"Investigar e corrigir", effects:{ rep:14, gov:6 } },
+      { label:"Ignorar", effects:{ rep:-16 } }
+    ],
+    dado:"Mais da metade dos resgates de trabalho escravo no Brasil entre 2010-2023 aconteceram em oficinas têxteis terceirizadas — casos assim tendem a vir à tona mais cedo ou mais tarde, e ignorá-los custa muito mais caro em reputação do que agir logo (fonte: Repórter Brasil, 2024)." }
+];
+
+/* =========================================================================
+   3. TEXTOS DE RESULTADO FINAL
+   ========================================================================= */
+
+var RESULT_TEXTS = {
+  high:{
+    title:"Parabéns! Sua empresa é referência em ESG",
+    shortTpl:"Sua nota foi {nota}/100. Isso coloca sua empresa entre as mais avançadas do setor têxtil em práticas ambientais, sociais e de governança.",
+    longTpl:"O ponto mais forte da sua empresa hoje é {pilarForte}. Continue investindo nisso — é um diferencial competitivo real. Mesmo com uma nota alta, {pilarFraco} ainda tem espaço pra evoluir; nenhuma empresa mantém excelência em todos os pilares sem revisão constante. ESG não é uma meta que se alcança e se esquece — é um processo contínuo, e manter esse padrão exige acompanhamento regular dos indicadores.",
+    considerations:"Empresas com esse perfil normalmente já têm acesso a linhas de crédito, editais e parcerias que exigem comprovação de práticas sustentáveis — vale checar se vocês estão aproveitando isso. Considere também documentar formalmente essas práticas (relatório de sustentabilidade, certificações) pra transformar o que já é feito em vantagem comercial mensurável."
+  },
+  mid:{
+    title:"Sua empresa está no caminho certo — mas pode melhorar",
+    shortTpl:"Sua nota foi {nota}/100. Sua empresa já pratica boa parte do que se espera em ESG, mas ainda deixa valor na mesa.",
+    longTpl:"O pilar onde vocês estão mais avançados é {pilarForte}, e é nele que dá pra buscar oportunidades (parcerias, certificações, reconhecimento de mercado) com esforço relativamente baixo. Já {pilarFraco} é onde está a maior lacuna — e normalmente é aí que moram os riscos mais caros de ignorar: multas ambientais, passivos trabalhistas, perda de contratos por falta de rastreabilidade. Fechar essa lacuna costuma custar menos do que lidar com as consequências de deixá-la aberta.",
+    considerations:"Comece pelo pilar mais fraco, não pelo mais fácil — é onde o risco (e o retorno de corrigir) é maior. Pequenas mudanças no curto prazo, como abrir um canal de denúncia ou mapear a origem dos principais fornecedores, já mudam a nota de forma perceptível na próxima avaliação."
+  },
+  low:{
+    title:"Sua empresa deve rever sua aplicação de ESG",
+    shortTpl:"Sua nota foi {nota}/100. Isso indica que práticas importantes de ESG ainda não fazem parte da rotina da empresa — e isso já pode estar custando caro, mesmo sem vocês perceberem diretamente.",
+    longTpl:"O pilar mais crítico agora é {pilarFraco}, e é por ali que a mudança deveria começar. Não é sobre resolver tudo de uma vez — é sobre priorizar o que reduz risco real primeiro (segurança do trabalho, canal de denúncia, rastreabilidade de fornecedores) antes de partir pras iniciativas mais \"vitrine\" (certificações, relatórios públicos). O lado bom: {pilarForte} já mostra que a empresa é capaz de implementar boas práticas — é questão de estender esse mesmo cuidado aos outros pilares.",
+    considerations:"Setores como o têxtil estão sob pressão crescente — legislação futura, exigência de grandes clientes e cobrança do consumidor tendem a aumentar, não diminuir. Empresas que resolvem isso agora, de forma gradual, gastam menos do que as forçadas a se adequar depois de uma crise. Vale começar pelo simples: escolher 1-2 ações de cada pilar pros próximos 6 meses, em vez de tentar resolver tudo ao mesmo tempo."
+  }
+};
+
+/* =========================================================================
+   4. ESTADO
+   ========================================================================= */
+
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+  }
+  return a;
+}
+
+function freshState(){
+  return {
+    companyName: "",
+    ind: { amb:50, tra:50, gov:50, rep:50 },
+    deck: shuffle(QUESTIONS),
+    index: 0,
+    history: [],
+    currentQuestion: null,
+    pendingChoice: null
+  };
+}
+var S = freshState();
+
+/* =========================================================================
+   5. UTILITÁRIOS
+   ========================================================================= */
+
+function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
+function barColor(v){
+  if(v>=90) return "var(--bar-90)";
+  if(v>=70) return "var(--bar-70)";
+  if(v>=50) return "var(--bar-50)";
+  if(v>=30) return "var(--bar-30)";
+  return "var(--bar-0)";
+}
+function el(tag, cls, html){ var e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+function avgInd(o){ return (o.amb+o.tra+o.gov+o.rep)/4; }
+
+function toneForOption(q, optIndex){
+  if(q.type==="hip") return optIndex===0 ? "tone-good" : "tone-bad";
+  if(q.options.length===3){
+    if(optIndex===0) return "tone-good";
+    if(optIndex===1) return "tone-mid";
+    return "tone-bad";
+  }
+  return "";
+}
+
+/* =========================================================================
+   6. RENDERIZAÇÃO
+   ========================================================================= */
+
+var stage = document.getElementById("card-stage");
+var optionsStack = document.getElementById("options-stack");
+var revealCard = document.getElementById("reveal-card");
+var revealBody = document.getElementById("reveal-body");
+var tagEmoji = document.getElementById("tag-emoji");
+var tagName = document.getElementById("tag-name");
+var tagRole = document.getElementById("tag-role");
+var progressPlaque = document.getElementById("progress-plaque");
+var progressFill = document.getElementById("progress-fill");
+var dashboard = document.getElementById("dashboard");
+var characterTag = document.getElementById("character-tag");
+
+function buildGauges(){
+  dashboard.innerHTML = "";
+  IND_KEYS.forEach(function(k){
+    var meta = IND_META[k];
+    var g = el("div","gauge");
+    g.dataset.k = k;
+    g.innerHTML =
+      '<div class="gauge-head"><span><span class="g-icon">'+meta.icon+'</span> '+meta.label+'</span><span class="g-val" data-val>'+S.ind[k]+'</span></div>'+
+      '<div class="gauge-track"><div class="gauge-fill" data-fill></div></div>';
+    dashboard.appendChild(g);
+  });
+  renderDashboard();
+}
+
+function renderDashboard(){
+  IND_KEYS.forEach(function(k){
+    var g = dashboard.querySelector('.gauge[data-k="'+k+'"]');
+    if(!g) return;
+    var v = Math.round(S.ind[k]);
+    g.querySelector("[data-val]").textContent = v;
+    var fill = g.querySelector("[data-fill]");
+    fill.style.width = v + "%";
+    fill.style.background = barColor(v);
+  });
+}
+
+function renderProgress(){
+  progressPlaque.textContent = (S.index+1) + " / " + QUESTIONS.length;
+  progressFill.style.width = Math.round((S.index/QUESTIONS.length)*100) + "%";
+}
+
+function renderHistoryList(){
+  var list = document.getElementById("history-list");
+  list.innerHTML = "";
+  if(S.history.length === 0){
+    list.appendChild(el("div","hist-item","<div class='h-text'>Nenhuma resposta registrada ainda.</div>"));
+    return;
+  }
+  S.history.slice().reverse().forEach(function(h){
+    var item = el("div","hist-item");
+    item.innerHTML =
+      '<div class="h-pillar">'+IND_META[h.pillar].icon+' '+IND_META[h.pillar].label.toUpperCase()+'</div>'+
+      '<div class="h-text">'+h.question+'</div>'+
+      '<div class="h-answer">Resposta: '+h.answer+'</div>';
+    list.appendChild(item);
+  });
+}
+
+function buildCardElement(q){
+  var wrap = el("div","card entering");
+  var ch = CHARACTERS[q.char];
+  var tab = el("div","tab");
+  tab.innerHTML = '<span class="tab-emoji">'+ch.emoji+'</span><span class="tab-text"><b>'+ch.name+'</b>'+ch.role+'</span>';
+  wrap.appendChild(tab);
+  wrap.appendChild(el("div","kind-flag"+(q.type==="hip"?" hip":""), q.type==="hip" ? "cenário hipotético" : "pergunta real"));
+  wrap.appendChild(el("div","quote", q.text));
+  return wrap;
+}
+
+function loadNextQuestion(){
+  if(S.index >= QUESTIONS.length){
+    showResults();
+    return;
+  }
+  var q = S.deck[S.index];
+  S.currentQuestion = q;
+
+  var ch = CHARACTERS[q.char];
+  tagEmoji.textContent = ch.emoji;
+  tagName.textContent = ch.name;
+  tagRole.textContent = ch.role;
+
+  stage.innerHTML = "";
+  stage.appendChild(buildCardElement(q));
+
+  optionsStack.innerHTML = "";
+  optionsStack.style.display = "flex";
+  revealCard.style.display = "none";
+
+  q.options.forEach(function(opt, i){
+    var btn = el("button","option-btn "+toneForOption(q,i), opt.label);
+    btn.addEventListener("click", function(){ chooseOption(q, opt, i); });
+    optionsStack.appendChild(btn);
+  });
+
+  renderProgress();
+}
+
+function chooseOption(q, opt, idx){
+  IND_KEYS.forEach(function(k){
+    if(opt.effects[k]){ S.ind[k] = clamp(S.ind[k] + opt.effects[k], 0, 100); }
+  });
+
+  S.history.push({ pillar:q.pillar, question:q.text, answer:opt.label });
+
+  renderDashboard();
+
+  optionsStack.style.display = "none";
+  revealCard.style.display = "block";
+  revealBody.textContent = q.dado;
+
+  S.pendingChoice = true;
+}
+
+function continueAfterReveal(){
+  S.index += 1;
+  loadNextQuestion();
+}
+
+/* =========================================================================
+   7. RESULTADO FINAL
+   ========================================================================= */
+
+function pillarSuperlatives(){
+  var entries = IND_KEYS.map(function(k){ return { k:k, v:S.ind[k] }; });
+  entries.sort(function(a,b){ return b.v-a.v; });
+  return { strongest: entries[0].k, weakest: entries[entries.length-1].k };
+}
+
+function fillTemplate(tpl, nota, forte, fraco){
+  return tpl
+    .replace(/\{nota\}/g, Math.round(nota))
+    .replace(/\{pilarForte\}/g, IND_META[forte].icon+" "+IND_META[forte].label)
+    .replace(/\{pilarFraco\}/g, IND_META[fraco].icon+" "+IND_META[fraco].label);
+}
+
+function showResults(){
+  document.getElementById("app").style.display = "none";
+
+  var nota = avgInd(S.ind);
+  var tier = nota >= 80 ? "high" : (nota >= 60 ? "mid" : "low");
+  var tierClass = tier === "high" ? "tier-high" : (tier === "mid" ? "tier-mid" : "tier-low");
+  var rt = RESULT_TEXTS[tier];
+  var sup = pillarSuperlatives();
+
+  var titleEl = document.getElementById("end-title");
+  titleEl.textContent = rt.title;
+  titleEl.className = tierClass;
+
+  document.getElementById("end-score").textContent = Math.round(nota);
+  document.getElementById("end-short").textContent = fillTemplate(rt.shortTpl, nota, sup.strongest, sup.weakest);
+  document.getElementById("end-long").textContent = fillTemplate(rt.longTpl, nota, sup.strongest, sup.weakest);
+  document.getElementById("end-considerations").textContent = rt.considerations;
+
+  var empresaLabel = S.companyName ? S.companyName : "Sua empresa";
+  document.getElementById("cs-empresa").textContent = "EMPRESA: " + empresaLabel;
+
+  var indBox = document.getElementById("result-ind");
+  indBox.innerHTML = "";
+  IND_KEYS.forEach(function(k){
+    indBox.appendChild(el("span","", IND_META[k].icon+" "+IND_META[k].label+": "+Math.round(S.ind[k])));
+  });
+
+  document.getElementById("screen-end").classList.remove("hidden");
+}
+
+/* =========================================================================
+   8. CICLO DE VIDA / EVENTOS DE UI
+   ========================================================================= */
+
+document.getElementById("btn-start").addEventListener("click", function(){
+  S.companyName = document.getElementById("company-name-input").value.trim();
+  document.getElementById("screen-start").style.display = "none";
+  document.getElementById("app").style.display = "flex";
+  buildGauges();
+  renderHistoryList();
+  loadNextQuestion();
+});
+
+document.getElementById("btn-restart").addEventListener("click", function(){
+  S = freshState();
+  document.getElementById("screen-end").classList.add("hidden");
+  document.getElementById("screen-start").style.display = "flex";
+});
+
+document.getElementById("btn-continue").addEventListener("click", continueAfterReveal);
+
+document.getElementById("btn-history").addEventListener("click", function(){
+  renderHistoryList();
+  document.getElementById("drawer-backdrop").classList.add("open");
+  document.getElementById("drawer-history").classList.add("open");
+});
+document.getElementById("drawer-backdrop").addEventListener("click", closeDrawers);
+document.querySelectorAll("[data-close-drawer]").forEach(function(b){ b.addEventListener("click", closeDrawers); });
+function closeDrawers(){
+  document.getElementById("drawer-backdrop").classList.remove("open");
+  document.getElementById("drawer-history").classList.remove("open");
+}
+
+})();
+</script>
+</body>
+</html>
