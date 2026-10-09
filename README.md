@@ -84,7 +84,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 ### Histórias do produto
 
-📄 Histórias do Usuário (docs/historias.md)
+📄 [Histórias do Usuário]()
 
 ### Histórias implementadas nesta entrega
 
