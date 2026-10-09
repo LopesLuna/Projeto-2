@@ -84,21 +84,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 ### Histórias do produto
 
-
-| #   | História                                                  | Documento                                                                                        |
-| --- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| H01 | Explicação curta e objetiva do Stitch                     | [historia-01.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-01.md) |
-| H02 | Entender a posição ESG da empresa com dados comparativos  | [historia-02.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-02.md) |
-| H03 | Histórico de relatórios e comparação temporal             | [historia-03.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-03.md) |
-| H04 | Aplicar ESG sem causar prejuízo                           | [historia-04.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-04.md) |
-| H05 | Saber se o ESG vale a pena                                | [historia-05.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-05.md) |
-| H06 | Relatório ESG para apresentação ao banco                  | [historia-06.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-06.md) |
-| H07 | Por onde começar a aplicar ESG                            | [historia-07.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-07.md) |
-| H08 | Criar conta para usar o simulador com dados reais         | [historia-08.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-08.md) |
-| H09 | Painel interno para editar materiais explicativos (admin) | [historia-09.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-09.md) |
-| H10 | Gerenciar métricas de mercado no banco de dados (gestor)  | [historia-10.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-10.md) |
-| H11 | Recomendações do que implementar e seus benefícios        | [historia-11.md](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias/historia-11.md) |
-
+📄 Histórias do Usuário (docs/historias.md)
 
 ### Histórias implementadas nesta entrega
 
