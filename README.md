@@ -84,7 +84,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 ### Histórias do produto
 
-📄 [Histórias do Usuário]()
+📄 [Histórias do Usuário](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias.md)
 
 ### Histórias implementadas nesta entrega
 
