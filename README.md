@@ -114,11 +114,9 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 ### Deploy das histórias
 
-[A fazer (Render)]
+🔗[Acessar Stitch (Aba de histórias de usuário)](https://projeto-2-tarefas.onrender.com/historias/)
 
 ### Issue/Bug Tracker
-
-[Atualizar o Bug tracker]
 
 [Ver issues](https://github.com/LopesLuna/Projeto-2/issues)
 
