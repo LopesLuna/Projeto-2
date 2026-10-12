@@ -122,7 +122,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 ### Screencast de explicação das atualizações
 
-[link para o vídeo](https://youtu.be/ToFv0Hx3jq8)
+🔗[link para o vídeo](https://youtu.be/ToFv0Hx3jq8)
 
 ---
 
