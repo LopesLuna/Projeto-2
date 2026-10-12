@@ -54,3 +54,6 @@ def criar_tarefa(request):
             return redirect('lista_tarefas')
 
     return render(request, 'tarefas/form.html')
+
+def historias(request):
+    return render(request, 'tarefas/historias.html')    
