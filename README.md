@@ -108,7 +108,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 ### Sprint 03 (Jira)
 
-[A fazer + link do backlog]
+🔗 [Acessar o backlog da Sprint 03: Board no Jira](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
 
 ### Deploy das histórias
 
