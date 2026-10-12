@@ -118,13 +118,11 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 ### Issue/Bug Tracker
 
-[Ver issues](https://github.com/LopesLuna/Projeto-2/issues)
+![Issues03](docs/issues03.png)
 
 ### Screencast de explicação do código Django
 
-[A fazer]
-
-\[Link para o vídeo no YouTube\]
+[]
 
 ---
 
