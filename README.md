@@ -88,23 +88,23 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 
 ### Histórias implementadas nesta entrega
 
-> 📌 **\[ID da História 1\]**
+> 📌 **\[H01 - Explicação curta e objetiva do Stitch]**
 >
-> **Como** \[persona — ex.: dono de PME têxtil\]  
-> **Quero** \[funcionalidade\]  
-> **Para** \[valor de negócio\]
+> **Como** \[Alguém com interesse nas empresas-alvo]  
+> **Quero** \[Uma explicação curta e objetiva do que se trata o Stitch]  
+> **Para** \[Entender rapidamente o valor da plataforma]
 
-> 📌 **\[ID da História 2\]**
+> 📌 **\[H02 - Entender a posição ESG da empresa com dados comparativos]**
 >
-> **Como** \[persona\]  
-> **Quero** \[funcionalidade\]  
-> **Para** \[valor de negócio\]
+> **Como** \[Dono de uma empresa-alvo que não sabe oque é ESG]  
+> **Quero** \[Visualizar dados comparativos e entender onde a empresa se encontra quanto às práticas verdes]  
+> **Para** \[Descobrir, sem conhecimento prévio, como meu negócio se posiciona frente ao mercado]
 
-> 📌 **\[ID da História 3\]**
+> 📌 **\[H05 - Saber se o ESG vale a pena]**
 >
-> **Como** \[persona\]  
-> **Quero** \[funcionalidade\]  
-> **Para** \[valor de negócio\]
+> **Como** \[Dono de uma empresa-alvo]  
+> **Quero** \[Saber se o ESG vale a pena aplicar (supre minhas necessidades)]  
+> **Para** \[Decidir com segurança se invisto em práticas sustentáveis]
 
 ### Sprint 03 (Jira)
 
