@@ -1,7 +1,5 @@
 # Histórias do Stitch 
 
----
-
 **📄 `docs/historias.md`**
 
 # Histórias do Usuário — Stitch
