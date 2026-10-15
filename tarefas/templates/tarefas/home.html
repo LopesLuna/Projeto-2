@@ -1,11 +1,19 @@
 {% extends 'tarefas/base.html' %}
-{% block title %}Home — Stitch{% endblock %}
+{% block title %}Início — Stitch{% endblock %}
 {% block content %}
-<h1>Stitch</h1>
+<div class="grid-2">
+    <div class="bloco">
+        <h1>Proposta do site / frase de impacto</h1>
+        <div class="placeholder">Texto de apresentação do Stitch (H01)<br>— a popular na próxima entrega —</div>
+    </div>
+    <div class="placeholder" style="margin-top:0">Imagem de destaque</div>
+</div>
 
-<h2>Sobre o Projeto</h2>
-<p><strong>Cliente:</strong> Disciplina de Projetos 2 — CESAR School</p>
-<p><strong>Projeto:</strong> Stitch é uma plataforma voltada para pequenas e médias empresas do setor têxtil que querem entender e melhorar sua atuação em ESG (Ambiental, Social e Governança). Através de uma simulação interativa, a empresa responde perguntas sobre sua situação real e cenários hipotéticos, recebendo uma pontuação em quatro frentes — Impacto Ambiental, Condições Trabalhistas, Governança/Transparência e Reputação/Financeiro — cada uma embasada em dados reais do setor, com o objetivo de mostrar onde a empresa já está bem e onde pode evoluir.</p>
+<h2>Por que ESG importa para o setor têxtil?</h2>
+<div class="placeholder">Imagem sobre o impacto da falta de práticas ESG</div>
 
-<a class="btn" href="{% url 'fale_conosco' %}">Fale Conosco</a>
+<h2>Informações básicas de ESG</h2>
+<div class="placeholder">Cartões com os 4 pilares: Ambiental, Social, Governança e Reputação/Financeiro (H02)</div>
+
+<p style="text-align:center"><a class="btn" href="{% url 'entenda_esg' %}">Quero entender ESG</a></p>
 {% endblock %}
