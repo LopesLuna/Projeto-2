@@ -2,19 +2,822 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Entregas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stitch - Plataforma ESG</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #ffffff;
+            color: #2b4c38;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            padding: 24px 32px;
+        }
+
+        /* Navigation Header */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f2f0;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #2b4c38;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 34px;
+        }
+
+        .logo-text {
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: #2b4c38;
+            letter-spacing: -0.5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4a5d4e;
+            font-size: 14px;
+            font-weight: 500;
+            padding-bottom: 4px;
+            transition: all 0.2s ease;
+        }
+
+        nav a:hover, nav a.active {
+            color: #2b4c38;
+            border-bottom: 2px solid #2b4c38;
+            font-weight: 600;
+        }
+
+        /* Section Layouts */
+        section {
+            padding: 40px 0 60px 0;
+            border-bottom: 1px dashed #e2e8e2;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 500;
+            color: #2b4c38;
+            margin-bottom: 36px;
+        }
+
+        /* Base Card Styling */
+        .card {
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .card-white {
+            background-color: #ffffff;
+            border: 2px solid #dce2dc;
+        }
+
+        .card-sage {
+            background-color: #e2e8e2;
+        }
+
+        .wireframe-text {
+            color: #2b5b3f;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+
+        .wireframe-text-small {
+            color: #2b5b3f;
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* SECTION 1: INÍCIO */
+        .grid-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 280px 320px;
+            gap: 24px;
+        }
+
+        .stacked-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .stacked-column .card-top {
+            flex: 1.2;
+        }
+
+        .stacked-column .card-bottom {
+            flex: 1;
+        }
+
+        .emblem-icon {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* SECTION 2: ENTENDA ESG */
+        .entenda-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 16px;
+        }
+
+        .entenda-header h3 {
+            font-size: 22px;
+            font-weight: 500;
+            color: #2b4c38;
+            text-align: center;
+        }
+
+        .grid-entenda {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            min-height: 300px;
+        }
+
+        /* Mock Chart Illustration */
+        .chart-mockup {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .chart-bars {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            height: 180px;
+            padding-top: 20px;
+            border-bottom: 2px solid #c2d0c2;
+        }
+
+        .bar-group {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .bar {
+            width: 28px;
+            border-radius: 6px 6px 0 0;
+            position: relative;
+        }
+
+        .bar-light { background-color: #88b090; }
+        .bar-dark { background-color: #2b5b3f; }
+
+        .bar-badge {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: 700;
+            color: #2b4c38;
+            background: #e2e8e2;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* SECTION 3: SIMULAÇÕES */
+        .simulacoes-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .sim-card {
+            position: relative;
+            min-height: 180px;
+            padding: 40px 24px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #2b5b3f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-card {
+            padding: 0;
+            overflow: hidden;
+            height: 650px;
+            border-radius: 20px;
+        }
+
+        .game-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 18px;
+        }
+
+        .sticky-tag {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background-color: #9bbcd0;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 12px 18px;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .simular-cta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .connector-line {
+            width: 2px;
+            height: 40px;
+            background-color: #88b090;
+        }
+
+        .btn-simular {
+            background-color: #ffffff;
+            border: 2px solid #2b4c38;
+            color: #2b4c38;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 14px 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-simular:hover {
+            background-color: #2b4c38;
+            color: #ffffff;
+        }
+
+        /* SECTION 4: QUEM SOMOS */
+        .team-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .team-row {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .avatar-box {
+            width: 90px;
+            height: 90px;
+            background-color: #e2e8e2;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-box svg {
+            width: 40px;
+            height: 40px;
+            fill: #7a9a82;
+        }
+
+        .member-name {
+            font-size: 14px;
+            color: #2b4c38;
+            font-weight: 500;
+        }
+
+        .team-subtitle {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: #2b4c38;
+            margin-top: 16px;
+        }
+
+        /* SECTION 5: ENTRE EM CONTATO */
+        .contact-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding: 40px 0;
+        }
+
+        .pill-button {
+            background-color: #e2e8e2;
+            color: #2b4c38;
+            font-size: 20px;
+            font-weight: 700;
+            padding: 16px 48px;
+            border-radius: 16px;
+            text-align: center;
+            border: none;
+            width: 340px;
+            letter-spacing: 0.5px;
+        }
+
+        .pill-email {
+            background-color: #e2e8e2;
+            color: #2b4c38;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 14px 48px;
+            border-radius: 16px;
+            text-align: center;
+            text-decoration: none;
+            width: 340px;
+            display: inline-block;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 820px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+            }
+            nav ul {
+                gap: 14px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .grid-hero, .grid-entenda, .simulacoes-cards, .entenda-header {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            .game-card {
+                height: 600px;
+            }
+            .pill-button, .pill-email {
+                width: 100%;
+                max-width: 320px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Entregas:</h1>
 
-    <h2>Entrega 1</h2>
-    <ul>
-        <li>Documento de análise de competidores: <a href="">link aqui</a></li>
-        <li>ScreenShots do figma:</li>
-    </ul>
+    <div class="container">
+        <!-- HEADER GLOBAL -->
+        <header>
+            <a href="#inicio" class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 45 15 C 10 35, 5 80, 38 102 C 55 112, 75 105, 75 80 C 75 60, 40 50, 45 15 Z" fill="#2d6a4f"/>
+                    <line x1="82" y1="20" x2="22" y2="105" stroke="#2b4c38" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M 82 20 C 95 35, 88 85, 45 100 C 30 105, 18 95, 22 80" stroke="#2d6a4f" stroke-width="2" fill="none"/>
+                </svg>
+                <span class="logo-text">Stitch</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#inicio" class="active">Início</a></li>
+                    <li><a href="#entenda-esg">Entenda ESG</a></li>
+                    <li><a href="#simulacoes">Simulações</a></li>
+                    <li><a href="#quem-somos">Quem Somos?</a></li>
+                    <li><a href="#contato">Entre em Contato</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <h2>Entrega 2</h2>
+        <!-- SEÇÃO 1: INÍCIO -->
+        <section id="inicio">
+            <div class="grid-hero">
+                <div class="card card-white">
+                    <p class="wireframe-text">
+                        PROPOSTA DO<br>
+                        SITE/FRASE DE<br>
+                        IMPACTO
+                    </p>
+                </div>
+                <div class="card card-sage"></div>
+                <div class="card card-white">
+                    <p class="wireframe-text">
+                        IMAGEM SOBRE<br>
+                        IMPACTO DA<br>
+                        FALTA DE ALGUMA<br>
+                        PRÁTICA ESG
+                    </p>
+                </div>
+                <div class="stacked-column">
+                    <div class="card card-sage card-top">
+                        <svg class="emblem-icon" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 45 15 C 10 35, 5 80, 38 102 C 55 112, 75 105, 75 80 C 75 60, 40 50, 45 15 Z" fill="#2d6a4f"/>
+                            <line x1="82" y1="20" x2="22" y2="105" stroke="#2b4c38" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M 82 20 C 95 35, 88 85, 45 100 C 30 105, 18 95, 22 80" stroke="#2d6a4f" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <div class="card card-sage card-bottom">
+                        <p class="wireframe-text-small">
+                            Informações<br>básicas ESG
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <h2>Entrega 3</h2>
+        <!-- SEÇÃO 2: ENTENDA ESG -->
+        <section id="entenda-esg">
+            <div class="entenda-header">
+                <h3>Conheça ESG com a Stitch</h3>
+                <h3>Informações importantes</h3>
+            </div>
+            <div class="grid-entenda">
+                <div class="card card-white">
+                    <div class="chart-mockup">
+                        <div class="chart-bars">
+                            <div class="bar-group">
+                                <div class="bar bar-light" style="height: 90px;"><span class="bar-badge">65%</span></div>
+                                <div class="bar bar-dark" style="height: 130px;"><span class="bar-badge">88%</span></div>
+                            </div>
+                            <div class="bar-group">
+                                <div class="bar bar-light" style="height: 70px;"><span class="bar-badge">50%</span></div>
+                                <div class="bar bar-dark" style="height: 110px;"><span class="bar-badge">75%</span></div>
+                            </div>
+                            <div class="bar-group">
+                                <div class="bar bar-light" style="height: 45px;"><span class="bar-badge">30%</span></div>
+                                <div class="bar bar-dark" style="height: 95px;"><span class="bar-badge">62%</span></div>
+                            </div>
+                            <div class="bar-group">
+                                <div class="bar bar-light" style="height: 80px;"><span class="bar-badge">58%</span></div>
+                                <div class="bar bar-dark" style="height: 140px;"><span class="bar-badge">92%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-white">
+                    <p class="wireframe-text" style="color: #6b8271; font-weight: 500; font-size: 16px;">
+                        [ Conteúdo informativo sobre práticas ESG, governança ambiental, responsabilidade social e métricas de sustentabilidade ]
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: SIMULAÇÕES -->
+        <section id="simulacoes">
+            <h2 class="section-title">Entenda simulando</h2>
+            
+            <div class="simulacoes-cards">
+                <div class="card card-white sim-card game-card">
+                    <!-- IFRAME DO JOGO TRAMA -->
+                    <iframe id="game-iframe" class="game-iframe"></iframe>
+                </div>
+                
+                <div class="card card-white sim-card">
+                    <div class="sticky-tag">GPR</div>
+                    <p>Simulação sem a<br>prática ESG na Stitch</p>
+                </div>
+            </div>
+
+            <div class="simular-cta">
+                <div class="connector-line"></div>
+                <button class="btn-simular">Simular por simulações</button>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: QUEM SOMOS -->
+        <section id="quem-somos">
+            <h2 class="section-title">Quem somos?</h2>
+
+            <div class="team-grid">
+                <div class="team-row">
+                    <div class="team-member">
+                        <div class="avatar-box"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <span class="member-name">Nome</span>
+                    </div>
+                    <div class="team-member">
+                        <div class="avatar-box"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <span class="member-name">Nome</span>
+                    </div>
+                    <div class="team-member">
+                        <div class="avatar-box"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+                        <span class="member-name">Nome</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="team-subtitle">Desenvolvedores do site</h3>
+        </section>
+
+        <!-- SEÇÃO 5: ENTRE EM CONTATO -->
+        <section id="contato">
+            <div class="contact-container">
+                <button class="pill-button">ENTRE EM CONTATO</button>
+                <a href="mailto:stitch@gmail.com" class="pill-email">stitch@gmail.com</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- TEMPLATE DO JOGO TRAMA (Carregado sem conflitos no iframe) -->
+    <template id="trama-game-template">
+      <!DOCTYPE html>
+      <html lang="pt-BR">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trama - ESG</title>
+        <style>
+          :root {
+            --void: #171310;
+            --panel: #2A2219;
+            --panel-line: #3C3122;
+            --paper: #F1E9D8;
+            --ink: #2B2318;
+            --thread: #C1683A;
+            --accept: #4C8B5B;
+            --reject: #B4523F;
+            --text: #ECE3D2;
+            --text-dim: #A69880;
+            --serif: "Iowan Old Style", Georgia, serif;
+            --mono: monospace;
+          }
+          * { box-sizing: border-box; margin: 0; padding: 0; }
+          body {
+            background: var(--void);
+            color: var(--text);
+            font-family: sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+          }
+          .fullscreen {
+            position: absolute;
+            inset: 0;
+            background: var(--void);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+          }
+          .fullscreen.hidden { display: none !important; }
+          .panel-box { max-width: 420px; }
+          .panel-box h1 { font-family: var(--serif); font-size: 32px; color: var(--thread); margin-bottom: 12px; }
+          .panel-box p { font-size: 14px; line-height: 1.5; color: var(--text-dim); margin-bottom: 20px; }
+          .primary-btn {
+            font-family: var(--serif);
+            font-size: 16px;
+            background: var(--thread);
+            color: #1c1108;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+          }
+          .primary-btn:hover { filter: brightness(1.1); }
+
+          /* Interface do Jogo */
+          #app {
+            display: none;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
+            padding: 12px;
+          }
+          .topbar { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 12px; padding: 8px 12px; background: var(--panel); border-radius: 6px; }
+          .brand-mark { color: var(--thread); font-weight: bold; font-family: var(--serif); font-size: 16px; }
+          .year-plaque { color: var(--text-dim); }
+
+          .stage-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 12px 0;
+          }
+          .character-tag { text-align: center; }
+          .character-tag .emoji { font-size: 28px; display: block; }
+          .character-tag .name { font-family: var(--serif); font-size: 16px; color: var(--text); font-weight: bold; }
+          .character-tag .role { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+
+          .card-stage {
+            width: min(320px, 90vw);
+            height: 220px;
+            background: var(--paper);
+            color: var(--ink);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+          }
+          .card-title { font-family: var(--mono); font-size: 10px; color: var(--thread); font-weight: bold; text-transform: uppercase; }
+          .card-body { font-family: var(--serif); font-size: 15px; line-height: 1.4; color: var(--ink); margin-top: 8px; }
+
+          .actions { display: flex; gap: 12px; width: min(320px, 90vw); }
+          .btn-choice {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: var(--mono);
+            font-size: 13px;
+          }
+          .btn-reject { background: var(--reject); color: #fff; }
+          .btn-accept { background: var(--accept); color: #fff; }
+
+          .dashboard { display: flex; gap: 6px; width: 100%; overflow-x: auto; }
+          .gauge { flex: 1; min-width: 55px; background: var(--panel); border: 1px solid var(--panel-line); border-radius: 6px; padding: 6px; text-align: center; }
+          .gauge-label { font-family: var(--mono); font-size: 9px; color: var(--text-dim); display: block; margin-bottom: 2px; }
+          .gauge-val { font-family: var(--mono); font-size: 12px; font-weight: bold; color: var(--text); }
+          .gauge-bar { height: 4px; background: #111; border-radius: 2px; margin-top: 4px; overflow: hidden; }
+          .gauge-fill { height: 100%; background: var(--accept); transition: width 0.3s; }
+        </style>
+      </head>
+      <body>
+
+        <!-- Tela Inicial -->
+        <div class="fullscreen" id="screen-start">
+          <div class="panel-box">
+            <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 1px; margin-bottom: 8px;">SIMULADOR DE GESTÃO ESG</div>
+            <h1>Trama</h1>
+            <p>Você é o novo gestor de uma marca de moda sustentável. Tome decisões anuais para manter o equilíbrio da empresa.</p>
+            <button class="primary-btn" id="btn-start">Assumir a Gestão</button>
+          </div>
+        </div>
+
+        <!-- Tela do Jogo -->
+        <div id="app">
+          <div class="topbar">
+            <span class="brand-mark">Trama</span>
+            <span class="year-plaque" id="year-display">ANO 1</span>
+          </div>
+
+          <div class="stage-wrap">
+            <div class="character-tag">
+              <span class="emoji" id="char-emoji">🌱</span>
+              <span class="name" id="char-name">Beatriz</span>
+              <span class="role" id="char-role">Consultora de Sustentabilidade</span>
+            </div>
+
+            <div class="card-stage">
+              <div class="card-title">PROPOSTA DA EQUIPE</div>
+              <div class="card-body" id="card-text">Instalar painéis solares na fábrica reduzirá custos de energia a longo prazo, mas exige alto investimento inicial.</div>
+              <div style="font-family: var(--mono); font-size: 10px; color: #777;">Decisão de Gestão</div>
+            </div>
+
+            <div class="actions">
+              <button class="btn-choice btn-reject" id="btn-reject">✕ RECUSAR</button>
+              <button class="btn-choice btn-accept" id="btn-accept">ACEITAR ✓</button>
+            </div>
+          </div>
+
+          <div class="dashboard" id="dashboard">
+            <div class="gauge"><span class="gauge-label">💰 Caixa</span><span class="gauge-val" id="val-cai">50</span><div class="gauge-bar"><div class="gauge-fill" id="fill-cai" style="width: 50%;"></div></div></div>
+            <div class="gauge"><span class="gauge-label">❤️ Marca</span><span class="gauge-val" id="val-mar">50</span><div class="gauge-bar"><div class="gauge-fill" id="fill-mar" style="width: 50%;"></div></div></div>
+            <div class="gauge"><span class="gauge-label">👥 Equipe</span><span class="gauge-val" id="val-equ">50</span><div class="gauge-bar"><div class="gauge-fill" id="fill-equ" style="width: 50%;"></div></div></div>
+            <div class="gauge"><span class="gauge-label">🏭 Operação</span><span class="gauge-val" id="val-ope">50</span><div class="gauge-bar"><div class="gauge-fill" id="fill-ope" style="width: 50%;"></div></div></div>
+            <div class="gauge"><span class="gauge-label">📈 Expansão</span><span class="gauge-val" id="val-cre">50</span><div class="gauge-bar"><div class="gauge-fill" id="fill-cre" style="width: 50%;"></div></div></div>
+          </div>
+        </div>
+
+        <script>
+          var year = 1;
+          var state = { cai: 50, mar: 50, equ: 50, ope: 50, cre: 50 };
+
+          var cards = [
+            { emoji: "🌱", name: "Beatriz", role: "Consultora de Sustentabilidade", text: "Instalar painéis solares na fábrica reduzirá custos de energia a longo prazo, mas exige alto investimento inicial.", accept: { cai: -15, ope: 10, mar: 5 }, reject: { cai: 5, ope: -5 } },
+            { emoji: "👥", name: "Marina", role: "Gestão de Pessoas", text: "A equipe está pedindo reajuste salarial e apoio de transporte sustentável. Aprovamos o pacote?", accept: { equ: 15, cai: -10, mar: 5 }, reject: { equ: -15, cai: 5 } },
+            { emoji: "🧵", name: "Fábio", role: "Fornecedor Têxtil", text: "Trocar todo o algodão convencional por algodão orgânico certificado eleva a qualidade da marca, mas encarece o produto.", accept: { mar: 15, cai: -10, cre: 5 }, reject: { mar: -10, cai: 5 } },
+            { emoji: "🏭", name: "Carlos", role: "Produção", text: "Implementar um sistema de reciclagem de água no tingimento de tecidos reduz o desperdício fabril.", accept: { ope: 12, cai: -8, mar: 5 }, reject: { ope: -8, cai: 2 } }
+          ];
+
+          var cardIdx = 0;
+
+          function updateUI() {
+            document.getElementById("year-display").innerText = "ANO " + year;
+            var keys = ["cai", "mar", "equ", "ope", "cre"];
+            keys.forEach(function(k) {
+              var val = Math.max(0, Math.min(100, state[k]));
+              document.getElementById("val-" + k).innerText = val;
+              document.getElementById("fill-" + k).style.width = val + "%";
+            });
+
+            var cur = cards[cardIdx % cards.length];
+            document.getElementById("char-emoji").innerText = cur.emoji;
+            document.getElementById("char-name").innerText = cur.name;
+            document.getElementById("char-role").innerText = cur.role;
+            document.getElementById("card-text").innerText = cur.text;
+          }
+
+          document.getElementById("btn-start").addEventListener("click", function() {
+            document.getElementById("screen-start").classList.add("hidden");
+            document.getElementById("app").style.display = "flex";
+            updateUI();
+          });
+
+          function nextTurn(isAccept) {
+            var cur = cards[cardIdx % cards.length];
+            var eff = isAccept ? cur.accept : cur.reject;
+            for (var k in eff) {
+              state[k] = Math.max(0, Math.min(100, state[k] + eff[k]));
+            }
+            year++;
+            cardIdx++;
+            updateUI();
+          }
+
+          document.getElementById("btn-accept").addEventListener("click", function() { nextTurn(true); });
+          document.getElementById("btn-reject").addEventListener("click", function() { nextTurn(false); });
+        </script>
+      </body>
+      </html>
+    </template>
+
+    <script>
+        // Injeta o conteúdo da template dentro do iframe sem quebrar o HTML/JS
+        document.addEventListener("DOMContentLoaded", function() {
+            var iframe = document.getElementById("game-iframe");
+            var template = document.getElementById("trama-game-template");
+            iframe.srcdoc = template.innerHTML;
+        });
+    </script>
+
 </body>
 </html>
