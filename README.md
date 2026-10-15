@@ -141,6 +141,7 @@ Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
 | Cauê Juvino | ceja@cesar.school |
 | João Bezerra | jbbn@cesar.school |
 | Jose Ernesto | jetd@cesar.school |
+| Luiz Carlos  | lcmpc@cesar.school |
 | Mariana Luna | maall@cesar.school |
 | Matheus Costa | mplc@cesar.school |
 | Pedro Correia | pca2@cesar.school |
