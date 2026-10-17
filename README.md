@@ -51,7 +51,7 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 ## Entregas e Histórico
 
 ### Entrega 01
-- [Relatório de Análise de Competidores](https://github.com/LopesLuna/Projeto-2/blob/main/Relat%C3%B3rio_de_An%C3%A1lise_de_Competidores.md) (Benchmark B2B)
+- [Relatório de Análise de Competidores](https://github.com/LopesLuna/Projeto-2/blob/main/Relat%C3%B3rio_de_An%C3%A1lise_de_Competidores.md) 
 
 ---
 
@@ -59,7 +59,7 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 
 **Status da Infraestrutura:**
 - Estrutura base em Django (Home, Equipe e Fale Conosco).
-- Migração de banco de dados concluída (SQLite $\rightarrow$ PostgreSQL).
+- Migração de banco de dados concluída (SQLite | PostgreSQL).
 
 **Links:**
 - [Site online](https://projeto-2-tarefas.onrender.com)
@@ -81,7 +81,7 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 - **H05:** Demonstração prática do retorno sobre investimento em práticas sustentáveis.
 
 **Acompanhamento:**
-- [Quadro de acompanhamento no Jira](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
+- [Quadro do Jira](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
 - [Screencast #3](https://youtu.be/ToFv0Hx3jq8) | [Screencast #4](https://youtu.be/422gJdXnZ8Y)
 
 ---
