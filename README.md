@@ -33,7 +33,7 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 - [x] Traduzir conceitos ESG para a realidade prática da confecção têxtil.
 - [x] Mapear e pontuar ações sustentáveis já realizadas pelas PMEs.
 - [x] Apresentar diagnósticos fundamentados em estatísticas e relatórios consolidados do setor.
-- [ ] Conectar a conformidade ESG a ganhos de mercado, crédito e reputação.
+- [x] Conectar a conformidade ESG a ganhos de mercado, crédito e reputação.
 
 ---
 
