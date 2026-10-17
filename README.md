@@ -62,10 +62,10 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 - Migração de banco de dados concluída (SQLite $\rightarrow$ PostgreSQL).
 
 **Links:**
-- [Aplicação online](https://projeto-2-tarefas.onrender.com)
-- [Demonstração do sistema (Screencast)](https://youtu.be/3Cm4KoyMyjQ)
-- [Explicação da arquitetura Django (Screencast)](https://youtu.be/5OAqTvpYoJA)
-- [Rastreamento de tarefas (GitHub Issues)](https://github.com/LopesLuna/Projeto-2/issues)
+- [Site online](https://projeto-2-tarefas.onrender.com)
+- [Screencast do sistema #1](https://youtu.be/3Cm4KoyMyjQ)
+- [Screencast da aplicação em Django #2](https://youtu.be/5OAqTvpYoJA)
+- [GitHub Issues](https://github.com/LopesLuna/Projeto-2/issues)
 
 ---
 
@@ -81,8 +81,8 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 - **H05:** Demonstração prática do retorno sobre investimento em práticas sustentáveis.
 
 **Acompanhamento:**
-- [Quadro de acompanhamento no Jira (Sprint 03)](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
-- Screencasts das atualizações: [Parte 1](https://youtu.be/ToFv0Hx3jq8) | [Parte 2](https://youtu.be/422gJdXnZ8Y)
+- [Quadro de acompanhamento no Jira](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
+- [Screencast #3](https://youtu.be/ToFv0Hx3jq8) | [Screencast #4](https://youtu.be/422gJdXnZ8Y)
 
 ---
 
