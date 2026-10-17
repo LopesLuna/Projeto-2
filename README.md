@@ -1,160 +1,112 @@
-# 🧵 Stitch
+# Stitch
 
-> **Desafio:** Como aumentar a percepção de valor e impulsionar a aplicação de práticas ESG nas pequenas e médias empresas (PMEs) do setor têxtil?
-
----
-
-## 📌 Visão Geral do Projeto
-
-**Stitch** é uma plataforma voltada para pequenas e médias empresas do setor têxtil que querem entender e melhorar sua atuação em ESG (*Environmental, Social and Governance*).
-
-Através de uma simulação interativa, a empresa responde a perguntas sobre sua situação real e a cenários hipotéticos, recebendo uma pontuação em quatro frentes — **Impacto Ambiental**, **Condições Trabalhistas**, **Governança/Transparência** e **Reputação/Financeiro** — cada uma embasada em dados reais do setor (Sebrae, União Europeia, Repórter Brasil, entre outras fontes), com o objetivo de mostrar onde a empresa já está bem e onde ela pode evoluir.
+Plataforma de diagnóstico e conscientização ESG (*Environmental, Social, and Governance*) para pequenas e médias empresas (PMEs) do setor têxtil.
 
 ---
 
-## ⚠️ Dores e Barreiras das PMEs Têxteis
+## Sobre o Projeto
 
-- **Falta de conhecimento:** muitas empresas já praticam ações sustentáveis no dia a dia, mas não sabem nomeá-las ou mensurá-las como ESG.
-- **Percepção de custo:** ESG costuma ser visto como um gasto extra, e não como um investimento com retorno.
-- **Greenwashing e desconfiança:** dificuldade em comprovar práticas sustentáveis de forma transparente.
-- **Impactos concretos do setor:** da geração de resíduo têxtil a condições de trabalho na cadeia de confecção — riscos que afetam reputação, contratos e acesso a crédito quando ignorados.
+Muitas PMEs têxteis já adotam ações sustentáveis no dia a dia, mas encontram barreiras para estruturar, mensurar ou reconhecer o valor dessas práticas. O **Stitch** resolve esse problema por meio de uma simulação interativa baseada em dados reais do setor (fontes como Sebrae, União Europeia e Repórter Brasil).
 
----
+A ferramenta avalia a empresa em quatro eixos principais:
 
-## 🎯 Objetivos do Projeto
+1. **Impacto Ambiental**
+2. **Condições Trabalhistas**
+3. **Governança e Transparência**
+4. **Reputação e Retorno Financeiro**
 
-- [x] Traduzir e desmistificar os pilares do ESG em linguagem simples, aplicada à realidade do setor têxtil.
-- [x] Ajudar empresas a reconhecer e mensurar práticas que já realizam no cotidiano.
-- [x] Embasar cada resultado da simulação com dados reais e verificados (não gerados por IA).
-- [ ] Evidenciar o retorno da adoção de ESG em reputação, acesso a capital e novos contratos.
+Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de evolução.
 
 ---
 
-## 🛠️ Tecnologias e Ferramentas
+## Problema e Oportunidade
+
+- **Falta de clareza:** Dificuldade em identificar e formalizar ações ESG já executadas na rotina.
+- **Percepção de custo:** Visão do ESG como despesa, e não como gerador de eficiência e novos negócios.
+- **Risco de reputação e mercado:** Aumento das exigências da cadeia de suprimentos em relação a resíduos e trabalho decente.
+- **Rastreabilidade:** Dificuldade de demonstrar transparência para clientes, investidores e parceiros.
+
+---
+
+## Objetivos
+
+- [x] Traduzir conceitos ESG para a realidade prática da confecção têxtil.
+- [x] Mapear e pontuar ações sustentáveis já realizadas pelas PMEs.
+- [x] Apresentar diagnósticos fundamentados em estatísticas e relatórios consolidados do setor.
+- [ ] Conectar a conformidade ESG a ganhos de mercado, crédito e reputação.
+
+---
+
+## Stack Tecnológica
 
 - **Backend:** Python, Django
-- **Banco de dados:** PostgreSQL (produção, via Render) / SQLite (ambiente local)
+- **Banco de Dados:** PostgreSQL (produção via Render) / SQLite (desenvolvimento local)
 - **Frontend:** HTML, CSS
-- **Deploy:** Render
-- **Gestão:** Jira, GitHub Issues
-- **Design:** Figma
+- **Hospedagem:** Render
+- **Gestão do Projeto:** Jira, GitHub Issues
+- **Prototipação:** Figma
 
 ---
 
-## Entrega 01
+## Entregas e Histórico
 
-- [Documento de análise de competidores](https://github.com/LopesLuna/Projeto-2/blob/main/Relat%C3%B3rio_de_An%C3%A1lise_de_Competidores.md) (benchmark de empresas B2B para PMEs)
-
----
-
-## Entrega 02
-
-### Infraestrutura
-
-- Aplicação Django com páginas Home, Equipe e Fale Conosco
-- Banco de dados migrado de SQLite para PostgreSQL
-
-### Link do Site
-
-[Acessar o Stitch](https://projeto-2-tarefas.onrender.com)
-
-### Screencast de uso do sistema
-
-[Link para o vídeo](https://youtu.be/3Cm4KoyMyjQ)
-
-### Screencast de explicação do código Django
-
-[Link para o vídeo](https://youtu.be/5OAqTvpYoJA)
-
-### Issue/Bug Tracker
-
-Utilizamos o GitHub Issues para rastrear as tarefas do desenvolvimento.
-
-[Ver issues](https://github.com/LopesLuna/Projeto-2/issues)
-
-![Issues](docs/issues.png)
-
-### Quadro da Sprint 02
-
-![Sprint 02](docs/sprint02.png)
+### Entrega 01
+- [Relatório de Análise de Competidores](https://github.com/LopesLuna/Projeto-2/blob/main/Relat%C3%B3rio_de_An%C3%A1lise_de_Competidores.md) (Benchmark B2B)
 
 ---
 
-## Entrega 03
+### Entrega 02
 
-### Histórias do produto
+**Status da Infraestrutura:**
+- Estrutura base em Django (Home, Equipe e Fale Conosco).
+- Migração de banco de dados concluída (SQLite $\rightarrow$ PostgreSQL).
 
-📄 [Histórias do Usuário](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias.md)
-
-### Histórias implementadas nesta entrega
-
-> 📌 **\[H01 - Explicação curta e objetiva do Stitch]**
->
-> **Como** \[Alguém com interesse nas empresas-alvo]  
-> **Quero** \[Uma explicação curta e objetiva do que se trata o Stitch]  
-> **Para** \[Entender rapidamente o valor da plataforma]
-
-> 📌 **\[H02 - Entender a posição ESG da empresa com dados comparativos]**
->
-> **Como** \[Dono de uma empresa-alvo que não sabe oque é ESG]  
-> **Quero** \[Visualizar dados comparativos e entender onde a empresa se encontra quanto às práticas verdes]  
-> **Para** \[Descobrir, sem conhecimento prévio, como meu negócio se posiciona frente ao mercado]
-
-> 📌 **\[H05 - Saber se o ESG vale a pena]**
->
-> **Como** \[Dono de uma empresa-alvo]  
-> **Quero** \[Saber se o ESG vale a pena aplicar (supre minhas necessidades)]  
-> **Para** \[Decidir com segurança se invisto em práticas sustentáveis]
-
-### Sprint 03 (Jira)
-
-🔗 [Acessar o backlog da Sprint 03: Board no Jira](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
-
-![Sprint 03](docs/sprint03.png)
-
-### Deploy das histórias
-
-🔗[Acessar Stitch (Aba de histórias de usuário)](https://projeto-2-tarefas.onrender.com/historias/)
-
-### Issue/Bug Tracker
-
-![Issues03](docs/issues03.png)
-
-### Screencast de explicação das atualizações
-
-🔗[link para o vídeo 1](https://youtu.be/ToFv0Hx3jq8)
-🔗[link para o vídeo 2](https://youtu.be/422gJdXnZ8Y)
+**Links:**
+- [Aplicação online](https://projeto-2-tarefas.onrender.com)
+- [Demonstração do sistema (Screencast)](https://youtu.be/3Cm4KoyMyjQ)
+- [Explicação da arquitetura Django (Screencast)](https://youtu.be/5OAqTvpYoJA)
+- [Rastreamento de tarefas (GitHub Issues)](https://github.com/LopesLuna/Projeto-2/issues)
 
 ---
 
-## Entrega 04
+### Entrega 03
 
-*(a preencher)*
+**Histórias de Usuário:**
+- [Documentação completa das Histórias](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias.md)
+- [Validação das histórias em ambiente de testes](https://projeto-2-tarefas.onrender.com/historias/)
+
+**Histórias contempladas nesta etapa:**
+- **H01:** Apresentação clara e objetiva sobre a proposta de valor do Stitch.
+- **H02:** Diagnóstico comparativo da posição ESG do negócio no setor.
+- **H05:** Demonstração prática do retorno sobre investimento em práticas sustentáveis.
+
+**Acompanhamento:**
+- [Quadro de acompanhamento no Jira (Sprint 03)](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
+- Screencasts das atualizações: [Parte 1](https://youtu.be/ToFv0Hx3jq8) | [Parte 2](https://youtu.be/422gJdXnZ8Y)
 
 ---
 
-## ✒️ Equipe
+### Entrega 04
+*(Em desenvolvimento)*
+
+---
+
+## Equipe
 
 ### Ciência da Computação
-
-| Nome completo | E-mail School |
-|---|---|
-| Cauê Juvino | ceja@cesar.school |
-| João Bezerra | jbbn@cesar.school |
-| Jose Ernesto | jetd@cesar.school |
-| Luiz Carlos  | lcmpc@cesar.school |
-| Mariana Luna | maall@cesar.school |
-| Matheus Costa | mplc@cesar.school |
-| Pedro Correia | pca2@cesar.school |
-| Rodrigo Fernandes | rfvb@cesar.school |
+- Cauê Juvino — `ceja@cesar.school`
+- João Bezerra — `jbbn@cesar.school`
+- Jose Ernesto — `jetd@cesar.school`
+- Luiz Carlos — `lcmpc@cesar.school`
+- Mariana Luna — `maall@cesar.school`
+- Matheus Costa — `mplc@cesar.school`
+- Pedro Correia — `pca2@cesar.school`
+- Rodrigo Fernandes — `rfvb@cesar.school`
 
 ### Design
-
-| Nome completo | E-mail School |
-|---|---|
-| Henri Kleiner | hkk@cesar.school |
-| Lis Bettini | lpbm@cesar.school |
-| Olívia Nóbrega | onb@cesar.school |
-| Elis Melo | easmm@cesar.school |
-| Guilherme Quintas | gqs@cesar.school |
-| Matheus Enrico | mevsr@cesar.school |
+- Henri Kleiner — `hkk@cesar.school`
+- Lis Bettini — `lpbm@cesar.school`
+- Olívia Nóbrega — `onb@cesar.school`
+- Elis Melo — `easmm@cesar.school`
+- Guilherme Quintas — `gqs@cesar.school`
+- Matheus Enrico — `mevsr@cesar.school`
