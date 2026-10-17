@@ -6,7 +6,7 @@ Plataforma de diagnóstico e conscientização ESG (*Environmental, Social, and 
 
 ## Sobre o Projeto
 
-Muitas PMEs têxteis já adotam ações sustentáveis no dia a dia, mas encontram barreiras para estruturar, mensurar ou reconhecer o valor dessas práticas. O **Stitch** resolve esse problema por meio de uma simulação interativa baseada em dados reais do setor (fontes como Sebrae, União Europeia e Repórter Brasil).
+Muitas PMEs têxteis já adotam ações sustentáveis no dia a dia, mas encontram barreiras para estruturar, mensurar ou reconhecer o valor dessas práticas. O **Stitch** resolve esse problema por meio de uma simulação interativa baseada em dados reais do setor, com fontes credibilizadas e verídicas.
 
 A ferramenta avalia a empresa em quatro eixos principais:
 
