@@ -73,7 +73,6 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 
 **Histórias de Usuário:**
 - [Documentação completa das Histórias](https://github.com/LopesLuna/Projeto-2/blob/main/docs/historias.md)
-- [Validação das histórias em ambiente de testes](https://projeto-2-tarefas.onrender.com/historias/)
 
 **Histórias contempladas nesta etapa:**
 - **H01:** Apresentação clara e objetiva sobre a proposta de valor do Stitch.
