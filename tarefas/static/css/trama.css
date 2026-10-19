@@ -1,8 +1,8 @@
 :root{
-  --void:        #171310;
-  --void-2:      #1E1913;
-  --panel:       #2A2219;
-  --panel-line:  #3C3122;
+  --void:        #f4f7f4;
+  --void-2:      #ffffff;
+  --panel:       #ffffff;
+  --panel-line:  #d2dad2;
   --paper:       #F1E9D8;
   --paper-edge:  #DDCBA6;
   --ink:         #2B2318;
@@ -27,15 +27,9 @@
 }
 
 *{ box-sizing: border-box; }
-html,body{ height:100%; }
 body{
-  margin:0;
-  background:
-    radial-gradient(circle at 50% -10%, #2a2117 0%, var(--void) 55%),
-    var(--void);
   color: var(--text);
   font-family: var(--sans);
-  overflow:hidden;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -43,13 +37,6 @@ body{
   *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
 
-.grid-veil{
-  position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image:
-    repeating-linear-gradient(45deg, rgba(193,104,58,0.05) 0 2px, transparent 2px 14px),
-    repeating-linear-gradient(-45deg, rgba(193,104,58,0.05) 0 2px, transparent 2px 14px);
-  opacity:0.5;
-}
 
 #app{ position:relative; z-index:1; height:100%; display:flex; flex-direction:column; }
 
