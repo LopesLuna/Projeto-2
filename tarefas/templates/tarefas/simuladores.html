@@ -417,8 +417,7 @@ function freshState(){
     deck: shuffle(QUESTIONS),
     index: 0,
     history: [],
-    currentQuestion: null,
-    pendingChoice: null
+    currentQuestion: null
   };
 }
 var S = freshState();
@@ -462,7 +461,6 @@ var tagRole = document.getElementById("tag-role");
 var progressPlaque = document.getElementById("progress-plaque");
 var progressFill = document.getElementById("progress-fill");
 var dashboard = document.getElementById("dashboard");
-var characterTag = document.getElementById("character-tag");
 
 function buildGauges(){
   dashboard.innerHTML = "";
@@ -564,8 +562,6 @@ function chooseOption(q, opt, idx){
   optionsStack.style.display = "none";
   revealCard.style.display = "block";
   revealBody.textContent = q.dado;
-
-  S.pendingChoice = true;
 }
 
 function continueAfterReveal(){
