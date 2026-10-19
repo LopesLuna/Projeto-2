@@ -2,33 +2,65 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Stitch — Projeto 2, Grupo 13{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stitch - Sustentabilidade</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 0 20px 40px; color: #222; }
-        nav { display: flex; gap: 20px; padding: 16px 0; border-bottom: 2px solid #eee; margin-bottom: 24px; }
-        nav a { text-decoration: none; color: #2e6fd9; font-weight: bold; }
-        nav a:hover { text-decoration: underline; }
-        h1 { color: #222; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
-        th { background-color: #f0f0f0; }
-        .status-pendente { color: #b8860b; }
-        .status-em_andamento { color: #1e6fd9; }
-        .status-concluida { color: #2e8b57; }
-        .btn { display: inline-block; margin-top: 12px; padding: 8px 16px; background: #2e6fd9; color: white; text-decoration: none; border-radius: 4px; border: none; cursor: pointer; }
-        label { display: block; margin-top: 12px; font-weight: bold; }
-        input, textarea, select { width: 100%; padding: 6px; margin-top: 4px; box-sizing: border-box; }
-        .card { border: 1px solid #ddd; border-radius: 6px; padding: 16px; margin-bottom: 16px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
+        body { background-color: #f8f9fa; color: #1e392a; }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .logo { font-size: 24px; font-weight: bold; color: #1e392a; text-decoration: none; }
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #4a5d4e;
+            font-size: 15px;
+        }
+        nav a:hover, nav a.active {
+            text-decoration: underline;
+            color: #1e392a;
+        }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+
+        .card {
+            background-color: #ffffff;
+            border: 2px solid #dcdcdc;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .card-verde { background-color: #e3ebe4; border: none; }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'equipe' %}">Equipe</a>
-        <a href="{% url 'fale_conosco' %}">Fale Conosco</a>
-        <a href="{% url 'historias' %}">Histórias de Usuário</a>
-    </nav>
 
-    {% block content %}{% endblock %}
+    <!-- Header Fixo do Wireframe -->
+    <header>
+        <a href="{% url 'home' %}" class="logo">🌿 Stitch</a>
+        <nav>
+            <a href="{% url 'home' %}">Início</a>
+            <a href="{% url 'simulacao' %}">Simulação</a>
+            <a href="{% url 'quem_somos' %}">Quem Somos</a>
+            <a href="{% url 'contato' %}">Entre em Contato</a>
+        </nav>
+    </header>
+
+    <!-- Onde o conteúdo de cada página vai entrar -->
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
 </body>
 </html>

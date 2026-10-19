@@ -1,11 +1,39 @@
-{% extends 'tarefas/base.html' %}
-{% block title %}Home — Stitch{% endblock %}
+{% extends 'core/base.html' %}
+
 {% block content %}
-<h1>Stitch</h1>
+<style>
+    .grid-home {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+    }
+    .box-grande { min-height: 250px; }
+</style>
 
-<h2>Sobre o Projeto</h2>
-<p><strong>Cliente:</strong> Disciplina de Projetos 2 — CESAR School</p>
-<p><strong>Projeto:</strong> Stitch é uma plataforma voltada para pequenas e médias empresas do setor têxtil que querem entender e melhorar sua atuação em ESG (Ambiental, Social e Governança). Através de uma simulação interativa, a empresa responde perguntas sobre sua situação real e cenários hipotéticos, recebendo uma pontuação em quatro frentes — Impacto Ambiental, Condições Trabalhistas, Governança/Transparência e Reputação/Financeiro — cada uma embasada em dados reais do setor, com o objetivo de mostrar onde a empresa já está bem e onde pode evoluir.</p>
+<div class="grid-home">
+    <!-- Bloco Superior Esquerdo -->
+    <div class="card box-grande">
+        <h2>PROPOSTA DO SITE / FRASE DE IMPACTO</h2>
+    </div>
 
-<a class="btn" href="{% url 'fale_conosco' %}">Fale Conosco</a>
+    <!-- Bloco Superior Direito (Verde) -->
+    <div class="card card-verde box-grande">
+        <!-- Espaço para ilustração ou banner -->
+    </div>
+
+    <!-- Bloco Inferior Esquerdo -->
+    <div class="card box-grande">
+        <h3>IMAGEM SOBRE IMPACTO DA FALTA DE ALGUMA PRÁTICA ESG</h3>
+    </div>
+
+    <!-- Bloco Inferior Direito (Dividido) -->
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="card card-verde" style="height: 140px;">
+            <p>🌿 [Ícone / Animação Stitch]</p>
+        </div>
+        <div class="card card-verde" style="height: 100px;">
+            <h3>Informações básicas ESG</h3>
+        </div>
+    </div>
+</div>
 {% endblock %}
