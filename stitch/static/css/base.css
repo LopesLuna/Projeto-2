@@ -1,0 +1,124 @@
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
+body { background-color: #f8f9fa; color: #1e392a; }
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+}
+.logo { font-size: 24px; font-weight: bold; color: #1e392a; text-decoration: none; }
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #4a5d4e;
+    font-size: 15px;
+}
+nav a:hover, nav a.active {
+    text-decoration: underline;
+    color: #1e392a;
+}
+
+.container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+
+.card {
+    background-color: #ffffff;
+    border: 2px solid #dcdcdc;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.card-verde { background-color: #e3ebe4; border: none; }
+
+/* HOME */
+.grid-home {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.box-grande {
+    min-height: 250px;
+}
+
+.coluna-dividida {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.box-medio {
+    height: 140px;
+}
+
+.box-pequeno {
+    height: 100px;
+}
+
+/* CONTATE-NOS */
+
+.msg-sucesso {
+    color: #2e8b57;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.form-contato label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #1e392a;
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.radio-item label {
+    margin-top: 0;
+}
+
+#div_assunto_outro {
+    display: none;
+}
+
+.form-contato input[type="text"],
+.form-contato input[type="email"],
+.form-contato select,
+.form-contato textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+}
+
+.btn-enviar {
+    background-color: #1e392a;
+    color: #ffffff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.btn-enviar:hover {
+    background-color: #4a5d4e;
+}

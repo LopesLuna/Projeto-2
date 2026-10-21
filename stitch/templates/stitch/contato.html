@@ -1,0 +1,90 @@
+{% extends 'stitch/base.html' %}
+{% block title %}Fale Conosco — Stitch{% endblock %}
+{% block content %}
+<h1>Fale Conosco</h1>
+<p>Tem dúvidas sobre os simuladores ou ESG? Fale com a gente.</p>
+
+{% if enviado %}
+<p class="msg-sucesso">Mensagem enviada com sucesso! Entraremos em contato em breve.</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Representa alguma empresa?</label>
+    <div class="radio-group">
+        <div class="radio-item">
+            <input type="radio" id="empresa_sim" name="tem_empresa" value="sim" onchange="toggleEmpresa()" checked>
+            <label for="empresa_sim">Sim</label>
+        </div>
+        <div class="radio-item">
+            <input type="radio" id="empresa_nao" name="tem_empresa" value="nao" onchange="toggleEmpresa()">
+            <label for="empresa_nao">Não, sou apenas visitante</label>
+        </div>
+    </div>
+
+    <div id="div_empresa">
+        <label for="input_empresa">Nome da Empresa</label>
+        <input type="text" name="empresa" id="input_empresa" maxlength="150">
+    </div>
+
+    <label for="nome">Seu Nome</label>
+    <input type="text" name="nome" id="nome" required>
+
+    <label for="email">E-mail para contato</label>
+    <input type="email" name="email" id="email" required>
+
+    <label for="telefone">Telefone/Whatsapp</label>
+    <input type="text" name="telefone" id="telefone" maxlength="20">
+
+    <label for="assunto">Assunto</label>
+    <select name="assunto" id="assunto" required>
+        <option value="" disabled selected>Indique motivo para contato</option>
+        <option value="Dúvida sobre os Simuladores">Dúvida sobre os Simuladores</option>
+        <option value="Privacidade e Uso de Dados">Privacidade e Uso de Dados</option>
+        <option value="Perguntas relacionadas a ESG">Perguntas relacionadas a ESG</option>
+        <option value="outros">Outros</option>
+    </select>
+
+    <div id="div_assunto_outro">
+        <label for="input_assunto_outro">Sobre:</label>
+        <input type="text" name="assunto_outro" id="input_assunto_outro" maxlength="100">
+    </div>
+
+    <label for="mensagem">Mensagem</label>
+    <textarea name="mensagem" id="mensagem" rows="4" required></textarea>
+
+    <button class="btn-enviar" type="submit">Enviar</button>
+</form>
+
+<script>
+    function toggleEmpresa(){
+        var divEmpresa = document.getElementbyId('div_empresa');
+        var inputEmpresa = document.getElementById('input_empresa');
+        var simSelecionado = document.getElementById('empresa_sim').checked;
+
+        if (simSelecionado) {
+            divEmpresa.style.display = 'block';
+        } else {
+            divEmpresa.style.display = 'none';
+            inputEmpresa.value = '';
+        }
+    }
+
+    function toggleAssunto(){
+        var selectAssunto = document.getElementbyId('assunto');
+        var divAssuntoOutro = document.getElementById('div_assunto_outro');
+        var inputAssuntoOutro = document.getElementbyId('input_assunto_outro');
+
+        if (selectAssunto.value === 'Outros') {
+            divAssuntoOutro.style.display = 'block';
+            inputAssuntoOutro.required = true;
+        } else {
+            divAssuntoOutro.style.display = 'none';
+            inputAssuntoOutro.required = false;
+            inputAssuntoOutro.value = '';
+        }
+    }
+</script>
+
+{% endblock %}
