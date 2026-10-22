@@ -53,7 +53,7 @@
   border-radius: 3px; padding: 6px 10px; font-family: var(--mono); font-size: 11px; cursor:pointer;
 }
 .icon-btn:hover{ color: var(--text); border-color: var(--thread-dim); }
-.icon-btn:focus-visible, button:focus-visible, #trama-came-container .card:focus-visible{ outline: 2px solid var(--thread); outline-offset: 2px; }
+.icon-btn:focus-visible, button:focus-visible, #trama-game-container .card:focus-visible{ outline: 2px solid var(--thread); outline-offset: 2px; }
 
 .progress-track{ height:3px; background:var(--panel-line); margin: 0 20px; border-radius: 2px; overflow:hidden; flex:0 0 auto; }
 .progress-fill{ height:100%; background: var(--thread); transition: width .4s ease; }
@@ -77,7 +77,7 @@
   letter-spacing:0.04em; 
 }
 
-#trama-came-container .card-stage{ 
+#trama-game-container .card-stage{ 
   position: relative; 
   width: min(400px, 94vw); 
   flex: 0 0 auto; 
@@ -92,25 +92,25 @@
   padding: 62px 24px 22px; display:flex; 
   flex-direction:column; min-height: 220px;
 }
-#trama-came-container .card.entering{ animation: cardIn 0.4s cubic-bezier(.2,.8,.2,1); }
+#trama-game-container .card.entering{ animation: cardIn 0.4s cubic-bezier(.2,.8,.2,1); }
 @keyframes cardIn{ from{ opacity:0; transform: translateY(18px) scale(0.97); } to{ opacity:1; transform: translateY(0) scale(1); } }
 
-#trama-came-container .card .tab{
+#trama-game-container .card .tab{
   position:absolute; top:0; left: 18px; right: 18px; height: 44px; background: var(--ink);
   border-radius: 0 0 8px 8px; color: var(--paper); display:flex; align-items:center; gap:10px;
   padding: 0 14px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.03em;
 }
-#trama-came-container .card .tab .tab-emoji{ font-size:17px; }
-#trama-came-container .card .tab .tab-text b{ display:block; font-family: var(--serif); font-size:13px; letter-spacing:0; }
+#trama-game-container .card .tab .tab-emoji{ font-size:17px; }
+#trama-game-container .card .tab .tab-text b{ display:block; font-family: var(--serif); font-size:13px; letter-spacing:0; }
 
-#trama-came-container .card .quote{ flex:1; display:flex; align-items:center; font-family: var(--serif); font-size: 17px; line-height: 1.45; color: var(--ink); }
+#trama-game-container .card .quote{ flex:1; display:flex; align-items:center; font-family: var(--serif); font-size: 17px; line-height: 1.45; color: var(--ink); }
 
-#trama-came-container .card .kind-flag{
+#trama-game-container .card .kind-flag{
   position:absolute; top:50px; right: 14px; font-family: var(--mono); font-size:9px; letter-spacing:0.08em;
   border: 1px solid var(--thread-dim); color: var(--thread-dim); padding: 2px 6px; border-radius: 2px; text-transform: uppercase;
   background: var(--paper);
 }
-#trama-came-container .card .kind-flag.hip{ color: var(--thread); border-color: var(--thread); }
+#trama-game-container .card .kind-flag.hip{ color: var(--thread); border-color: var(--thread); }
 
 /* ------------------------------------------------------------- OPTIONS */
 .options-stack{ width: min(400px, 94vw); display:flex; flex-direction:column; gap: 8px; margin-top: 14px; flex: 0 0 auto; }
@@ -195,8 +195,8 @@
 
 @media (max-width: 420px){
   .panel-box h1{ font-size: 26px; }
-  #trama-came-container .card{ padding: 56px 18px 18px; }
-  #trama-came-container .card .quote{ font-size: 15.5px; }
+  #trama-game-container .card{ padding: 56px 18px 18px; }
+  #trama-game-container .card .quote{ font-size: 15.5px; }
   .dashboard{ flex-wrap: wrap; }
   .gauge{ min-width: 44%; }
 }
