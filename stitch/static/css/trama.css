@@ -63,28 +63,45 @@ body{
 /* ---------------------------------------------------------------- STAGE */
 .stage-wrap{ flex: 1 1 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; min-height:0; padding: 10px 16px; overflow-y:auto; }
 
-.character-tag{ text-align:center; margin-bottom: 6px; flex: 0 0 auto; }
-.character-tag .emoji{ font-size: 28px; display:block; }
-.character-tag .name{ font-family: var(--serif); font-size: 15px; color: var(--text); margin-top:2px; }
-.character-tag .role{ font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing:0.04em; }
+.character-tag{ text-align:center; 
+  margin-bottom: 6px; flex: 0 0 auto; }
 
-.card-stage{ position: relative; width: min(400px, 94vw); flex: 0 0 auto; }
-
-.card{
-  position:relative; background: var(--paper); color: var(--ink);
-  border-radius: 10px; box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 2px 0 var(--paper-edge) inset;
-  padding: 62px 24px 22px; display:flex; flex-direction:column; min-height: 220px;
+.character-tag .emoji{ 
+  font-size: 28px; 
+  display:block; 
 }
-.card.entering{ animation: cardIn 0.4s cubic-bezier(.2,.8,.2,1); }
+
+.character-tag .name{ font-family: var(--serif); 
+  font-size: 15px; color: var(--text); margin-top:2px; }
+
+.character-tag .role{ 
+  font-family: var(--mono); font-size: 10px; color: var(--text-dim); 
+  letter-spacing:0.04em; 
+}
+
+#trama-game-container .card-stage{ 
+  position: relative; 
+  width: min(400px, 94vw); 
+  flex: 0 0 auto; 
+}
+
+#trama-game-container {
+  position:relative; 
+  background: var(--paper); color: var(--ink);
+  border-radius: 10px; box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 2px 0 var(--paper-edge) inset;
+  padding: 62px 24px 22px; display:flex; 
+  flex-direction:column; min-height: 220px;
+}
+#trama-game-container .card.entering{ animation: cardIn 0.4s cubic-bezier(.2,.8,.2,1); }
 @keyframes cardIn{ from{ opacity:0; transform: translateY(18px) scale(0.97); } to{ opacity:1; transform: translateY(0) scale(1); } }
 
-.card .tab{
+#trama-game-container .card .tab{
   position:absolute; top:0; left: 18px; right: 18px; height: 44px; background: var(--ink);
   border-radius: 0 0 8px 8px; color: var(--paper); display:flex; align-items:center; gap:10px;
   padding: 0 14px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.03em;
 }
-.card .tab .tab-emoji{ font-size:17px; }
-.card .tab .tab-text b{ display:block; font-family: var(--serif); font-size:13px; letter-spacing:0; }
+#trama-game-container .card .tab .tab-emoji{ font-size:17px; }
+#trama-game-container .card .tab .tab-text b{ display:block; font-family: var(--serif); font-size:13px; letter-spacing:0; }
 
 .card .quote{ flex:1; display:flex; align-items:center; font-family: var(--serif); font-size: 17px; line-height: 1.45; color: var(--ink); }
 

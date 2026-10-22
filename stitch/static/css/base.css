@@ -159,12 +159,17 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    grid-row: 1/3;
+    grid-column: 2;
+    height: 100%;
 }
 
-.stacked-column .card-top {
-    flex: 1.2;
+.stacked-column .card-top{
+    height: 280px;
+    flex: none;
 }
 
+.stacked-column .card-middle,
 .stacked-column .card-bottom {
     flex: 1;
 }

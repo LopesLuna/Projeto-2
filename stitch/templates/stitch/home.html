@@ -1,42 +1,32 @@
 {% extends 'stitch/base.html' %}
-
+{% load static %}
 {% block content %}
-<div class="grid-hero">
-    <div class="card card-white">
-        <p class="wireframe-text">
-            PROPOSTA DO<br>
-            SITE/FRASE DE<br>
-            IMPACTO
-        </p>
-    </div>
-    
-    <div class="card card-sage"></div>
-
-    <div class="card card-white">
-        <p class="wireframe-text">
-            IMAGEM SOBRE<br>
-            IMPACTO DA<br>
-            FALTA DE ALGUMA<br>
-            PRÁTICA ESG
-        </p>
-    </div>
-    
-    <!-- Coluna Direita Agrupada -->
-    <div class="stacked-column">
-        <!-- Card do Logo -->
-        <div class="card card-sage card-top">
-            <svg class="emblem-icon" viewBox="0 0 100 120" fill="none" xmlns="http://w3.org">
-                <path d="M 45 15 C 10 35, 5 80, 38 102 C 55 112, 75 105, 75 80 C 75 60, 40 50, 45 15 Z" fill="#2d6a4f"/>
-                <line x1="82" y1="20" x2="22" y2="105" stroke="#2b4c38" stroke-width="3" stroke-linecap="round"/>
-                <path d="M 82 20 C 95 35, 88 85, 45 100 C 30 105, 18 95, 22 80" stroke="#2d6a4f" stroke-width="2" fill="none"/>
-            </svg>
-        </div>
-        <!-- Card de Infos Básicas -->
-        <div class="card card-sage card-bottom">
-            <p class="wireframe-text-small">
-                Informações<br>básicas ESG
+<section class="main-section" id="inicio">
+    <div class="grid-hero">
+        <div class="card card-white">
+            <p class="wireframe-text">
+                PROPOSTA DO<br>SITE/FRASE DE<br>IMPACTO
             </p>
         </div>
+        <div class="card card-white">
+            <p class="wireframe-text">
+                IMAGEM SOBRE<br>IMPACTO DA<br>FALTA DE ALGUMA<br>PRÁTICA ESG
+            </p>
+        </div>
+        <div class="stacked-column">
+            <div class="card card-sage card-top"></div>
+            
+            <div class="card card-sage">
+                <img src="{% static 'img/logo.png' %}" alt="Logo" style="width: 55px !important; height: auto !important;">
+            </div>
+            
+            <div class="card card-sage card-bottom">
+                <p class="wireframe-text-small">
+                    Informações<br>básicas ESG
+                </p>
+            </div>
+        </div>
+
     </div>
-</div>
+</section>
 {% endblock %}
