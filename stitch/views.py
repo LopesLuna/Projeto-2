@@ -14,7 +14,6 @@ def quem_somos(request):
 def simuladores(request):
     return render(request, 'stitch/simuladores.html')
 
-
 def contato(request):
     enviado = False
     if request.method == 'POST':

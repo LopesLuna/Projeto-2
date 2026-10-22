@@ -1,124 +1,452 @@
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
-body { background-color: #f8f9fa; color: #1e392a; }
+/* ==========================================================================
+   1. RESETS E CONFIGURAÇÕES GERAIS
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-header {
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #ffffff;
+    color: #2b4c38;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    padding: 24px 32px;
+}
+
+/* ==========================================================================
+   2. CABEÇALHO GLOBAL (HEADER & NAVEGAÇÃO)
+   ========================================================================== */
+#global-header {
+    position: sticky;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 100;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
-}
-.logo { font-size: 24px; font-weight: bold; color: #1e392a; text-decoration: none; }
-nav a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #4a5d4e;
-    font-size: 15px;
-}
-nav a:hover, nav a.active {
-    text-decoration: underline;
-    color: #1e392a;
+    padding: 24px 0;
+    border-bottom: 1px solid #f0f2f0;
+    width: 100%;
+    margin-bottom: 32px;
 }
 
-.container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-
-.card {
-    background-color: #ffffff;
-    border: 2px solid #dcdcdc;
-    border-radius: 20px;
-    padding: 30px;
+.logo-link {
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #2b4c38;
 }
-.card-verde { background-color: #e3ebe4; border: none; }
 
-/* HOME */
-.grid-home {
+.logo-icon {
+    width: 28px;
+    height: 34px;
+}
+
+.logo-text {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #2b4c38;
+    letter-spacing: -0.5px;
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    gap: 28px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #4a5d4e;
+    font-size: 14px;
+    font-weight: 500;
+    padding-bottom: 4px;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover, 
+.nav-link.active {
+    color: #2b4c38;
+    border-bottom: 2px solid #2b4c38;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   3. ESTRUTURA DE SEÇÕES E CARDS BASE
+   ========================================================================== */
+.main-section {
+    padding: 40px 0 60px 0;
+    border-bottom: 1px dashed #e2e8e2;
+    width: 100%;
+}
+
+.main-section:last-of-type {
+    border-bottom: none;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 500;
+    color: #2b4c38;
+    margin-bottom: 36px;
+}
+
+.card {
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+    text-align: center;
+    box-shadow: none !important;
+}
+
+.card-white {
+    background-color: #ffffff;
+    border: 2px solid #dce2dc;
+}
+
+.card-sage {
+    background-color: #e2e8e2;
+}
+
+.wireframe-text {
+    color: #2b5b3f;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.wireframe-text-small {
+    color: #2b5b3f;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* ==========================================================================
+   4. SEÇÃO 1: INÍCIO (HERO GRID)
+   ========================================================================== */
+.grid-hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    grid-template-rows: 280px 320px;
+    gap: 24px;
+    width: 100%;
 }
 
-.box-grande {
-    min-height: 250px;
-}
-
-.coluna-dividida {
+.stacked-column {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
 }
 
-.box-medio {
-    height: 140px;
+.stacked-column .card-top {
+    flex: 1.2;
 }
 
-.box-pequeno {
+.stacked-column .card-bottom {
+    flex: 1;
+}
+
+.emblem-icon {
+    width: 100px;
     height: 100px;
 }
 
-/* CONTATE-NOS */
-
-.msg-sucesso {
-    color: #2e8b57;
-    font-weight: bold;
-    margin-bottom: 20px;
+/* ==========================================================================
+   5. SEÇÃO 2: ENTENDA ESG (MOCKUP DE GRÁFICO)
+   ========================================================================== */
+.entenda-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 16px;
 }
 
-.form-contato label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-    color: #1e392a;
+.entenda-header h3 {
+    font-size: 22px;
+    font-weight: 500;
+    color: #2b4c38;
+    text-align: center;
 }
 
-.radio-group {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
+.grid-entenda {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    min-height: 300px;
 }
 
-.radio-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.radio-item label {
-    margin-top: 0;
-}
-
-#div_assunto_outro {
-    display: none;
-}
-
-.form-contato input[type="text"],
-.form-contato input[type="email"],
-.form-contato select,
-.form-contato textarea {
+.chart-mockup {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #dcdcdc;
-    border-radius: 8px;
-    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
 }
 
-.btn-enviar {
-    background-color: #1e392a;
-    color: #ffffff;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 20px;
-    font-weight: bold;
+.chart-bars {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100%;
+    height: 180px;
+    padding-top: 20px;
+    border-bottom: 2px solid #c2d0c2;
+}
+
+.bar-group {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.bar {
+    width: 28px;
+    border-radius: 6px 6px 0 0;
+    position: relative;
+}
+
+.bar-light { background-color: #88b090; }
+.bar-dark { background-color: #2b5b3f; }
+
+.bar-badge {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 700;
+    color: #2b4c38;
+    background: #e2e8e2;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.informative-text {
+    color: #6b8271;
+    font-weight: 500;
     font-size: 16px;
 }
 
-.btn-enviar:hover {
-    background-color: #4a5d4e;
+/* ==========================================================================
+   6. SEÇÃO 3: SIMULAÇÕES E IFRAME DO JOGO TRAMA
+   ========================================================================== */
+.simulacoes-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.sim-card {
+    position: relative;
+    min-height: 180px;
+    padding: 40px 24px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #2b5b3f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-card {
+    padding: 0;
+    overflow: hidden;
+    height: 650px;
+    border-radius: 20px;
+}
+
+.game-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 18px;
+}
+
+.sticky-tag {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background-color: #9bbcd0;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 18px;
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+}
+
+.simular-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.connector-line {
+    width: 2px;
+    height: 40px;
+    background-color: #88b090;
+}
+
+.btn-simular {
+    background-color: #ffffff;
+    border: 2px solid #2b4c38;
+    color: #2b4c38;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 14px 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-simular:hover {
+    background-color: #2b4c38;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   7. SEÇÃO 4: QUEM SOMOS (GRID DA EQUIPE)
+   ========================================================================== */
+.team-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.team-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.team-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.avatar-box {
+    width: 90px;
+    height: 90px;
+    background-color: #e2e8e2;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-box svg {
+    width: 40px;
+    height: 40px;
+    fill: #7a9a82;
+}
+
+.member-name {
+    font-size: 14px;
+    color: #2b4c38;
+    font-weight: 500;
+}
+
+.team-subtitle {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2b4c38;
+    margin-top: 16px;
+}
+
+/* ==========================================================================
+   8. SEÇÃO 5: ENTRE EM CONTATO
+   ========================================================================== */
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 40px 0;
+}
+
+.pill-button {
+    background-color: #e2e8e2;
+    color: #2b4c38;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 16px 48px;
+    border-radius: 16px;
+    text-align: center;
+    border: none;
+    width: 340px;
+    letter-spacing: 0.5px;
+}
+
+.pill-email {
+    background-color: #e2e8e2;
+    color: #2b4c38;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 14px 48px;
+    border-radius: 16px;
+    text-align: center;
+    text-decoration: none;
+    width: 340px;
+    display: inline-block;
+}
+
+/* ==========================================================================
+   9. RESPONSIVIDADE (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 820px) {
+    #global-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .nav-menu ul {
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .grid-hero, 
+    .grid-entenda, 
+    .simulacoes-cards, 
+    .entenda-header {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .game-card {
+        height: 600px;
+    }
+    .pill-button, 
+    .pill-email {
+        width: 100%;
+        max-width: 320px;
+    }
 }

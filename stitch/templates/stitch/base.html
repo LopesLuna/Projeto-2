@@ -6,30 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stitch - Sustentabilidade</title>
 
-    {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/trama.css' %}">
+    {% block extra_css %}
     {% endblock %}
-
 </head>
 <body>
+    <div class="container">
+        <header id="global-header">
+            <a href="{% url 'home' %}" class="logo-link">
+                <span class="logo-text">Stitch</span>
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="{% url 'home' %}" class="nav-link active">Início</a></li>
+                    <li><a href="{% url 'entenda_esg' %}" class="nav-link">Entenda ESG</a></li>
+                    <li><a href="{% url 'simuladores' %}" class="nav-link">Simulações</a></li>
+                    <li><a href="{% url 'quem_somos' %}" class="nav-link">Quem Somos?</a></li>
+                    <li><a href="{% url 'contato' %}" class="nav-link">Entre em Contato</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <!-- Header Fixo do Wireframe -->
-    <header>
-        <a href="{% url 'home' %}" class="logo">🌿 Stitch</a>
-        <nav>
-            <a href="{% url 'home' %}">Início</a>
-            <a href="{% url 'simulacao' %}">Simulação</a>
-            <a href="{% url 'quem_somos' %}">Quem Somos</a>
-            <a href="{% url 'contato' %}">Entre em Contato</a>
-        </nav>
-    </header>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
 
-    <!-- Onde o conteúdo de cada página vai entrar -->
-    <main class="container">
-        {% block content %}
-        {% endblock %}
-    </main>
+    </div>
 
 </body>
 </html>
