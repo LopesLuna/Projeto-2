@@ -63,6 +63,7 @@ body {
     font-weight: 600;
     color: #2b4c38;
     letter-spacing: -0.5px;
+    font-variant: small-caps;
 }
 
 .nav-menu ul {
