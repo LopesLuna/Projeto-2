@@ -1,66 +1,12 @@
-<!DOCTYPE html>
-<html lang="pt-PT">
-<head>
-    <meta charset="UTF-8">
-    <title>Quem Somos - STITCH</title>
+    {% extends 'stitch/base.html' %}
+    {% load static %}
+
+    {% block title %}Quem Somos - STITCH{% endblock %}
+
+    {% block extra_css %}
     
     <!-- AQUI ENTRA O CSS (A MAQUILHAGEM) -->
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f5f2e6;
-        }
-
-        .cabecalho {
-            background-color: #8c865c;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 30px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .circulo-logo {
-            width: 35px;
-            height: 35px;
-            background-color: #dfd8c4;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .texto-logo {
-            font-size: 24px;
-            color: #000000;
-        }
-
-        .navegacao {
-            display: flex;
-            gap: 15px;
-        }
-
-        .botao-nav {
-            background-color: #355320;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            transition: 0.3s; /* Deixa a mudança de cor suave, sem ser um "piscar" brusco */
-        }
-
-        .botao-nav:hover {
-            background-color: #ffffff; /* O fundo fica branco */
-            color: #355320; /* A letra fica verde escura */
-            transition: 0.3s; /* Deixa a mudança de cor suave, sem ser um "piscar" brusco */
-        }
-        /* --- ESTILOS DO CONTEÚDO PRINCIPAL --- */
-        
         .titulo-principal {
             text-align: center; /* Centra o texto no meio do ecrã */
             font-weight: normal; /* Tira o negrito forte padrão do h1 */
@@ -116,25 +62,9 @@
             padding: 0 20px; /* Garante que o texto não cole nas bordas se visto no celular */
         }
     </style>
-</head>
+    {% endblock %}
 
-<!-- AQUI ENTRA O HTML (O ESQUELETO VISÍVEL) -->
-<body>
-
-    <header class="cabecalho">
-        <div class="logo">
-            <div class="circulo-logo"></div>
-            <span class="texto-logo">STITCH</span>
-        </div>
-
-        <nav class="navegacao">
-            <a href="/" class="botao-nav">Ínicio</a>
-            <a href="/entenda-esg/" class="botao-nav">Entenda ESG</a>
-            <a href="/simuladores/" class="botao-nav">Simulações</a>
-            <a href="/quem-somos/" class="botao-nav">Quem Somos?</a>
-            <a href="/contato/" class="botao-nav">Entre em Contato</a>
-        </nav>
-    </header>
+    {% block content %}
         <!-- Título Principal -->
     <h1 class="titulo-principal">QUEM SOMOS?</h1>
 
@@ -243,6 +173,4 @@
     <section class="sobre-nos">
         <p>Somos um grupo de 14 estudantes da CESAR School, sendo de Ciência da Computação e Design, que através deste projeto buscamos resolver um problema comum a times e grupos de trabalho: a dificuldade de acompanhar tarefas de forma organizada e centralizada. A equipe de Ciência da Computação ficou responsável pelo desenvolvimento do sistema, enquanto a equipe de Design contribuiu com a definição da experiência e identidade visual da solução.</p>
     </section>
-
-</body>
-</html>
+{% endblock %}
