@@ -1,32 +1,27 @@
 {% extends 'stitch/base.html' %}
 {% load static %}
-{% block content %}
-<section class="main-section" id="inicio">
-    <div class="grid-hero">
-        <div class="card card-white">
-            <p class="wireframe-text">
-                PROPOSTA DO<br>SITE/FRASE DE<br>IMPACTO
-            </p>
-        </div>
-        <div class="card card-white">
-            <p class="wireframe-text">
-                IMAGEM SOBRE<br>IMPACTO DA<br>FALTA DE ALGUMA<br>PRÁTICA ESG
-            </p>
-        </div>
-        <div class="stacked-column">
-            <div class="card card-sage card-top"></div>
-            
-            <div class="card card-sage">
-                <img src="{% static 'img/logo.png' %}" alt="Logo" style="width: 55px !important; height: auto !important;">
-            </div>
-            
-            <div class="card card-sage card-bottom">
-                <p class="wireframe-text-small">
-                    Informações<br>básicas ESG
-                </p>
-            </div>
-        </div>
 
+{% block content %}
+<section class="hero">
+    <img class="hero-bg" src="{% static 'img/hero.jpg' %}" alt="">
+    <div class="hero-texto">
+        <h1>Frase de impacto</h1>
+    </div>
+</section>
+
+<section class="sobre">
+    <div>
+        <div class="card card-logo">
+            <img src="{% static 'img/logo-escura.png' %}" alt="Logo Stitch">
+        </div>
+        <div class="sobre-texto">
+            <h2>O que é Stitch?</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+    </div>
+
+    <div class="card card-reciclagem">
+        <img src="{% static 'img/reciclagem.png' %}" alt="Símbolo de reciclagem feito com tecido">
     </div>
 </section>
 {% endblock %}
