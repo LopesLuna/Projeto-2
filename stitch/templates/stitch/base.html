@@ -6,38 +6,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stitch - Sustentabilidade</title>
 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{% static 'css/trama.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+
     {% block extra_css %}
     {% endblock %}
 </head>
 <body>
-    <div class="container">
-        <header id="global-header">
-            <a href="{% url 'home' %}" class="logo-link">
-                <img src="{% static 'img/logo.png' %}" alt="Logo Stitch" class="logo-icon">
-                <span class="logo-text">Stitch</span>
-            </a>
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="{% url 'home' %}" class="nav-link active">Início</a></li>
-                    <li><a href="{% url 'entenda_esg' %}" class="nav-link">Entenda ESG</a></li>
-                    <li><a href="{% url 'simuladores' %}" class="nav-link">Simulações</a></li>
-                    <li><a href="{% url 'quem_somos' %}" class="nav-link">Quem Somos?</a></li>
-                    <li><a href="{% url 'contato' %}" class="nav-link">Entre em Contato</a></li>
-                </ul>
-            </nav>
-        </header>
 
+    <header class="header">
+        <div class="container">
+            <a href="{% url 'home' %}" class="logo">
+                <img src="{% static 'img/wordmark-branca.png' %}" alt="Stitch">
+            </a>
+            <nav class="nav">
+                <button class="btn-login" id="abrir-login" type="button">Login</button>
+                <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}ativo{% endif %}">Início</a>
+                <a href="{% url 'entenda_esg' %}" class="{% if request.resolver_match.url_name == 'entenda_esg' %}ativo{% endif %}">Entenda ESG</a>
+                <a href="{% url 'simuladores' %}" class="{% if request.resolver_match.url_name == 'simuladores' %}ativo{% endif %}">Simulações</a>
+                <a href="{% url 'quem_somos' %}" class="{% if request.resolver_match.url_name == 'quem_somos' %}ativo{% endif %}">Quem Somos?</a>
+                <a href="{% url 'contato' %}" class="{% if request.resolver_match.url_name == 'contato' %}ativo{% endif %}">Entre em Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
         <main>
             {% block content %}
             {% endblock %}
         </main>
-
     </div>
+
+    <!-- Popup de login -->
+    <div class="modal" id="modal-login" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
+        <div class="modal-fundo" data-fechar></div>
+        <div class="modal-painel">
+            <button class="modal-fechar" data-fechar type="button" aria-label="Fechar">×</button>
+            <h2 id="titulo-login">Entrar no Stitch</h2>
+            <p class="subtitulo">Acesse sua conta para continuar sua simulação ESG.</p>
+
+            <form>
+                <div class="campo">
+                    <label for="login-email">E-mail</label>
+                    <input id="login-email" type="email" placeholder="seu@email.com">
+                </div>
+                <div class="campo">
+                    <label for="login-senha">Senha</label>
+                    <input id="login-senha" type="password" placeholder="Digite sua senha">
+                </div>
+                <button class="btn-principal" type="submit">Entrar</button>
+            </form>
+
+            <p class="rodape">Ainda não tem conta? <a href="#">Criar conta</a></p>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const modal = document.getElementById('modal-login');
+            const abrir = document.getElementById('abrir-login');
+            if (!modal || !abrir) return;
+
+            function abrirModal() {
+                modal.classList.add('aberto');
+                document.body.style.overflow = 'hidden';
+                modal.querySelector('input').focus();
+            }
+
+            function fecharModal() {
+                modal.classList.remove('aberto');
+                document.body.style.overflow = '';
+                abrir.focus();
+            }
+
+            abrir.addEventListener('click', abrirModal);
+            modal.querySelectorAll('[data-fechar]').forEach(el => el.addEventListener('click', fecharModal));
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && modal.classList.contains('aberto')) fecharModal();
+            });
+            modal.querySelector('form').addEventListener('submit', e => e.preventDefault());
+        })();
+    </script>
 
 </body>
 <footer class="footer">
