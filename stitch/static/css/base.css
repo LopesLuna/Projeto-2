@@ -456,3 +456,23 @@ body {
         max-width: 320px;
     }
 }
+
+/* ==========================================================================
+   10. Footer
+   ========================================================================== */
+.footer {
+    width: 100%;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 60px;
+    padding: 20px;
+}
+
+.footer-column {
+    flex: 0 1 auto;
+}
