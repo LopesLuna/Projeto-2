@@ -5,39 +5,38 @@
 
     {% block extra_css %}
     
-    <!-- AQUI ENTRA O CSS (A MAQUILHAGEM) -->
     <style>
         .titulo-principal {
-            text-align: center; /* Centra o texto no meio do ecrã */
-            font-weight: normal; /* Tira o negrito forte padrão do h1 */
+            text-align: center;
+            font-weight: normal;
             font-size: 28px;
             color: #333;
-            margin-top: 40px; /* Dá um espaço em relação à barra verde lá em cima */
-            margin-bottom: 40px; /* Dá um espaço antes de começarem os cartões */
+            margin-top: 40px;
+            margin-bottom: 40px;
         }
 
         .grade-membros {
-            display: flex; /* Permite colocar os membros lado a lado */
-            flex-wrap: wrap; /* Permite que os cartões "caiam" para a linha de baixo quando falta espaço */
-            justify-content: center; /* Centra todos os cartões, garantindo que a última linha fique no meio */
-            gap: 40px; /* O espaço exato (distância) entre cada cartão */
-            max-width: 900px; /* Define uma largura máxima para a grelha, forçando a quebra de linha a cada 4 cartões */
-            margin: 0 auto 60px auto; /* Centra a própria grelha no ecrã e dá um espaço no fundo da página */
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 40px; 
+            max-width: 900px; 
+            margin: 0 auto 60px auto; 
         }
 
         .membro {
             display: flex;
-            flex-direction: column; /* Coloca o quadrado, o nome e o curso um por baixo do outro */
-            align-items: center; /* Centra os textos debaixo do quadrado */
-            width: 170px; /* A largura total de cada espaço de membro */
+            flex-direction: column; 
+            align-items: center; 
+            width: 170px;
         }
 
         .foto-quadrada {
-            width: 160px; /* Largura do quadrado */
-            height: 160px; /* Altura do quadrado */
-            background-color: #d6d3c4; /* A cor bege acinzentada do quadrado */
-            border-radius: 15px; /* Arredonda os cantos do quadrado */
-            margin-bottom: 15px; /* Dá espaço entre o quadrado e o nome */
+            width: 160px; 
+            height: 160px; 
+            background-color: #d6d3c4; 
+            border-radius: 15px; 
+            margin-bottom: 15px; 
         }
 
         .nome {
@@ -50,25 +49,25 @@
             font-size: 14px;
             color: #333;
             text-align: center;
-            text-transform: uppercase; /* Força todas as letras a ficarem MAIÚSCULAS */
+            text-transform: uppercase;
         }
         .sobre-nos {
-            max-width: 800px; /* Limita a largura do texto para não ficar muito esticado */
-            margin: 0 auto 60px auto; /* Centraliza a caixa de texto na tela e dá espaço embaixo */
-            text-align: center; /* Centraliza as letras do texto */
+            max-width: 800px; 
+            margin: 0 auto 60px auto; 
+            text-align: center; 
             color: #333;
             font-size: 16px;
-            line-height: 1.6; /* Dá um respiro entre as linhas do texto (espaçamento) */
-            padding: 0 20px; /* Garante que o texto não cole nas bordas se visto no celular */
+            line-height: 1.6; 
+            padding: 0 20px; 
         }
     </style>
     {% endblock %}
 
     {% block content %}
-        <!-- Título Principal -->
+
     <h1 class="titulo-principal">QUEM SOMOS?</h1>
 
-    <!-- Grelha que vai segurar todos os membros -->
+    
     <main class="grade-membros">
         
         <!-- MEMBRO 1 -->
