@@ -1,65 +1,176 @@
-{% extends 'stitch/base.html' %}
-{% block title %}Equipe — Projeto 2{% endblock %}
-{% block content %}
-<h1>Quem Somos</h1>
+    {% extends 'stitch/base.html' %}
+    {% load static %}
 
-<p>Somos um grupo de 13 estudantes da CESAR School, sendo 7 de Ciência da Computação e 6 de Design, que através deste projeto buscamos resolver um problema comum a times e grupos de trabalho: a dificuldade de acompanhar tarefas de forma organizada e centralizada. A equipe de Ciência da Computação ficou responsável pelo desenvolvimento do sistema, enquanto a equipe de Design contribuiu com a definição da experiência e identidade visual da solução.</p>
+    {% block title %}Quem Somos - STITCH{% endblock %}
 
-<h2>Ciência da Computação</h2>
+    {% block extra_css %}
+    
+    <!-- AQUI ENTRA O CSS (A MAQUILHAGEM) -->
+    <style>
+        .titulo-principal {
+            text-align: center; /* Centra o texto no meio do ecrã */
+            font-weight: normal; /* Tira o negrito forte padrão do h1 */
+            font-size: 28px;
+            color: #333;
+            margin-top: 40px; /* Dá um espaço em relação à barra verde lá em cima */
+            margin-bottom: 40px; /* Dá um espaço antes de começarem os cartões */
+        }
 
-<div class="card">
-    <strong>Cauê Juvino</strong>
-    <p>Ciência da Computação — desenvolvimento do sistema.</p>
-</div>
-<div class="card">
-    <strong>João Bezerra</strong>
-    <p>Ciência da Computação — desenvolvimento do sistema.</p>
-</div>
-<div class="card">
-    <strong>Jose Ernesto</strong>
-    <p>Ciência da Computação — desenvolvimento do sistema.</p>
-</div>
-<div class="card">
-    <strong>Mariana Luna</strong>
-    <p>Ciência da Computação — desenvolvimento do sistema.</p>
-</div>
-<div class="card">
-    <strong>Matheus Costa</strong>
-    <p>Ciência da Computação — desenvolvimento do sistema.</p>
-</div>
-<div class="card">
-    <strong>Pedro Correia</strong>
-    <p>Ciência da Computação — desenvolvimento do sistema.</p>
-</div>
-<div class="card">
-    <strong>Rodrigo Fernandes</strong>
-    <p>Ciência da Computação — desenvolvimento do sistema.</p>
-</div>
+        .grade-membros {
+            display: flex; /* Permite colocar os membros lado a lado */
+            flex-wrap: wrap; /* Permite que os cartões "caiam" para a linha de baixo quando falta espaço */
+            justify-content: center; /* Centra todos os cartões, garantindo que a última linha fique no meio */
+            gap: 40px; /* O espaço exato (distância) entre cada cartão */
+            max-width: 900px; /* Define uma largura máxima para a grelha, forçando a quebra de linha a cada 4 cartões */
+            margin: 0 auto 60px auto; /* Centra a própria grelha no ecrã e dá um espaço no fundo da página */
+        }
 
-<h2>Design</h2>
+        .membro {
+            display: flex;
+            flex-direction: column; /* Coloca o quadrado, o nome e o curso um por baixo do outro */
+            align-items: center; /* Centra os textos debaixo do quadrado */
+            width: 170px; /* A largura total de cada espaço de membro */
+        }
 
-<div class="card">
-    <strong>Henri Kleiner</strong>
-    <p>Design — experiência e identidade visual da solução.</p>
-</div>
-<div class="card">
-    <strong>Lis Bettini</strong>
-    <p>Design — experiência e identidade visual da solução.</p>
-</div>
-<div class="card">
-    <strong>Olívia Nóbrega</strong>
-    <p>Design — experiência e identidade visual da solução.</p>
-</div>
-<div class="card">
-    <strong>Elis Melo</strong>
-    <p>Design — experiência e identidade visual da solução.</p>
-</div>
-<div class="card">
-    <strong>Guilherme Quintas</strong>
-    <p>Design — experiência e identidade visual da solução.</p>
-</div>
-<div class="card">
-    <strong>Matheus Enrico</strong>
-    <p>Design — experiência e identidade visual da solução.</p>
-</div>
+        .foto-quadrada {
+            width: 160px; /* Largura do quadrado */
+            height: 160px; /* Altura do quadrado */
+            background-color: #d6d3c4; /* A cor bege acinzentada do quadrado */
+            border-radius: 15px; /* Arredonda os cantos do quadrado */
+            margin-bottom: 15px; /* Dá espaço entre o quadrado e o nome */
+        }
+
+        .nome {
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+        }
+
+        .curso {
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            text-transform: uppercase; /* Força todas as letras a ficarem MAIÚSCULAS */
+        }
+        .sobre-nos {
+            max-width: 800px; /* Limita a largura do texto para não ficar muito esticado */
+            margin: 0 auto 60px auto; /* Centraliza a caixa de texto na tela e dá espaço embaixo */
+            text-align: center; /* Centraliza as letras do texto */
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6; /* Dá um respiro entre as linhas do texto (espaçamento) */
+            padding: 0 20px; /* Garante que o texto não cole nas bordas se visto no celular */
+        }
+    </style>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Título Principal -->
+    <h1 class="titulo-principal">QUEM SOMOS?</h1>
+
+    <!-- Grelha que vai segurar todos os membros -->
+    <main class="grade-membros">
+        
+        <!-- MEMBRO 1 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Cauê Juvino</div>
+            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
+        </div>
+
+        <!-- MEMBRO 2 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">João Bezerra</div>
+            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
+        </div>
+
+        <!-- MEMBRO 3 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Jose Ernesto</div>
+            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
+        </div>
+
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Luiz Carlos</div>
+            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
+        </div>
+
+        <!-- MEMBRO 4 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Mariana Luna</div>
+            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
+        </div>
+
+        <!-- MEMBRO 5 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Matheus Costa</div>
+            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
+        </div>
+
+        <!-- MEMBRO 6 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Pedro Correia</div>
+            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
+        </div>
+
+        <!-- MEMBRO 7 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Rodrigo Fernandes</div>
+            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
+        </div>
+
+        <!-- MEMBRO 8 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Henri Kleiner</div>
+            <div class="curso">DESIGN</div>
+        </div>
+
+        <!-- MEMBRO 9 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Lis Bettini</div>
+            <div class="curso">DESIGN</div>
+        </div>
+
+        <!-- MEMBRO 10 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Olívia Nóbrega</div>
+            <div class="curso">DESIGN</div>
+        </div>
+
+        <!-- MEMBRO 11 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Elis Melo</div>
+            <div class="curso">DESIGN</div>
+        </div>
+
+        <!-- MEMBRO 12 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Guilherme Quintas</div>
+            <div class="curso">DESIGN</div>
+        </div>
+
+        <!-- MEMBRO 13 -->
+        <div class="membro">
+            <div class="foto-quadrada"></div>
+            <div class="nome">Matheus Enrico</div>
+            <div class="curso">DESIGN</div>
+        </div>
+
+    </main>
+
+    <section class="sobre-nos">
+        <p>Somos um grupo de 14 estudantes da CESAR School, sendo de Ciência da Computação e Design, que através deste projeto buscamos resolver um problema comum a times e grupos de trabalho: a dificuldade de acompanhar tarefas de forma organizada e centralizada. A equipe de Ciência da Computação ficou responsável pelo desenvolvimento do sistema, enquanto a equipe de Design contribuiu com a definição da experiência e identidade visual da solução.</p>
+    </section>
 {% endblock %}
