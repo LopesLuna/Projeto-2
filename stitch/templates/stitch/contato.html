@@ -1,90 +1,148 @@
 {% extends 'stitch/base.html' %}
-{% block title %}Fale Conosco — Stitch{% endblock %}
+
+{% block title %}Entre em Contato - Stitch{% endblock %}
+
 {% block content %}
-<h1>Fale Conosco</h1>
-<p>Tem dúvidas sobre os simuladores ou ESG? Fale com a gente.</p>
+<div class="min-h-screen bg-slate-50 py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto space-y-10">
 
-{% if enviado %}
-<p class="msg-sucesso">Mensagem enviada com sucesso! Entraremos em contato em breve.</p>
-{% endif %}
-
-<form method="post">
-    {% csrf_token %}
-
-    <label>Representa alguma empresa?</label>
-    <div class="radio-group">
-        <div class="radio-item">
-            <input type="radio" id="empresa_sim" name="tem_empresa" value="sim" onchange="toggleEmpresa()" checked>
-            <label for="empresa_sim">Sim</label>
+        {#{ Cabeçalho Principal Centralizado #}
+        <div class="text-center max-w-2xl mx-auto space-y-3">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">Precisa de ajuda?</h1>
+            <p class="text-sm sm:text-base text-gray-500 leading-relaxed">
+                Nossa equipe está pronta para te ajudar. Preencha o formulário abaixo para entrar em contato conosco e solucionar sua dúvida ou solicitação.
+            </p>
         </div>
-        <div class="radio-item">
-            <input type="radio" id="empresa_nao" name="tem_empresa" value="nao" onchange="toggleEmpresa()">
-            <label for="empresa_nao">Não, sou apenas visitante</label>
+
+        {#{ Card Principal com o Formulário #}
+        <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-gray-100">
+            
+            <div class="mb-8 space-y-2">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-800">
+                    Não encontrou o que procurava?
+                </h2>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    Preencha o formulário abaixo com as informações solicitadas. Analisaremos sua mensagem e retornaremos o mais breve possível.
+                </p>
+            </div>
+
+            {% if messages %}
+                <div class="mb-6 space-y-2">
+                    {% for message in messages %}
+                        <div class="p-4 rounded-xl text-sm {% if message.tags == 'success' %}bg-green-50 text-green-800 border border-green-200{% else %}bg-red-50 text-red-800 border border-red-200{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="POST" class="space-y-6">
+                {% csrf_token %}
+
+                {#{ Linha 1: CPF/CNPJ e Nome Completo #}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="documento" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-1">
+                            Digite o CPF ou CNPJ <span class="text-red-500">*</span>
+                        </label>
+                        <p class="text-[11px] text-gray-400 mb-2">Utilizado apenas para identificação do atendimento</p>
+                        <input type="text" name="documento" id="documento" placeholder="000.000.000-00" required
+                            class="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm text-gray-700 placeholder-gray-300 transition duration-150">
+                    </div>
+
+                    <div>
+                        <label for="nome" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-1">
+                            Digite seu nome completo <span class="text-red-500">*</span>
+                        </label>
+                        <p class="text-[11px] text-transparent mb-2 hidden md:block">Espaçador visual</p>
+                        <input type="text" name="nome" id="nome" placeholder="Seu nome" required
+                            class="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm text-gray-700 placeholder-gray-300 transition duration-150">
+                    </div>
+                </div>
+
+                {#{ Linha 2: E-mail e Telefone #}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="email" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">
+                            Digite seu e-mail de contato <span class="text-red-500">*</span>
+                        </label>
+                        <input type="email" name="email" id="email" placeholder="E-mail" required
+                            class="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm text-gray-700 placeholder-gray-300 transition duration-150">
+                    </div>
+
+                    <div>
+                        <label for="telefone" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">
+                            Digite seu telefone de contato <span class="text-red-500">*</span>
+                        </label>
+                        <input type="tel" name="telefone" id="telefone" placeholder="Telefone" required
+                            class="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm text-gray-700 placeholder-gray-300 transition duration-150">
+                    </div>
+                </div>
+
+                {#{ Linha 3: Selects de Motivo e Assunto #}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="motivo" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">
+                            Selecione o motivo do contato <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <select name="motivo" id="motivo" required
+                                class="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm text-gray-400 bg-white appearance-none cursor-pointer">
+                                <option value="" disabled selected>Selecione</option>
+                                <option value="duvida" class="text-gray-700">Dúvida</option>
+                                <option value="suporte" class="text-gray-700">Suporte Técnico</option>
+                                <option value="sugestao" class="text-gray-700">Sugestão</option>
+                                <option value="reclamacao" class="text-gray-700">Reclamação</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="assunto" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">
+                            Selecione o assunto relacionado <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <select name="assunto" id="assunto" required
+                                class="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm text-gray-400 bg-white appearance-none cursor-pointer">
+                                <option value="" disabled selected>Selecione</option>
+                                <option value="esg" class="text-gray-700">Métricas ESG</option>
+                                <option value="plataforma" class="text-gray-700">Uso da Plataforma</option>
+                                <option value="outro" class="text-gray-700">Outro assunto</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {#{ Campo de Mensagem Detalhada #}
+                <div>
+                    <label for="mensagem" class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">
+                        Descreva o seu caso ou dúvida <span class="text-red-500">*</span>
+                    </label>
+                    <textarea name="mensagem" id="mensagem" rows="4" placeholder="Escreva os detalhes da sua mensagem aqui..." required
+                        class="w-full px-4 py-3 rounded-2xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm text-gray-700 placeholder-gray-300 transition duration-150"></textarea>
+                </div>
+
+                {#{ Botão de Envio #}
+                <div class="pt-4">
+                    <button type="submit"
+                        class="w-full sm:w-auto px-8 py-3.5 bg-gray-900 hover:bg-black text-white font-semibold rounded-2xl shadow-sm text-sm transition duration-150 cursor-pointer">
+                        Enviar solicitação
+                    </button>
+                </div>
+
+            </form>
         </div>
+
     </div>
-
-    <div id="div_empresa">
-        <label for="input_empresa">Nome da Empresa</label>
-        <input type="text" name="empresa" id="input_empresa" maxlength="150">
-    </div>
-
-    <label for="nome">Seu Nome</label>
-    <input type="text" name="nome" id="nome" required>
-
-    <label for="email">E-mail para contato</label>
-    <input type="email" name="email" id="email" required>
-
-    <label for="telefone">Telefone/Whatsapp</label>
-    <input type="text" name="telefone" id="telefone" maxlength="20">
-
-    <label for="assunto">Assunto</label>
-    <select name="assunto" id="assunto" required>
-        <option value="" disabled selected>Indique motivo para contato</option>
-        <option value="Dúvida sobre os Simuladores">Dúvida sobre os Simuladores</option>
-        <option value="Privacidade e Uso de Dados">Privacidade e Uso de Dados</option>
-        <option value="Perguntas relacionadas a ESG">Perguntas relacionadas a ESG</option>
-        <option value="outros">Outros</option>
-    </select>
-
-    <div id="div_assunto_outro">
-        <label for="input_assunto_outro">Sobre:</label>
-        <input type="text" name="assunto_outro" id="input_assunto_outro" maxlength="100">
-    </div>
-
-    <label for="mensagem">Mensagem</label>
-    <textarea name="mensagem" id="mensagem" rows="4" required></textarea>
-
-    <button class="btn-enviar" type="submit">Enviar</button>
-</form>
-
-<script>
-    function toggleEmpresa(){
-        var divEmpresa = document.getElementbyId('div_empresa');
-        var inputEmpresa = document.getElementById('input_empresa');
-        var simSelecionado = document.getElementById('empresa_sim').checked;
-
-        if (simSelecionado) {
-            divEmpresa.style.display = 'block';
-        } else {
-            divEmpresa.style.display = 'none';
-            inputEmpresa.value = '';
-        }
-    }
-
-    function toggleAssunto(){
-        var selectAssunto = document.getElementbyId('assunto');
-        var divAssuntoOutro = document.getElementById('div_assunto_outro');
-        var inputAssuntoOutro = document.getElementbyId('input_assunto_outro');
-
-        if (selectAssunto.value === 'Outros') {
-            divAssuntoOutro.style.display = 'block';
-            inputAssuntoOutro.required = true;
-        } else {
-            divAssuntoOutro.style.display = 'none';
-            inputAssuntoOutro.required = false;
-            inputAssuntoOutro.value = '';
-        }
-    }
-</script>
-
+</div>
 {% endblock %}
