@@ -552,3 +552,102 @@
   #trama-game-container .decision-card { min-height: 365px; padding: 22px 20px 76px; }
   #trama-game-container .report-bars { grid-template-columns: 1fr; }
 }
+
+/* Contâineres da página Simuladores.html */
+.trama-game-container {
+  position: relative;
+  max-width: 1300;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.simulation-title {
+  font-size: 2.5rem;
+  color: #4a6b53;
+  margin-bottom: 2rem;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.split-game-wrapper {
+  display: flex;
+  flex-direction: row; /* Inicia lado a lado */
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  min-height: 550px;
+  transition: flex-direction 0.5s ease, gap 0.5s ease, min-height 0.5s ease;
+}
+
+.game-side {
+  flex: 1;
+  background: #ffffff;
+  border: 3px solid #000000;
+  padding 2.5rem;
+  position:relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.6s ease,
+              background-color 0.5s ease;
+}
+
+/*Onclick card do Trama*/
+.split-game-wrapper.active-vertical {
+  flex-direction: column;
+  min-height: 700px;
+}
+
+.split-game-wrapper.active-vertical .side-simule {
+  flex: 5;
+  border-color: transparent;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+}
+
+.split-game-wrapper.active-vertical .side-veja {
+  flex: 0.8;
+  pointer-events: none;
+  background: #fafafa;
+  min-height: 80px;
+}
+
+/* Onclick card quiz */
+.split-game-wrapper.active-theater .side-veja {
+  flex: 2.5;
+  border-color: transparent;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+}
+
+.split-game-wrapper.active-theater .side-simule {
+  flex: 0.4;
+  pointer-events: none;
+  background: #fafafa;
+}
+
+/* Interface Grid Simulados */
+.initial-card-content {
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+.initial-card-content h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.btn-theater-back {
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  background: transparent;
+  border: none;
+  color: #4a6b53;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  z-index: 15;
+}
