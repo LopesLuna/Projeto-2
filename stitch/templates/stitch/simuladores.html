@@ -5,135 +5,186 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script src="{% static 'js/script.js' %}" defer></script>
 
-<div id="trama-game-container">
-  <main class="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark">E</div>
-        <div>
-          <p class="eyebrow">SIMULADOR DE GESTÃO E TRADE-OFFS ESG</p>
-          <h1>Decisões ESG</h1>
+<div class="simulacao-container">
+  <h1 class="simulacao-titulo">Entenda simulando</h1>
+
+  <div class="split-game-wrapper" id="gameWrapper">
+    <div class="game-side side-simule" id="sideSimule">
+      <button class="btn-theater-back d-none" id="btnBackVertical">
+        <svg width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Recolher Simulador
+      </button>
+
+      <div class="card-conteudo-inicial" id="conteudoCardSimule">
+        <h2>Simule!</h2>
+        <p>Projeção aplicando ESG</p>
+      </div>
+
+      <div class="trama-game-content" id="tramaGameContent">
+        <div id="trama-game-container">
+          <main class="app">
+            <header class="topbar">
+              <div class="brand">
+                <div class="brand-mark">E</div>
+                <div>
+                  <p class="eyebrow">SIMULADOR DE GESTÃO E TRADE-OFFS ESG</p>
+                  <h1>Decisões ESG</h1>
+                </div>
+              </div>
+              <span id="roundLabel" class="round-label">Partida · 1 de 5</span>
+            </header>
+        
+            <section class="dashboard" aria-label="Indicadores da empresa">
+              <div class="indicator" data-key="profit">
+                <div class="indicator-head">
+                  <div class="indicator-title">
+                    <svg viewBox="0 0 24 24"><path d="M22 12A10 10 0 1 1 12 2a10 10 0 0 1 10 10z"/><path d="M16 8l-4 4-2-2-4 4"/><path d="M16 12V8h-4"/></svg>
+                    <span>Lucro</span>
+                  </div>
+                  <strong>Estável</strong>
+                </div>
+                <div class="track"><div id="bar-profit" class="fill"></div></div>
+                <div class="passive-badge"><span>Rendimento Recorrente:</span><span id="passive-profit" class="passive-val">0/turno</span></div>
+              </div>
+              <div class="indicator" data-key="environment">
+                <div class="indicator-head">
+                  <div class="indicator-title">
+                    <svg viewBox="0 0 24 24"><path d="M11 20A9 9 0 0 1 2 11 9 9 0 0 1 11 2c5 0 9 4 9 9a9 9 0 0 1-9 9z"/><path d="M11 2a9 9 0 0 1 9 9c0 5-4 9-9 9"/><path d="M2 11c0 5 4 9 9 9"/></svg>
+                    <span>Meio ambiente</span>
+                  </div>
+                  <strong>Estável</strong>
+                </div>
+                <div class="track"><div id="bar-environment" class="fill"></div></div>
+                <div class="passive-badge"><span>Efeito Passivo:</span><span id="passive-environment" class="passive-val">0/turno</span></div>
+              </div>
+              <div class="indicator" data-key="people">
+                <div class="indicator-head">
+                  <div class="indicator-title">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Social</span>
+                  </div>
+                  <strong>Estável</strong>
+                </div>
+                <div class="track"><div id="bar-people" class="fill"></div></div>
+                <div class="passive-badge"><span>Efeito Passivo:</span><span id="passive-people" class="passive-val">0/turno</span></div>
+              </div>
+              <div class="indicator" data-key="governance">
+                <div class="indicator-head">
+                  <div class="indicator-title">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    <span>Governança</span>
+                  </div>
+                  <strong>Estável</strong>
+                </div>
+                <div class="track"><div id="bar-governance" class="fill"></div></div>
+                <div class="passive-badge"><span>Efeito Passivo:</span><span id="passive-governance" class="passive-val">0/turno</span></div>
+              </div>
+            </section>
+        
+            <section id="gameArea" class="game-area">
+              <div class="progress">
+                <span id="pillarTag" class="tag">Social</span>
+                <span id="progressText">Decisão 1 de 5</span>
+              </div>
+              <div class="card-stage">
+                <article id="decisionCard" class="decision-card" tabindex="0" aria-label="Arraste para escolher">
+                  <div class="card-top">
+                    <span id="caseNumber">CASO 01</span>
+                    <span id="symbol" class="symbol"></span>
+                  </div>
+                  <h2 id="eventTitle"></h2>
+                  <p id="eventDescription" class="description"></p>
+        
+                  <!-- Executive Signature Stamp -->
+                  <div id="leftPreview" class="executive-stamp left-stamp">
+                    <div class="stamp-header">Opção A / Decisão</div>
+                    <strong id="leftPreviewText" class="stamp-title"></strong>
+                    <div class="signature-line">
+                      <span>Assinatura do Executivo</span>
+                      <svg class="signature-svg" viewBox="0 0 100 20"><path d="M5 15 C 20 5, 35 18, 50 8 C 65 2, 80 16, 95 10"/></svg>
+                    </div>
+                  </div>
+        
+                  <div id="rightPreview" class="executive-stamp right-stamp">
+                    <div class="stamp-header">Opção B / Decisão</div>
+                    <strong id="rightPreviewText" class="stamp-title"></strong>
+                    <div class="signature-line">
+                      <svg class="signature-svg" viewBox="0 0 100 20"><path d="M5 12 C 25 3, 40 18, 60 5 C 75 2, 85 14, 95 8"/></svg>
+                      <span>Assinatura do Executivo</span>
+                    </div>
+                  </div>
+        
+                  <div class="card-foot">
+                    <span>↔ Arraste a carta para um dos lados para decidir</span>
+                  </div>
+                </article>
+              </div>
+              <p class="hint">Cada escolha envolve trade-offs entre pilares. Analise os impactos antes de assinar.</p>
+              <div class="choices">
+                <button id="leftButton" class="choice left" type="button">← <span></span></button>
+                <button id="rightButton" class="choice right" type="button"><span></span> →</button>
+              </div>
+            </section>
+        
+            <section id="report" class="panel hidden">
+              <p class="eyebrow" id="reportEyebrow">FIM DA PARTIDA</p>
+              <h2 id="reportTitle">Relatório da Empresa</h2>
+              <p id="reportIntro" class="report-intro">Os indicadores refletem a gestão equilibrada de trade-offs operacionais e estratégicos.</p>
+              
+              <div id="roiBox" class="roi-box">
+                <h4>Retorno Econômico e Resiliência ESG</h4>
+                <p id="roiText">As suas escolhas estratégicas geraram <strong>+0 pontos</strong> de retorno recorrente e mitigarão riscos futuros de mercado.</p>
+              </div>
+        
+              <div id="reportBars" class="report-bars"></div>
+              
+              <h3>Decisões Tomadas nesta Partida</h3>
+              <div id="decisionSummary" class="summary-list"></div>
+              
+              <div class="learning">
+                <h3>O que esta partida ensina</h3>
+                <p id="learningText"></p>
+              </div>
+              
+              <button id="restartButton" class="primary" type="button">Jogar novamente</button>
+            </section>
+        
+            <footer>Protótipo educativo ESG · Equilíbrio de trade-offs reais.</footer>
+          </main>
+        </div>
+        <h2>Simulador Trama Ativo</h2>
+      </div>
+    </div>
+
+    <div class="game-side side-veja" id="sideVeja">
+      <button class="btn-theater-back d-none" id="btnBackTheater">
+        <svg width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2=5 y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Recolher Quiz
+      </button>
+
+      <div class="initial-card-content" id="contentCardVeja">
+        <h2>Veja</h2>
+        <p>Conheça os impactos ambientais na cadeia de produção têxtil</p>
+      </div>
+
+      <div class="quiz-content d-none" id="quizContent">
+        <div class="quiz-stage" id="quizQuestionStage">
+          <h3 class="quiz-question" id="quizOptionsWrapper"></h3>
+          <div class="quiz-choices" id="quizOptionsWrapper"></div>
+        </div>
+
+        <div class="quiz-stage d-none" id="quizResultStage">
+          <h3>Resultado:</h3>
+          <p class="result-highlight"><span id="resultPercentage">XX%</span> de equilíbrio ESG</p>
         </div>
       </div>
-      <span id="roundLabel" class="round-label">Partida · 1 de 5</span>
-    </header>
+    </div>
+  </div>
 
-    <section class="dashboard" aria-label="Indicadores da empresa">
-      <div class="indicator" data-key="profit">
-        <div class="indicator-head">
-          <div class="indicator-title">
-            <svg viewBox="0 0 24 24"><path d="M22 12A10 10 0 1 1 12 2a10 10 0 0 1 10 10z"/><path d="M16 8l-4 4-2-2-4 4"/><path d="M16 12V8h-4"/></svg>
-            <span>Lucro</span>
-          </div>
-          <strong>Estável</strong>
-        </div>
-        <div class="track"><div id="bar-profit" class="fill"></div></div>
-        <div class="passive-badge"><span>Rendimento Recorrente:</span><span id="passive-profit" class="passive-val">0/turno</span></div>
-      </div>
-      <div class="indicator" data-key="environment">
-        <div class="indicator-head">
-          <div class="indicator-title">
-            <svg viewBox="0 0 24 24"><path d="M11 20A9 9 0 0 1 2 11 9 9 0 0 1 11 2c5 0 9 4 9 9a9 9 0 0 1-9 9z"/><path d="M11 2a9 9 0 0 1 9 9c0 5-4 9-9 9"/><path d="M2 11c0 5 4 9 9 9"/></svg>
-            <span>Meio ambiente</span>
-          </div>
-          <strong>Estável</strong>
-        </div>
-        <div class="track"><div id="bar-environment" class="fill"></div></div>
-        <div class="passive-badge"><span>Efeito Passivo:</span><span id="passive-environment" class="passive-val">0/turno</span></div>
-      </div>
-      <div class="indicator" data-key="people">
-        <div class="indicator-head">
-          <div class="indicator-title">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span>Social</span>
-          </div>
-          <strong>Estável</strong>
-        </div>
-        <div class="track"><div id="bar-people" class="fill"></div></div>
-        <div class="passive-badge"><span>Efeito Passivo:</span><span id="passive-people" class="passive-val">0/turno</span></div>
-      </div>
-      <div class="indicator" data-key="governance">
-        <div class="indicator-head">
-          <div class="indicator-title">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-            <span>Governança</span>
-          </div>
-          <strong>Estável</strong>
-        </div>
-        <div class="track"><div id="bar-governance" class="fill"></div></div>
-        <div class="passive-badge"><span>Efeito Passivo:</span><span id="passive-governance" class="passive-val">0/turno</span></div>
-      </div>
-    </section>
-
-    <section id="gameArea" class="game-area">
-      <div class="progress">
-        <span id="pillarTag" class="tag">Social</span>
-        <span id="progressText">Decisão 1 de 5</span>
-      </div>
-      <div class="card-stage">
-        <article id="decisionCard" class="decision-card" tabindex="0" aria-label="Arraste para escolher">
-          <div class="card-top">
-            <span id="caseNumber">CASO 01</span>
-            <span id="symbol" class="symbol"></span>
-          </div>
-          <h2 id="eventTitle"></h2>
-          <p id="eventDescription" class="description"></p>
-
-          <!-- Executive Signature Stamp -->
-          <div id="leftPreview" class="executive-stamp left-stamp">
-            <div class="stamp-header">Opção A / Decisão</div>
-            <strong id="leftPreviewText" class="stamp-title"></strong>
-            <div class="signature-line">
-              <span>Assinatura do Executivo</span>
-              <svg class="signature-svg" viewBox="0 0 100 20"><path d="M5 15 C 20 5, 35 18, 50 8 C 65 2, 80 16, 95 10"/></svg>
-            </div>
-          </div>
-
-          <div id="rightPreview" class="executive-stamp right-stamp">
-            <div class="stamp-header">Opção B / Decisão</div>
-            <strong id="rightPreviewText" class="stamp-title"></strong>
-            <div class="signature-line">
-              <svg class="signature-svg" viewBox="0 0 100 20"><path d="M5 12 C 25 3, 40 18, 60 5 C 75 2, 85 14, 95 8"/></svg>
-              <span>Assinatura do Executivo</span>
-            </div>
-          </div>
-
-          <div class="card-foot">
-            <span>↔ Arraste a carta para um dos lados para decidir</span>
-          </div>
-        </article>
-      </div>
-      <p class="hint">Cada escolha envolve trade-offs entre pilares. Analise os impactos antes de assinar.</p>
-      <div class="choices">
-        <button id="leftButton" class="choice left" type="button">← <span></span></button>
-        <button id="rightButton" class="choice right" type="button"><span></span> →</button>
-      </div>
-    </section>
-
-    <section id="report" class="panel hidden">
-      <p class="eyebrow" id="reportEyebrow">FIM DA PARTIDA</p>
-      <h2 id="reportTitle">Relatório da Empresa</h2>
-      <p id="reportIntro" class="report-intro">Os indicadores refletem a gestão equilibrada de trade-offs operacionais e estratégicos.</p>
-      
-      <div id="roiBox" class="roi-box">
-        <h4>Retorno Econômico e Resiliência ESG</h4>
-        <p id="roiText">As suas escolhas estratégicas geraram <strong>+0 pontos</strong> de retorno recorrente e mitigarão riscos futuros de mercado.</p>
-      </div>
-
-      <div id="reportBars" class="report-bars"></div>
-      
-      <h3>Decisões Tomadas nesta Partida</h3>
-      <div id="decisionSummary" class="summary-list"></div>
-      
-      <div class="learning">
-        <h3>O que esta partida ensina</h3>
-        <p id="learningText"></p>
-      </div>
-      
-      <button id="restartButton" class="primary" type="button">Jogar novamente</button>
-    </section>
-
-    <footer>Protótipo educativo ESG · Equilíbrio de trade-offs reais.</footer>
-  </main>
-</div>
 {% endblock %}
