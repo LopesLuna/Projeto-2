@@ -5,93 +5,147 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stitch - Sustentabilidade</title>
+    <title>{% block title %}Stitch | Sustentabilidade e Inovação{% endblock %}</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'css/trama.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stitch.css' %}">
 
     {% block extra_css %}
     {% endblock %}
 </head>
-<body>
+<body class="st-body">
 
-    <header class="header">
-        <div class="container">
-            <a href="{% url 'home' %}" class="logo">
-                <img src="{% static 'img/wordmark-branca.png' %}" alt="Stitch">
-            </a>
-            <nav class="nav">
-                <button class="btn-login" id="abrir-login" type="button">Login</button>
-                <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}ativo{% endif %}">Início</a>
-                <a href="{% url 'entenda_esg' %}" class="{% if request.resolver_match.url_name == 'entenda_esg' %}ativo{% endif %}">Entenda ESG</a>
-                <a href="{% url 'simuladores' %}" class="{% if request.resolver_match.url_name == 'simuladores' %}ativo{% endif %}">Simulações</a>
-                <a href="{% url 'quem_somos' %}" class="{% if request.resolver_match.url_name == 'quem_somos' %}ativo{% endif %}">Quem Somos?</a>
-                <a href="{% url 'contato' %}" class="{% if request.resolver_match.url_name == 'contato' %}ativo{% endif %}">Entre em Contato</a>
-            </nav>
-        </div>
+    {% block hero %}
+    <!-- Faixa de topo das páginas internas (a home sobrescreve este bloco com o carrossel) -->
+    <header class="st-hero st-hero--slim">
+        {% include 'stitch/partials/navbar.html' %}
     </header>
+    {% endblock %}
 
-    <div class="container">
+    {% block main %}
+    <div class="container st-container">
         <main>
             {% block content %}
             {% endblock %}
         </main>
     </div>
+    {% endblock %}
+
+    <footer class="st-footer">
+        <svg class="st-wave-l" viewBox="0 0 360 66" fill="none" stroke-linecap="round" aria-hidden="true">
+            <path d="M0 32 C 22 24, 55 18, 88 35 S 140 62, 165 66" stroke="#7f9136" stroke-opacity=".55" stroke-width="1.1"/>
+            <path d="M0 55 C 40 38, 70 32, 100 33 C 150 34, 190 46, 240 51 C 290 54, 330 34, 357 27" stroke="#8d9a4c" stroke-opacity=".4" stroke-width="1"/>
+        </svg>
+
+        <ul class="st-footer-links">
+            <li><span>Stitch</span></li>
+            <li><a href="{% url 'quem_somos' %}">Sobre o Stitch</a></li>
+            <li><a href="{% url 'entenda_esg' %}">Entenda ESG</a></li>
+            <li><a href="{% url 'simuladores' %}">Simulações</a></li>
+            <li><span>Suporte</span></li>
+            <li><a href="{% url 'contato' %}">Fale Conosco</a></li>
+        </ul>
+
+        <div class="st-social">
+            <a href="#" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/>
+                </svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm1.6 7.2V18h2.6v-7.8H6.6ZM7.9 6.3a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm3.1 3.9V18h2.6v-4.2c0-1.1.6-1.8 1.5-1.8s1.4.6 1.4 1.7V18h2.6v-4.7c0-2.3-1.2-3.4-3-3.4-1.2 0-1.9.6-2.5 1.3v-1h-2.6Z" fill-rule="evenodd"/>
+                </svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2.5" y="4.5" width="19" height="15" rx="4.5"/>
+                    <path d="M10 9.2v5.6l4.8-2.8L10 9.2Z" fill="currentColor" stroke="none"/>
+                </svg>
+            </a>
+        </div>
+
+        <svg class="st-wave-r" viewBox="0 0 92 75" fill="none" stroke-linecap="round" aria-hidden="true">
+            <path d="M57 75 C 70 63, 84 54, 92 47" stroke="#7f9136" stroke-opacity=".55" stroke-width="1.1"/>
+        </svg>
+    </footer>
 
     <!-- Popup de login -->
-    <div class="modal" id="modal-login" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
-        <div class="modal-fundo" data-fechar></div>
-        <div class="modal-painel">
-            <button class="modal-fechar" data-fechar type="button" aria-label="Fechar">×</button>
+    <div class="st-modal" id="modal-login" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
+        <div class="st-modal-fundo" data-fechar></div>
+        <div class="st-modal-painel">
+            <button class="st-modal-fechar" data-fechar type="button" aria-label="Fechar">×</button>
             <h2 id="titulo-login">Entrar no Stitch</h2>
-            <p class="subtitulo">Acesse sua conta para continuar sua simulação ESG.</p>
+            <p class="st-modal-sub">Acesse sua conta para continuar sua simulação ESG.</p>
 
             <form>
-                <div class="campo">
+                <div class="st-campo">
                     <label for="login-email">E-mail</label>
-                    <input id="login-email" type="email" placeholder="seu@email.com">
+                    <input id="login-email" type="email" placeholder="seu@email.com" autocomplete="email">
                 </div>
-                <div class="campo">
+                <div class="st-campo">
                     <label for="login-senha">Senha</label>
-                    <input id="login-senha" type="password" placeholder="Digite sua senha">
+                    <input id="login-senha" type="password" placeholder="Digite sua senha" autocomplete="current-password">
                 </div>
-                <button class="btn-principal" type="submit">Entrar</button>
+                <button class="st-btn" type="submit">Entrar</button>
             </form>
 
-            <p class="rodape">Ainda não tem conta? <a href="#">Criar conta</a></p>
+            <p class="st-modal-rodape">Ainda não tem conta? <a href="#">Criar conta</a></p>
         </div>
     </div>
 
     <script>
         (function () {
+            /* ---- popup de login ---- */
             const modal = document.getElementById('modal-login');
             const abrir = document.getElementById('abrir-login');
-            if (!modal || !abrir) return;
+            if (modal && abrir) {
+                function abrirModal() {
+                    modal.classList.add('aberto');
+                    document.body.style.overflow = 'hidden';
+                    modal.querySelector('input').focus();
+                }
 
-            function abrirModal() {
-                modal.classList.add('aberto');
-                document.body.style.overflow = 'hidden';
-                modal.querySelector('input').focus();
+                function fecharModal() {
+                    modal.classList.remove('aberto');
+                    document.body.style.overflow = '';
+                    abrir.focus();
+                }
+
+                abrir.addEventListener('click', abrirModal);
+                modal.querySelectorAll('[data-fechar]').forEach(el => el.addEventListener('click', fecharModal));
+                document.addEventListener('keydown', e => {
+                    if (e.key === 'Escape' && modal.classList.contains('aberto')) fecharModal();
+                });
+                modal.querySelector('form').addEventListener('submit', e => e.preventDefault());
             }
 
-            function fecharModal() {
-                modal.classList.remove('aberto');
-                document.body.style.overflow = '';
-                abrir.focus();
+            /* ---- menu no celular ---- */
+            const nav = document.getElementById('st-navbar');
+            const menuBtn = document.getElementById('abrir-menu');
+            if (nav && menuBtn) {
+                function setMenu(aberto) {
+                    nav.classList.toggle('menu-aberto', aberto);
+                    menuBtn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+                    menuBtn.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+                }
+                menuBtn.addEventListener('click', () => setMenu(!nav.classList.contains('menu-aberto')));
+                document.addEventListener('click', e => { if (!nav.contains(e.target)) setMenu(false); });
+                document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
             }
-
-            abrir.addEventListener('click', abrirModal);
-            modal.querySelectorAll('[data-fechar]').forEach(el => el.addEventListener('click', fecharModal));
-            document.addEventListener('keydown', e => {
-                if (e.key === 'Escape' && modal.classList.contains('aberto')) fecharModal();
-            });
-            modal.querySelector('form').addEventListener('submit', e => e.preventDefault());
         })();
     </script>
+
+    {% block extra_js %}
+    {% endblock %}
 
 </body>
 <footer class="footer">

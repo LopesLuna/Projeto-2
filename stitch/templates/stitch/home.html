@@ -1,27 +1,108 @@
 {% extends 'stitch/base.html' %}
 {% load static %}
 
-{% block content %}
-<section class="hero">
-    <img class="hero-bg" src="{% static 'img/hero.jpg' %}" alt="">
-    <div class="hero-texto">
-        <h1>Frase de impacto</h1>
-    </div>
-</section>
+{% block title %}Stitch | Sustentabilidade e Inovação{% endblock %}
 
-<section class="sobre">
-    <div>
-        <div class="card card-logo">
-            <img src="{% static 'img/logo-escura.png' %}" alt="Logo Stitch">
-        </div>
-        <div class="sobre-texto">
+{% block hero %}
+<!-- ===================== HERO / CARROSSEL ===================== -->
+<header class="st-hero" aria-roledescription="carousel" aria-label="Destaques">
+
+    <!-- As fotos de cada slide ficam em static/css/stitch.css (--img-slide-1 ... 4) -->
+    <div class="st-slides" aria-live="off">
+        <div class="st-slide on" role="group" aria-roledescription="slide" aria-label="1 de 4"></div>
+        <div class="st-slide" role="group" aria-roledescription="slide" aria-label="2 de 4"></div>
+        <div class="st-slide" role="group" aria-roledescription="slide" aria-label="3 de 4"></div>
+        <div class="st-slide" role="group" aria-roledescription="slide" aria-label="4 de 4"></div>
+    </div>
+
+    {% include 'stitch/partials/navbar.html' %}
+
+    <div class="st-hero-content">
+        <h1>Frase de<br>impacto</h1>
+        <p>Sustentabilidade que gera valor real.</p>
+        <a href="{% url 'quem_somos' %}" class="st-btn-outline">
+            Entenda o Stitch
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 12h15M13 6l6 6-6 6"/>
+            </svg>
+        </a>
+    </div>
+
+    <div class="st-dots" role="tablist" aria-label="Escolher slide">
+        <button class="on" role="tab" aria-selected="true" aria-label="Slide 1"></button>
+        <button role="tab" aria-selected="false" aria-label="Slide 2"></button>
+        <button role="tab" aria-selected="false" aria-label="Slide 3"></button>
+        <button role="tab" aria-selected="false" aria-label="Slide 4"></button>
+    </div>
+</header>
+{% endblock %}
+
+{% block main %}
+<!-- ===================== CARDS ===================== -->
+<main class="st-cards">
+
+    <section class="st-card st-card-about">
+        <div class="st-recycle" aria-hidden="true"></div>
+        <div class="st-content">
+            <img class="st-logo-card" src="{% static 'img/logo-oliva.png' %}" alt="Stitch">
             <h2>O que é Stitch?</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,<br>
+                sed do eiusmod tempor incididunt ut labore et dolore<br>
+                magna aliqua. Ut enim ad minim veniam, quis nostrud<br>
+                exercitation ullamco laboris nisi ut aliquip ex ea<br>
+                commodo consequat.
+            </p>
         </div>
-    </div>
+    </section>
 
-    <div class="card card-reciclagem">
-        <img src="{% static 'img/reciclagem.png' %}" alt="Símbolo de reciclagem feito com tecido">
-    </div>
-</section>
+    <section class="st-card st-card-join">
+        <div class="st-content">
+            <h3>Juntos por<br>um futuro mais<br>sustentável.</h3>
+            <p>
+                Transformamos resíduos<br>
+                em novas possibilidades<br>
+                através da tecnologia<br>
+                e da economia circular.
+            </p>
+            <a href="{% url 'entenda_esg' %}" class="st-btn-outline">
+                Saiba mais
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 12h15M13 6l6 6-6 6"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    /* Carrossel do banner: troca a cada 8 segundos; as bolinhas levam direto ao slide. */
+    (function () {
+        var INTERVAL = 8000;
+        var slides = document.querySelectorAll('.st-slide');
+        var dots = document.querySelectorAll('.st-dots button');
+        var current = 0, timer = null;
+
+        function show(n) {
+            current = (n + slides.length) % slides.length;
+            slides.forEach(function (el, i) { el.classList.toggle('on', i === current); });
+            dots.forEach(function (el, i) {
+                el.classList.toggle('on', i === current);
+                el.setAttribute('aria-selected', i === current ? 'true' : 'false');
+            });
+        }
+        function start() { stop(); timer = setInterval(function () { show(current + 1); }, INTERVAL); }
+        function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+        dots.forEach(function (el, i) {
+            el.addEventListener('click', function () { show(i); start(); }); /* reinicia a contagem dos 8s */
+        });
+        document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+
+        start();
+    })();
+</script>
 {% endblock %}

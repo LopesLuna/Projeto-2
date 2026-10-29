@@ -1,175 +1,116 @@
-    {% extends 'stitch/base.html' %}
-    {% load static %}
+{% extends 'stitch/base.html' %}
+{% load static %}
 
-    {% block title %}Quem Somos - STITCH{% endblock %}
+{% block title %}Quem Somos - STITCH{% endblock %}
 
-    {% block extra_css %}
-    
-    <style>
-        .titulo-principal {
-            text-align: center;
-            font-weight: normal;
-            font-size: 28px;
-            color: #333;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
+{% block content %}
 
-        .grade-membros {
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            gap: 40px; 
-            max-width: 900px; 
-            margin: 0 auto 60px auto; 
-        }
+<h1 class="st-title st-title--caps">QUEM SOMOS?</h1>
 
-        .membro {
-            display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            width: 170px;
-        }
+<div class="st-team">
 
-        .foto-quadrada {
-            width: 160px; 
-            height: 160px; 
-            background-color: #d6d3c4; 
-            border-radius: 15px; 
-            margin-bottom: 15px; 
-        }
+    <!-- MEMBRO 1 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Cauê Juvino</div>
+        <div class="st-member-course">CIÊNCIA DA COMPUTAÇÃO</div>
+    </div>
 
-        .nome {
-            font-size: 16px;
-            color: #333;
-            text-align: center;
-        }
+    <!-- MEMBRO 2 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">João Bezerra</div>
+        <div class="st-member-course">CIÊNCIA DA COMPUTAÇÃO</div>
+    </div>
 
-        .curso {
-            font-size: 14px;
-            color: #333;
-            text-align: center;
-            text-transform: uppercase;
-        }
-        .sobre-nos {
-            max-width: 800px; 
-            margin: 0 auto 60px auto; 
-            text-align: center; 
-            color: #333;
-            font-size: 16px;
-            line-height: 1.6; 
-            padding: 0 20px; 
-        }
-    </style>
-    {% endblock %}
+    <!-- MEMBRO 3 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Jose Ernesto</div>
+        <div class="st-member-course">CIÊNCIA DA COMPUTAÇÃO</div>
+    </div>
 
-    {% block content %}
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Luiz Carlos</div>
+        <div class="st-member-course">CIÊNCIA DA COMPUTAÇÃO</div>
+    </div>
 
-    <h1 class="titulo-principal">QUEM SOMOS?</h1>
+    <!-- MEMBRO 4 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Mariana Luna</div>
+        <div class="st-member-course">CIÊNCIA DA COMPUTAÇÃO</div>
+    </div>
 
-    
-    <main class="grade-membros">
-        
-        <!-- MEMBRO 1 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Cauê Juvino</div>
-            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
-        </div>
+    <!-- MEMBRO 5 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Matheus Costa</div>
+        <div class="st-member-course">CIÊNCIA DA COMPUTAÇÃO</div>
+    </div>
 
-        <!-- MEMBRO 2 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">João Bezerra</div>
-            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
-        </div>
+    <!-- MEMBRO 6 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Pedro Correia</div>
+        <div class="st-member-course">CIÊNCIA DA COMPUTAÇÃO</div>
+    </div>
 
-        <!-- MEMBRO 3 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Jose Ernesto</div>
-            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
-        </div>
+    <!-- MEMBRO 7 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Rodrigo Fernandes</div>
+        <div class="st-member-course">CIÊNCIA DA COMPUTAÇÃO</div>
+    </div>
 
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Luiz Carlos</div>
-            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
-        </div>
+    <!-- MEMBRO 8 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Henri Kleiner</div>
+        <div class="st-member-course">DESIGN</div>
+    </div>
 
-        <!-- MEMBRO 4 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Mariana Luna</div>
-            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
-        </div>
+    <!-- MEMBRO 9 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Lis Bettini</div>
+        <div class="st-member-course">DESIGN</div>
+    </div>
 
-        <!-- MEMBRO 5 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Matheus Costa</div>
-            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
-        </div>
+    <!-- MEMBRO 10 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Olívia Nóbrega</div>
+        <div class="st-member-course">DESIGN</div>
+    </div>
 
-        <!-- MEMBRO 6 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Pedro Correia</div>
-            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
-        </div>
+    <!-- MEMBRO 11 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Elis Melo</div>
+        <div class="st-member-course">DESIGN</div>
+    </div>
 
-        <!-- MEMBRO 7 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Rodrigo Fernandes</div>
-            <div class="curso">CIÊNCIA DA COMPUTAÇÃO</div>
-        </div>
+    <!-- MEMBRO 12 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Guilherme Quintas</div>
+        <div class="st-member-course">DESIGN</div>
+    </div>
 
-        <!-- MEMBRO 8 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Henri Kleiner</div>
-            <div class="curso">DESIGN</div>
-        </div>
+    <!-- MEMBRO 13 -->
+    <div class="st-member">
+        <div class="st-member-photo"></div>
+        <div class="st-member-name">Matheus Enrico</div>
+        <div class="st-member-course">DESIGN</div>
+    </div>
 
-        <!-- MEMBRO 9 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Lis Bettini</div>
-            <div class="curso">DESIGN</div>
-        </div>
+</div>
 
-        <!-- MEMBRO 10 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Olívia Nóbrega</div>
-            <div class="curso">DESIGN</div>
-        </div>
+<section class="st-panel">
+    <p class="st-about">Somos um grupo de 14 estudantes da CESAR School, sendo de Ciência da Computação e Design, que através deste projeto buscamos resolver um problema comum a times e grupos de trabalho: a dificuldade de acompanhar tarefas de forma organizada e centralizada. A equipe de Ciência da Computação ficou responsável pelo desenvolvimento do sistema, enquanto a equipe de Design contribuiu com a definição da experiência e identidade visual da solução.</p>
+</section>
 
-        <!-- MEMBRO 11 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Elis Melo</div>
-            <div class="curso">DESIGN</div>
-        </div>
-
-        <!-- MEMBRO 12 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Guilherme Quintas</div>
-            <div class="curso">DESIGN</div>
-        </div>
-
-        <!-- MEMBRO 13 -->
-        <div class="membro">
-            <div class="foto-quadrada"></div>
-            <div class="nome">Matheus Enrico</div>
-            <div class="curso">DESIGN</div>
-        </div>
-
-    </main>
-
-    <section class="sobre-nos">
-        <p>Somos um grupo de 14 estudantes da CESAR School, sendo de Ciência da Computação e Design, que através deste projeto buscamos resolver um problema comum a times e grupos de trabalho: a dificuldade de acompanhar tarefas de forma organizada e centralizada. A equipe de Ciência da Computação ficou responsável pelo desenvolvimento do sistema, enquanto a equipe de Design contribuiu com a definição da experiência e identidade visual da solução.</p>
-    </section>
 {% endblock %}
+>>>>>>> 93a3e80 (Stitch 3)

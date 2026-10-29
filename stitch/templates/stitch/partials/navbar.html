@@ -1,0 +1,31 @@
+{% load static %}
+{% with atual=request.resolver_match.url_name %}
+<nav class="st-navbar" id="st-navbar" aria-label="Principal">
+    <a href="{% url 'home' %}" class="st-logo-nav" aria-label="Stitch — página inicial">
+        <img src="{% static 'img/logo-branca.png' %}" alt="Stitch">
+    </a>
+
+    <ul class="st-nav-links" id="st-nav-links">
+        <li><a href="{% url 'home' %}" class="{% if atual == 'home' %}active{% endif %}"{% if atual == 'home' %} aria-current="page"{% endif %}>Início</a></li>
+        <li><a href="{% url 'entenda_esg' %}" class="{% if atual == 'entenda_esg' %}active{% endif %}"{% if atual == 'entenda_esg' %} aria-current="page"{% endif %}>Entenda ESG</a></li>
+        <li><a href="{% url 'simuladores' %}" class="{% if atual == 'simuladores' %}active{% endif %}"{% if atual == 'simuladores' %} aria-current="page"{% endif %}>Simulações</a></li>
+        <li><a href="{% url 'quem_somos' %}" class="{% if atual == 'quem_somos' %}active{% endif %}"{% if atual == 'quem_somos' %} aria-current="page"{% endif %}>Quem Somos?</a></li>
+        <li><a href="{% url 'contato' %}" class="{% if atual == 'contato' %}active{% endif %}"{% if atual == 'contato' %} aria-current="page"{% endif %}>Entre em Contato</a></li>
+    </ul>
+
+    <div class="st-nav-right">
+        <button class="st-btn-login" id="abrir-login" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4.5 21c0-4.1 3.4-6.8 7.5-6.8s7.5 2.7 7.5 6.8"/>
+            </svg>
+            Login
+        </button>
+        <button class="st-menu-btn" id="abrir-menu" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="st-nav-links">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M4 7h16M4 12h16M4 17h16"/>
+            </svg>
+        </button>
+    </div>
+</nav>
+{% endwith %}
