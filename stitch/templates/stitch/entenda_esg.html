@@ -1,8 +1,38 @@
 {% extends 'stitch/base.html' %}
+{% load static %}
+
+{% block title %}Entenda ESG — Stitch{% endblock %}
 
 {% block content %}
-<section class="main-section" id="entenda-esg">
-    <h2 class="section-title">Conheça ESG com a Stitch</h2>
-    <p style="text-align: center; color: #6b8271;">Página em desenvolvimento. Em breve o conteúdo será populado aqui!</p>
+<!-- Adicionada centralização vertical com flexbox e espaçamento em relação ao header/footer -->
+<section id="entenda-esg" style="min-height: calc(100vh - 220px); display: flex; flex-direction: column; justify-content: center; padding: 40px 0;">
+    
+    <!-- Contêiner flex que coloca os dois painéis separados lado a lado -->
+    <div style="display: flex; gap: 24px; align-items: stretch; width: 100%;">
+        
+        <!-- SEÇÃO DA ESQUERDA: Preenchimento total (padding: 0 e overflow: hidden cortam a imagem no formato arredondado do card) -->
+        <div class="st-panel" style="flex: 2; padding: 0; overflow: hidden; display: flex;">
+            <img src="{% static 'img/Grafico-ESG.jpeg' %}" alt="Gráfico de Desempenho Financeiro ESG" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+
+        <!-- SEÇÃO DA DIREITA: Card para os itens -->
+        <div class="st-panel" style="flex: 1; padding: 24px; display: flex; flex-direction: column; justify-content: center;">
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; height: 100%; justify-content: space-around;">
+                <li style="padding: 14px 18px; background-color: #f4f5f1; border-radius: 8px; color: #333;">
+                    Item 1
+                </li>
+                <li style="padding: 14px 18px; background-color: #f4f5f1; border-radius: 8px; color: #333;">
+                    Item 2
+                </li>
+                <li style="padding: 14px 18px; background-color: #f4f5f1; border-radius: 8px; color: #333;">
+                    Item 3
+                </li>
+                <li style="padding: 14px 18px; background-color: #f4f5f1; border-radius: 8px; color: #333;">
+                    Item 4
+                </li>
+            </ul>
+        </div>
+
+    </div>
 </section>
 {% endblock %}
