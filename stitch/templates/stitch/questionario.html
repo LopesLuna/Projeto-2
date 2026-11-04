@@ -1,15 +1,12 @@
-
-
-Questionario · HTML
 {% extends 'stitch/base.html' %}
 {% load static %}
- 
+
 {% block title %}Questionário ESG | Stitch{% endblock %}
- 
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/questionario.css' %}">
 {% endblock %}
- 
+
 {% block content %}
 <section class="qz" id="questionario">
   <header class="qz-topo">
@@ -21,34 +18,42 @@ Questionario · HTML
       de melhoria.
     </p>
   </header>
- 
-  <div class="qz-progresso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-    <div id="qz-barra"></div>
-  </div>
-  <p id="qz-etapa" class="qz-etapa-texto"></p>
- 
-  <form id="qz-form" method="post" novalidate>
-    {% csrf_token %}
-    <div id="qz-corpo"></div>
- 
-    <div class="qz-nav">
-      <button type="button" id="qz-voltar" class="qz-btn qz-btn--sec" hidden>Voltar</button>
-      <button type="button" id="qz-proximo" class="qz-btn">Próximo</button>
-      <button type="submit" id="qz-enviar" class="qz-btn" hidden>Gerar relatório</button>
+
+  <div class="qz-cartao" id="quiz">
+    <div class="qz-progresso-texto">
+      <span id="count"></span>
+      <span id="pct"></span>
     </div>
-  </form>
- 
+    <div class="qz-progresso" role="progressbar" aria-label="Progresso do questionário"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div id="fill"></div>
+    </div>
+
+    <p class="qz-pilar" id="pillar"></p>
+    <h2 id="qtext" tabindex="-1"></h2>
+    <p class="qz-dica" id="qhint"></p>
+    <div class="qz-respostas" id="input"></div>
+
+    <div class="qz-nav">
+      <button type="button" class="qz-btn qz-btn--sec" id="back" disabled>Voltar</button>
+      <button type="button" class="qz-btn" id="next" disabled>Próxima</button>
+    </div>
+  </div>
+
+  <section class="qz-cartao qz-relatorio hidden" id="report" aria-live="polite">
+    <h2 id="rtitle"></h2>
+    <p class="qz-intro" id="rintro"></p>
+    <div class="qz-resultados" id="rbars"></div>
+    <div class="qz-pontos-atencao" id="tips"></div>
+    <button type="button" class="qz-btn" id="restart">Refazer questionário</button>
+  </section>
+
   <noscript>
-    <p class="qz-erro-fixo">Este questionário precisa de JavaScript ativado para funcionar.</p>
+    <p class="qz-erro">Este questionário precisa de JavaScript ativado para funcionar.</p>
   </noscript>
 </section>
- 
-{# Dados enviados pela view. Atenção: NÃO carregue o script.js do jogo nesta página. #}
-{{ perfil|json_script:"dados-perfil" }}
-{{ perguntas|json_script:"dados-perguntas" }}
-{{ pilares|json_script:"dados-pilares" }}
 {% endblock %}
- 
+
 {% block extra_js %}
 <script src="{% static 'js/questionario.js' %}"></script>
 {% endblock %}
