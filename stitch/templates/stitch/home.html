@@ -1,32 +1,123 @@
 {% extends 'stitch/base.html' %}
 {% load static %}
-{% block content %}
-<section class="main-section" id="inicio">
-    <div class="grid-hero">
-        <div class="card card-white">
-            <p class="wireframe-text">
-                PROPOSTA DO<br>SITE/FRASE DE<br>IMPACTO
-            </p>
-        </div>
-        <div class="card card-white">
-            <p class="wireframe-text">
-                IMAGEM SOBRE<br>IMPACTO DA<br>FALTA DE ALGUMA<br>PRÁTICA ESG
-            </p>
-        </div>
-        <div class="stacked-column">
-            <div class="card card-sage card-top"></div>
-            
-            <div class="card card-sage">
-                <img src="{% static 'img/logo.png' %}" alt="Logo" style="width: 55px !important; height: auto !important;">
-            </div>
-            
-            <div class="card card-sage card-bottom">
-                <p class="wireframe-text-small">
-                    Informações<br>básicas ESG
-                </p>
-            </div>
-        </div>
 
+{% block title %}Stitch | Sustentabilidade e Inovação{% endblock %}
+
+{% block hero %}
+<header class="st-hero" aria-roledescription="carousel" aria-label="Destaques">
+    <div class="st-slides" aria-live="off">
+        <div class="st-slide on" role="group" aria-roledescription="slide" aria-label="1 de 4"></div>
+        <div class="st-slide" role="group" aria-roledescription="slide" aria-label="2 de 4"></div>
+        <div class="st-slide" role="group" aria-roledescription="slide" aria-label="3 de 4"></div>
+        <div class="st-slide" role="group" aria-roledescription="slide" aria-label="4 de 4"></div>
     </div>
-</section>
+
+    {% include 'stitch/partials/navbar.html' %}
+
+    <div class="st-hero-content">
+        <h1>Têxtil.<br>Sustentável.<br>Ao seu alcançe.</h1>
+        <p>Transforme sua empresa em um diferencial no mercado.</p>
+        <a href="{% url 'quem_somos' %}" class="st-btn-outline">
+            Nossa iniciativa
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 12h15M13 6l6 6-6 6"/>
+            </svg>
+        </a>
+    </div>
+
+    <div class="st-dots" role="tablist" aria-label="Escolher slide">
+        <button class="on" role="tab" aria-selected="true" aria-label="Slide 1"></button>
+        <button role="tab" aria-selected="false" aria-label="Slide 2"></button>
+        <button role="tab" aria-selected="false" aria-label="Slide 3"></button>
+        <button role="tab" aria-selected="false" aria-label="Slide 4"></button>
+    </div>
+</header>
+{% endblock %}
+
+{% block main %}
+<main class="st-cards">
+    <section class="st-card st-card-about">
+        <div class="st-recycle" aria-hidden="true"></div>
+        <div class="st-content">
+            <img class="st-logo-card" src="{% static 'img/logo-oliva.png' %}" alt="Stitch">
+            <h2>O que é Stitch?</h2>
+            <p>
+                Somos uma plataforma gratuita de consulta ESG,
+                desenvolvida para pequenas e médias empresas do eixo têxtil.
+                Reunimos dados reais e práticos
+                para ajudar o seu negócio a implementar estratégias sustentáveis
+                de forma viável e sem pesar no seu bolso.
+            </p>
+        </div>
+    </section>
+
+    <section class="st-card st-card-join">
+        <div class="st-content">
+            <h3>Juntos por<br>um futuro mais<br>sustentável.</h3>
+            <p>
+                Conscientizamos você<br>
+                com simulações práticas<br>
+                através da tecnologia<br>
+                e dados informativos
+            </p>
+            <a href="{% url 'entenda_esg' %}" class="st-btn-outline">
+                Saiba mais
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 12h15M13 6l6 6-6 6"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    (function () {
+        var interval = 8000;
+        var slides = document.querySelectorAll('.st-slide');
+        var dots = document.querySelectorAll('.st-dots button');
+        var current = 0;
+        var timer = null;
+
+        function show(index) {
+            current = (index + slides.length) % slides.length;
+            slides.forEach(function (slide, i) {
+                slide.classList.toggle('on', i === current);
+            });
+            dots.forEach(function (dot, i) {
+                dot.classList.toggle('on', i === current);
+                dot.setAttribute('aria-selected', i === current ? 'true' : 'false');
+            });
+        }
+
+        function stop() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        function start() {
+            stop();
+            timer = setInterval(function () { show(current + 1); }, interval);
+        }
+
+        dots.forEach(function (dot, i) {
+            dot.addEventListener('click', function () {
+                show(i);
+                start();
+            });
+        });
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                stop();
+            } else {
+                start();
+            }
+        });
+
+        start();
+    })();
+</script>
 {% endblock %}
