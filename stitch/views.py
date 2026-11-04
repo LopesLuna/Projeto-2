@@ -23,7 +23,7 @@ def contato(request):
         telefone = request.POST.get('telefone')
 
         assunto = request.POST.get('assunto')
-        if assunto == 'Outros':
+        if assunto and assunto.lower() == 'outros':
             assunto = request.POST.get('assunto_outro')
 
         mensagem = request.POST.get('mensagem')
