@@ -9,7 +9,7 @@ class Contato(models.Model):
     mensagem = models.TextField()
     data_envio = models.DateTimeField(auto_now_add=True)
 
-    def __self__(self):
-        # Se tiver empresa, mostra seu nome, caso contrário, mostra o nome da pessoa
-        identificacao = self.empresa if self.empresa else self.none
-        return f'{identificacao} - {self.assunto}'
+    def __str__(self):
+        # Se tiver empresa, mostra seu nome; caso contrário, mostra o nome da pessoa
+        identificacao = self.empresa if self.empresa else self.nome
+        return f"{identificacao} - {self.assunto}"
