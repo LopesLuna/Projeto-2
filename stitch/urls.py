@@ -7,4 +7,6 @@ urlpatterns = [
     path('contato/', views.contato, name='contato'),
     path('simuladores/', views.simuladores, name='simuladores'),
     path('entenda-esg/', views.entenda_esg, name='entenda_esg'),
+    path('questionario/', views.questionario, name='questionario'),
+    path('comparador_pdf/', views.comparador_pdf, name= 'comparador_pdf')
 ]
