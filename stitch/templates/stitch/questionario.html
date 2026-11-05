@@ -20,6 +20,7 @@
   </header>
 
   <div class="qz-cartao" id="quiz">
+    <button type="button" class="qz-pular" id="skip">Ir direto ao resultado</button>
     <div class="qz-progresso-texto">
       <span id="count"></span>
       <span id="pct"></span>
@@ -45,7 +46,10 @@
     <p class="qz-intro" id="rintro"></p>
     <div class="qz-resultados" id="rbars"></div>
     <div class="qz-pontos-atencao" id="tips"></div>
-    <button type="button" class="qz-btn" id="restart">Refazer questionário</button>
+    <div class="qz-acoes">
+      <button type="button" class="qz-btn qz-btn--sec" id="restart">Refazer questionário</button>
+      <button type="button" class="qz-btn" id="pdf">Gerar PDF</button>
+    </div>
   </section>
 
   <noscript>

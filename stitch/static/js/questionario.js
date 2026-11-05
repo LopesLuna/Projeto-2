@@ -16,7 +16,7 @@ const SVG_ICONS = {
 const VERSAO=1; // aumente quando mudar perguntas ou faixas
 const NAMES={ambiente:"Meio ambiente",social:"Social",governanca:"Governança",lucro:"Lucro"};
 const DESC={ambiente:"Ecoeficiência, redução de pegada e capital natural.",social:"Produtividade, retenção, clima e direitos humanos.",governanca:"Conformidade, transparência e controle de riscos.",lucro:"Saúde financeira e capacidade de investimento."};
-const STATES=[{max:24,label:"Crítico",color:"#c6534d"},{max:44,label:"Preocupante",color:"#d28a42"},{max:74,label:"Estável",color:"#497eb0"},{max:100,label:"Excelente",color:"#3b785b"}];
+const STATES=[{max:24,label:"Crítico",color:"#c6534d",tone:"critical"},{max:44,label:"Preocupante",color:"#d28a42",tone:"warning"},{max:74,label:"Estável",color:"#3b785b",tone:"good"},{max:100,label:"Excelente",color:"#3b785b",tone:"good"}];
 
 // Construtores de pergunta
 const N=(c,p,tm,t,u,f,o={})=>({c,p,tm,t,k:"n",u,f,peso:1,...o});
@@ -161,23 +161,42 @@ function finish(){
   $("quiz").classList.add("hidden");$("report").classList.remove("hidden");
   const sum={},w={},items=[];
   Q.forEach((q,k)=>{
-    const o=opts(q)[ans[NP+k]],s=o[1];
-    if(s===null)return;
+    const answer=ans[NP+k];
+    if(answer===undefined)return;
+    const o=opts(q)[answer];
+    if(!o||o[1]===null)return;
+    const s=o[1];
     sum[q.p]=(sum[q.p]||0)+s*q.peso;w[q.p]=(w[q.p]||0)+q.peso;
     items.push({q,s,a:o[0]});
   });
-  const res={};for(const p in NAMES)res[p]=w[p]?Math.round(sum[p]/w[p]):0;
-  $("rtitle").textContent="Diagnóstico ESG: "+ans[0];
-  $("rintro").textContent=`Ano de referência ${ans[1]}. Questionário versão ${VERSAO}. `+(Math.min(...Object.values(res))<=24?"Há pelo menos um pilar em situação crítica e ele deve ser a prioridade da gestão.":"Veja como cada pilar se saiu e onde há mais espaço para melhorar.");
+  const res={};for(const p in NAMES)res[p]=w[p]?Math.round(sum[p]/w[p]):null;
+  const empresa=typeof ans[0]==="string"&&ans[0].trim()?ans[0].trim():"Sua empresa";
+  const ano=ans[1]===undefined?"":`Ano de referência ${ans[1]}. `;
+  const notas=Object.values(res).filter(v=>v!==null);
+  $("rtitle").textContent="Diagnóstico ESG: "+empresa;
+  $("rintro").textContent=`${ano}Questionário versão ${VERSAO}. `+
+    (!items.length?"Este é um resumo prévio. Responda ao questionário para gerar notas e recomendações personalizadas.":
+      notas.some(v=>v<=24)?"Há pelo menos um pilar em situação crítica e ele deve ser a prioridade da gestão.":"Veja como cada pilar se saiu e onde há mais espaço para melhorar.");
   const bars=$("rbars");bars.innerHTML="";
   for(const p in NAMES){
-    const v=res[p],s=stateOf(v),d=document.createElement("div");d.className="ri";
-    d.innerHTML=`<div class="rh"><span>${NAMES[p]}</span><span style="color:${s.color}">${s.label} (${v}%)</span></div><div class="bar" style="height:8px"><i style="width:${v}%;background:${s.color}"></i></div><p class="tip">${DESC[p]}</p>`;
+    const v=res[p],s=v===null?null:stateOf(v),d=document.createElement("div");d.className="ri";
+    const heading=document.createElement("div");heading.className="rh";
+    const name=document.createElement("span");name.textContent=NAMES[p];
+    const score=document.createElement("span");score.className=s?`qz-score qz-score--${s.tone}`:"qz-score qz-score--empty";
+    score.textContent=s?`${s.label} (${v}%)`:"Sem dados";
+    heading.append(name,score);
+    const track=document.createElement("div");track.className=`bar${s?` qz-bar--${s.tone}`:" qz-bar--empty"}`;
+    track.setAttribute("role","img");
+    track.setAttribute("aria-label",s?`${NAMES[p]}: ${v}%, ${s.label}`:`${NAMES[p]}: sem dados`);
+    const fill=document.createElement("i");fill.className="qz-bar-fill";fill.style.width=`${v||0}%`;
+    track.append(fill);
+    const description=document.createElement("p");description.className="tip";description.textContent=DESC[p];
+    d.append(heading,track,description);
     bars.append(d);
   }
   const tips=$("tips");tips.innerHTML="";
   const weak=items.filter(x=>x.s<=45).sort((a,b)=>a.s-b.s||b.q.peso-a.q.peso);
-  if(!weak.length)tips.innerHTML='<p class="tip">Nenhuma resposta ficou em nível de atenção. Continue acompanhando os indicadores todo ano.</p>';
+  if(!weak.length)tips.innerHTML=`<p class="tip">${items.length?"Nenhuma resposta ficou em nível de atenção. Continue acompanhando os indicadores todo ano.":"Responda ao questionário para ver recomendações personalizadas."}</p>`;
   weak.forEach(x=>{
     const d=document.createElement("div");d.className="ri";
     d.innerHTML=`<div class="rh"><span>${NAMES[x.q.p]}: ${x.q.tm}</span><span>${x.s}/100</span></div><p style="margin:0">${x.q.t}</p><p class="tip">Sua resposta: ${x.a}</p>`;
@@ -190,6 +209,8 @@ function finish(){
 // ------------------------------------------------------------
 $("next").onclick=()=>{if(i<S.length-1){i++;show()}else finish()};
 $("back").onclick=()=>{if(i>0){i--;show()}};
+$("skip").onclick=finish;
 $("restart").onclick=()=>{ans=[];i=0;$("report").classList.add("hidden");$("quiz").classList.remove("hidden");show()};
+$("pdf").onclick=()=>window.print();
 show();
  
