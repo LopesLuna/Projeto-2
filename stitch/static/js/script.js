@@ -1,7 +1,7 @@
 // SVG Icons
 const SVG_ICONS = {
   supplier: `<svg viewBox="0 0 24 24"><path d="M16 16l3-8 3 8H16z"/><path d="M2 16l3-8 3 8H2z"/><path d="M7 21h10"/><path d="M12 3v18"/></svg>`,
-  workload: `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  workload: `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
   waste: `<svg viewBox="0 0 24 24"><path d="M7 19a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7z"/><path d="M12 9v6"/><path d="M9 12h6"/></svg>`,
   investor: `<svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
   privacy: `<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
@@ -9,6 +9,8 @@ const SVG_ICONS = {
   energy: `<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 10 12 10 13 2"/></svg>`,
   warning: `<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`
 };
+
+const CARDS_PER_GAME = 5; // Quantidade de cartas sorteadas por partida
 
 const NAMES = { profit: "Lucro", environment: "Meio ambiente", people: "Social", governance: "Governança" };
 const STATES = [
@@ -33,7 +35,7 @@ const CRISIS_EVENTS = {
   governance_min: { title: "Prisão por Fraude e Perda de Licença", text: "Falta de transparência e quebra de regras resultaram em intervenção judicial imediata." }
 };
 
-// Cartas com trade-offs rigorosos (Impossível vencer spamando o mesmo botão)
+// BANCO DE CARTAS (POOL PRINCIPAL DE EVENTOS ESG)
 const RAW_EVENTS = [
   {
     id: "automation",
@@ -160,6 +162,168 @@ const RAW_EVENTS = [
         explanation: "Garantiu lucro alto nas vendas, mas acumulou rejeição de consumidores e risco de novas taxas ecológicas."
       }
     ]
+  },
+  {
+    id: "whistleblower",
+    title: "Denúncia de Irregularidade Contábil",
+    pillar: "Governança vs Lucro",
+    iconKey: "warning",
+    description: "Um auditor interno descobriu que diretorias inflaram resultados de trimestres passados. Abrir uma investigação interna destruirá o valor de mercado das ações.",
+    lesson: "Controle ético previne escândalos judiciais, mesmo ao custo de desvalorização financeira temporária.",
+    choices: [
+      {
+        label: "Contratar auditoria independente",
+        effects: { profit: -25, governance: 28, people: 5, environment: 0 },
+        explanation: "O mercado reagiu com queda nas ações, mas a postura firme evitou um processo criminal contra a diretoria."
+      },
+      {
+        label: "Resolver o caso discretamente",
+        effects: { profit: 12, governance: -30, people: -10, environment: 0 },
+        explanation: "Manteve o valor das ações no curto prazo, mas destruiu a confiança no conselho de administração.",
+        followUp: {
+          id: "sec_investigation",
+          title: "Vazamento e Investigação Federal",
+          pillar: "Governança vs Lucro",
+          iconKey: "privacy",
+          description: "O caso foi vazado para a imprensa. Autoridades iniciaram uma devassa fiscal na sede da empresa.",
+          lesson: "Encobrir falhas contábeis transforma problemas internos em colapsos institucionais públicos.",
+          choices: [
+            {
+              label: "Colaborar com as autoridades",
+              effects: { profit: -30, governance: 15, people: -10 },
+              explanation: "Pagou multas bilionárias e afastou os diretores, iniciando a reconstrução reputacional."
+            },
+            {
+              label: "Contestar na justiça",
+              effects: { profit: -15, governance: -25, people: -15 },
+              explanation: "Longa batalha judicial paralisou os investimentos da empresa e minou a marca."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: "child_labor_supplier",
+    title: "Trabalho Análogo à Escravidão na Cadeia",
+    pillar: "Social vs Lucro",
+    iconKey: "supplier",
+    description: "Um grande fornecedor de matéria-prima foi flagrado usando trabalho infantil e precarizado. Romper o contrato imediatamente paralisará a produção por 2 meses.",
+    lesson: "A responsabilidade ESG estende-se a toda a cadeia de fornecedores, não apenas à matriz.",
+    choices: [
+      {
+        label: "Cancelar contrato imediatamente",
+        effects: { profit: -24, people: 22, governance: 18, environment: 0 },
+        explanation: "Interrompeu as entregas e reduziu vendas, mas protegeu os direitos humanos e a imagem da empresa."
+      },
+      {
+        label: "Dar prazo de 6 meses para adequação",
+        effects: { profit: 14, people: -28, governance: -20, environment: 0 },
+        explanation: "Manteve as operações sem prejuízo imediato, mas causou enorme indignação pública ao ser noticiado."
+      }
+    ]
+  },
+  {
+    id: "carbon_greenwashing",
+    title: "Créditos de Carbono Duvidosos",
+    pillar: "Ambiental vs Governança",
+    iconKey: "energy",
+    description: "A equipe de marketing propõe comprar créditos de carbono baratos de uma ONG não auditada para declarar a empresa como 'Zero Carbono' na campanha anual.",
+    lesson: "Marketing ambiental sem comprovação sólida (Greenwashing) é um grande risco de governança.",
+    choices: [
+      {
+        label: "Rejeitar e investir em floresta própria",
+        effects: { profit: -18, environment: 20, governance: 15, people: 0 },
+        passive: { environment: 1 },
+        explanation: "Investimento caro e de longo prazo, mas garantiu descarbonização autêntica e auditada."
+      },
+      {
+        label: "Comprar créditos baratos e lançar campanha",
+        effects: { profit: 15, environment: 5, governance: -24, people: -5 },
+        explanation: "Alavancou vendas imediatas com selo verde, mas ativistas denunciaram o crédito fantasma."
+      }
+    ]
+  },
+  {
+    id: "toxic_waste_leak",
+    title: "Vazamento Químico de Baixa Severidade",
+    pillar: "Ambiental vs Lucro",
+    iconKey: "waste",
+    description: "Um vazamento menor contaminou o solo de um terreno adjacente à fábrica. A contenção voluntária total exige parar a fábrica por semanas.",
+    lesson: "Tratar incidentes ambientais com transparência evita desastres ecológicos e sanções graves.",
+    choices: [
+      {
+        label: "Notificar órgão ambiental e fazer descontaminação",
+        effects: { profit: -20, environment: 24, governance: 14, people: 2 },
+        explanation: "Assumiu os custos operacionais altos, mas neutralizou completamente os danos ao ecossistema."
+      },
+      {
+        label: "Realizar contenção interna sem alarde",
+        effects: { profit: 12, environment: -26, governance: -18, people: -6 },
+        explanation: "Evitou a paralisação da fábrica, mas o lençol freático local sofreu contaminação acumulada."
+      }
+    ]
+  },
+  {
+    id: "ai_surveillance",
+    title: "Monitoramento Extensivo por IA",
+    pillar: "Governança vs Social",
+    iconKey: "privacy",
+    description: "Para aumentar a produtividade no trabalho remoto, a gestão propõe instalar software de rastreamento por IA que mede cada clique e expressão dos funcionários.",
+    lesson: "Inovação e eficiência não podem violar a dignidade e a privacidade dos colaboradores.",
+    choices: [
+      {
+        label: "Bloquear implementação do software",
+        effects: { profit: -5, people: 20, governance: 10, environment: 0 },
+        explanation: "Manteve a confiança e a autonomia das equipes, preservando um bom clima organizacional."
+      },
+      {
+        label: "Aprovar monitoramento por IA",
+        effects: { profit: 16, people: -26, governance: 8, environment: 0 },
+        explanation: "Aumentou entregas de curto prazo, mas gerou surto de ansiedade e onda de demissões."
+      }
+    ]
+  },
+  {
+    id: "diversity_board",
+    title: "Metas de Inclusão no Conselho Executivo",
+    pillar: "Social vs Governança",
+    iconKey: "diversity",
+    description: "O conselho é composto 100% por homens seniores. Uma proposta exige criar cotas afirmativas de gênero e raça para as próximas 3 vagas de diretoria.",
+    lesson: "Diversidade na liderança amplia perspectivas estratégicas e melhora o poder decisório.",
+    choices: [
+      {
+        label: "Aprovar cotas obrigatórias",
+        effects: { profit: -4, governance: 18, people: 22, environment: 0 },
+        explanation: "Diversificou a alta gestão, atraindo investidores focados em critérios ESG e aumentando a inovação."
+      },
+      {
+        label: "Manter processo seletivo tradicional",
+        effects: { profit: 5, governance: -12, people: -16, environment: 0 },
+        explanation: "Manteve a estrutura antiga sem atritos internos, mas recebeu duras críticas de fundos ESG."
+      }
+    ]
+  },
+  {
+    id: "conflict_minerals",
+    title: "Matéria-Prima de Zona de Conflito",
+    pillar: "Ambiental vs Lucro",
+    iconKey: "supplier",
+    description: "Mineral essencial para as baterias da empresa é extraído de uma região de floresta nativa em área de litígio armado. Substituí-lo por sintéticos encarece os produtos em 35%.",
+    lesson: "A integridade da oferta exige recusar insumos que financiem destruição ecológica ou violência.",
+    choices: [
+      {
+        label: "Mudar para alternativa sintética limpa",
+        effects: { profit: -25, environment: 22, governance: 16, people: 6 },
+        passive: { profit: 1 },
+        explanation: "Elevou os custos de produção, mas posicionou a marca como referência de ética global."
+      },
+      {
+        label: "Manter fornecimento barato atual",
+        effects: { profit: 20, environment: -24, governance: -22, people: -10 },
+        explanation: "Gantiu margens de lucro recordes, mas deixou a empresa vulnerável a boicotes internacionais."
+      }
+    ]
   }
 ];
 
@@ -172,6 +336,7 @@ const game = {
   events: [],
   index: 0,
   history: [],
+  snapshots: [],
   gameOver: false
 };
 
@@ -234,28 +399,57 @@ function shuffle(array) {
   return a;
 }
 
+function updateUndoBtn() {
+  const btn = $("undoButton");
+  if (!btn) return;
+  const canUndo = game.snapshots && game.snapshots.length > 0;
+  btn.disabled = !canUndo;
+  btn.classList.toggle("disabled", !canUndo);
+}
+
+function undo() {
+  if (!game.snapshots || game.snapshots.length === 0) return;
+  const prev = game.snapshots.pop();
+  game.values = prev.values;
+  game.passives = prev.passives;
+  game.totalPassiveProfitGained = prev.totalPassiveProfitGained;
+  game.events = prev.events;
+  game.index = prev.index;
+  game.history = prev.history;
+  game.gameOver = false;
+
+  $("report").classList.add("hidden");
+  $("gameArea").classList.remove("hidden");
+
+  renderBars();
+  renderEvent();
+  updateUndoBtn();
+}
+
 function newGame() {
   game.values = { profit: 60, environment: 60, people: 60, governance: 60 };
   game.passives = { profit: 0, environment: 0, people: 0, governance: 0 };
   game.totalPassiveProfitGained = 0;
   game.history = [];
+  game.snapshots = [];
   game.index = 0;
   game.gameOver = false;
 
-  // Cria cópia nova e embaralhada sem reutilizar referências antigas
-  game.events = shuffle(RAW_EVENTS);
+  // Sorteia um subconjunto de cartas (CARDS_PER_GAME) do banco completo de cartas
+  const pool = shuffle(RAW_EVENTS);
+  game.events = pool.slice(0, Math.min(CARDS_PER_GAME, pool.length));
 
   $("report").classList.add("hidden");
   $("gameArea").classList.remove("hidden");
   renderBars();
   renderEvent();
+  updateUndoBtn();
 }
 
 function renderEvent() {
   const e = game.events[game.index];
   if (!e) return finishGame(false);
 
-  // Embaralha sempre Esquerda/Direita para CADA carta
   const swap = Math.random() < 0.5;
   e._renderChoices = swap ? [e.choices[1], e.choices[0]] : [e.choices[0], e.choices[1]];
 
@@ -265,7 +459,11 @@ function renderEvent() {
   const totalCards = game.events.length;
   $("roundLabel").textContent = `Partida · ${game.index + 1} de ${totalCards}`;
   $("progressText").textContent = `Decisão ${game.index + 1} de ${totalCards}`;
-  $("pillarTag").textContent = e.pillar;
+  $("pillarTag").innerHTML = e.pillar
+    .replace("Ambiental", SVG_ICONS.energy)
+    .replace("Social", SVG_ICONS.workload)
+    .replace("Governança", SVG_ICONS.privacy)
+    .replace("Lucro", SVG_ICONS.investor);
   $("caseNumber").textContent = `CASO ${String(game.index + 1).padStart(2, "0")}`;
   $("symbol").innerHTML = SVG_ICONS[e.iconKey] || SVG_ICONS.warning;
   $("eventTitle").textContent = e.title;
@@ -284,6 +482,7 @@ function renderEvent() {
   requestAnimationFrame(() => card.style.transition = "");
 
   clearHighlights();
+  updateUndoBtn();
 }
 
 function choose(side) {
@@ -291,6 +490,16 @@ function choose(side) {
 
   const e = game.events[game.index];
   if (!e || !e._renderChoices) return;
+
+  // Guarda o estado atual no histórico de snapshots para permitir desfazer
+  game.snapshots.push(JSON.parse(JSON.stringify({
+    values: game.values,
+    passives: game.passives,
+    totalPassiveProfitGained: game.totalPassiveProfitGained,
+    events: game.events,
+    index: game.index,
+    history: game.history
+  })));
 
   const c = side === "left" ? e._renderChoices[0] : e._renderChoices[1];
 
@@ -315,8 +524,9 @@ function choose(side) {
 
   applyPassives();
 
+  // Insere desdobramento (followUp) imediatamente após a carta atual, caso exista
   if (c.followUp) {
-    const insertAt = Math.min(game.index + 2, game.events.length);
+    const insertAt = game.index + 1;
     game.events.splice(insertAt, 0, c.followUp);
   }
 
@@ -397,6 +607,8 @@ function finishGame(isCrisis = false, crisisData = null) {
   $("learningText").textContent = isCrisis
     ? `A gestão colapsou por falta de equilíbrio num dos pilares. Lembre-se: ${lessons.slice(-2).join(" ")}`
     : lessons.join(" ");
+
+  updateUndoBtn();
 }
 
 function highlightAffected(side) {
@@ -442,6 +654,7 @@ document.addEventListener("DOMContentLoaded", () => {
   rightBtn = $("rightButton");
 
   card.addEventListener("pointerdown", e => {
+    if (e.target.closest(".choice")) return;
     if (game.gameOver || $("gameArea").classList.contains("hidden")) return;
     dragging = true;
     startX = e.clientX;
@@ -479,15 +692,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "ArrowRight") choose("right");
   });
 
-  leftBtn.addEventListener("mouseenter", () => highlightAffected("left"));
-  leftBtn.addEventListener("mouseleave", clearHighlights);
-  leftBtn.addEventListener("click", () => choose("left"));
+  const bindChoiceBtn = (btn, side) => {
+    if (!btn) return;
+    btn.addEventListener("mouseenter", () => highlightAffected(side));
+    btn.addEventListener("mouseleave", clearHighlights);
+    btn.addEventListener("pointerdown", e => e.stopPropagation());
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      choose(side);
+    });
+  };
 
-  rightBtn.addEventListener("mouseenter", () => highlightAffected("right"));
-  rightBtn.addEventListener("mouseleave", clearHighlights);
-  rightBtn.addEventListener("click", () => choose("right"));
+  bindChoiceBtn(leftBtn, "left");
+  bindChoiceBtn(rightBtn, "right");
 
   $("restartButton").addEventListener("click", newGame);
+
+  const undoBtn = $("undoButton");
+  if (undoBtn) {
+    undoBtn.addEventListener("pointerdown", e => e.stopPropagation());
+    undoBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      undo();
+    });
+  }
+
+  const reloadPage = e => {
+    if (e) e.stopPropagation();
+    window.location.reload();
+  };
+
+  const brandLogo = $("brandLogo");
+  if (brandLogo) {
+    brandLogo.addEventListener("click", reloadPage);
+  }
 
   newGame();
 });

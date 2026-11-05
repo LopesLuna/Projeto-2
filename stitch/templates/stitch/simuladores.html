@@ -8,7 +8,7 @@
 <div id="trama-game-container">
   <main class="app">
     <header class="topbar">
-      <div class="brand">
+      <div class="brand" id="brandLogo" title="Clique para recarregar a página">
         <div class="brand-mark">E</div>
         <div>
           <p class="eyebrow">SIMULADOR DE GESTÃO ESG</p>
@@ -67,10 +67,14 @@
 
     <section id="gameArea" class="game-area">
       <div class="progress">
-        <span id="pillarTag" class="tag">Social</span>
+        <div class="progress-left">
+          <button id="undoButton" class="undo-btn" type="button" title="Voltar a decisão anterior" disabled>↩ Voltar</button>
+          <span id="pillarTag" class="tag">Social</span>
+        </div>
         <span id="progressText">Decisão 1 de 5</span>
       </div>
       <div class="card-stage">
+        <span class="stage-arrow left">←</span>
         <article id="decisionCard" class="decision-card" tabindex="0" aria-label="Arraste para escolher">
           <div class="card-top">
             <span id="caseNumber">CASO 01</span>
@@ -98,16 +102,19 @@
             </div>
           </div>
 
+          <!-- Botões de escolha inseridos dentro da própria carta -->
+          <div class="choices">
+            <button id="leftButton" class="choice left" type="button">← <span></span></button>
+            <button id="rightButton" class="choice right" type="button"><span></span> →</button>
+          </div>
+
           <div class="card-foot">
             <span>↔ Arraste a carta para um dos lados para decidir</span>
           </div>
         </article>
+        <span class="stage-arrow right">→</span>
       </div>
       <p class="hint">Cada escolha impacta os indicadores. Considere as consequências antes de assinar.</p>
-      <div class="choices">
-        <button id="leftButton" class="choice left" type="button">← <span></span></button>
-        <button id="rightButton" class="choice right" type="button"><span></span> →</button>
-      </div>
     </section>
 
     <section id="report" class="panel hidden">
