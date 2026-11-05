@@ -18,7 +18,7 @@ def simuladores(request):
     return render(request, 'stitch/simuladores.html')
 
 def questionario(request):
-    return render(request, "stitch/questionario.html")
+    return render(request, "stitch/diagnostico.html")
     
     
 def contato(request):
