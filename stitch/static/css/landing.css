@@ -301,3 +301,30 @@
       .logo { width: 100%; text-align: center; }
       .hero { min-height: 360px; }
     }
+/* ---------- Setas do carrossel da Entenda ESG (não cortar nas bordas) ---------- */
+.esg-section .arrow.prev { left: 16px; }
+.esg-section .arrow.next { right: 16px; }
+
+@media (max-width: 768px) {
+    .esg-section .arrow.prev { left: 6px; }
+    .esg-section .arrow.next { right: 6px; }
+}
+/* Liberar o corte das setas do carrossel na Entenda ESG */
+.container.st-container:has(.esg-section),
+.container.st-container:has(.esg-section) main {
+    overflow: visible !important;
+}
+/* Setas do carrossel 3D da Entenda ESG dentro da seção */
+.esg-section {
+    overflow: visible !important;
+}
+.esg-section .arrow.prev { left: 16px; }
+.esg-section .arrow.next { right: 16px; }
+@media (max-width: 768px) {
+    .esg-section .arrow.prev { left: 6px; }
+    .esg-section .arrow.next { right: 6px; }
+}
+/* Seta acima do container da página */
+.esg-section .arrow {
+    z-index: 1000 !important;
+}
