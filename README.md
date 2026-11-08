@@ -86,7 +86,16 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 ---
 
 ### Entrega 04
-*(Em desenvolvimento)*
+
+**Testes de sistema (E2E):** testes automatizados com Selenium.
+
+**Integração e deploy contínuos.**
+
+**Acompanhamento:**
+- [Quadro da Sprint 04 no Jira](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
+- [Screencast #5](https://youtu.be/Oorc_vXUeJ4?si=SLVnoFFFr9VPlo6g)
+
+![Sprint 04](docs/sprint04.png)
 
 ---
 
