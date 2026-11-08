@@ -89,7 +89,7 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 
 **Status da infraestrutura:**
 - Testes de sistema (E2E) com Selenium.
-- Integração e deploy contínuos.**
+- Integração e deploy contínuos.
 
 **Acompanhamento:**
 - [Quadro do Jira](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
