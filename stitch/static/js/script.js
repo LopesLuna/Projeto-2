@@ -15,8 +15,8 @@ const STATES = [
   { max: 0, label: "Crítico", color: "#c6534d" },
   { max: 24, label: "Crítico", color: "#c6534d" },
   { max: 44, label: "Preocupante", color: "#d28a42" },
-  { max: 74, label: "Estável", color: "#3b785b" },
-  { max: 100, label: "Excelente", color: "#497eb0" }
+  { max: 74, label: "Estável", color: "#497eb0" },
+  { max: 100, label: "Excelente", color: "#3b785b" }
 ];
 
 const INDICATOR_DESCRIPTIONS = {

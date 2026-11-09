@@ -1,0 +1,59 @@
+{% extends 'stitch/base.html' %}
+{% load static %}
+ 
+{% block title %}Comparar relatórios ESG | Stitch{% endblock %}
+ 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/questionario.css' %}">
+{% endblock %}
+ 
+{% block content %}
+<div class="qz" id="comparador-esg">
+  <p class="qz-eyebrow">COMPARADOR</p>
+  <h1 class="qz-titulo">Compare dois relatórios ESG</h1>
+  <p class="qz-intro">
+    Envie dois PDFs gerados pelo diagnóstico ESG do Stitch (por exemplo, de anos
+    diferentes). A comparação acontece no seu navegador: os arquivos não são
+    enviados para nenhum servidor.
+  </p>
+ 
+  <div class="cmp-campos">
+    <label class="cmp-campo">
+      <span>Relatório 1</span>
+      <input type="file" id="pdfA" accept="application/pdf">
+    </label>
+    <label class="cmp-campo">
+      <span>Relatório 2</span>
+      <input type="file" id="pdfB" accept="application/pdf">
+    </label>
+  </div>
+ 
+  <p id="cmp-erro" class="cmp-erro" role="alert" hidden></p>
+ 
+  <div class="qz-acoes">
+    <button id="comparar" type="button" class="qz-btn">Comparar</button>
+    <a class="qz-btn qz-btn--sec" href="{% url 'questionario' %}">Fazer o diagnóstico</a>
+  </div>
+ 
+  <section id="cmp-resultado" hidden>
+    <div id="cmp-avisos"></div>
+    <h2 class="qz-subtitulo" id="cmp-titulo"></h2>
+    <div id="cmp-resumo" class="cmp-resumo"></div>
+    <div id="cmp-pilares"></div>
+ 
+    <h3 class="qz-subtitulo">O que melhorou</h3>
+    <div id="cmp-melhoras"></div>
+ 
+    <h3 class="qz-subtitulo">O que piorou</h3>
+    <div id="cmp-pioras"></div>
+ 
+    <p id="cmp-iguais" class="tip"></p>
+  </section>
+</div>
+{% endblock %}
+ 
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="{% static 'js/comparador.js' %}"></script>
+{% endblock %}
+ 

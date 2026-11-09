@@ -1,0 +1,63 @@
+{% extends 'stitch/base.html' %}
+{% load static %}
+
+{% block title %}Diagnóstico ESG | Stitch{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/questionario.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="qz" id="diagnostico">
+  <header class="qz-topo">
+    <p class="qz-eyebrow">DIAGNÓSTICO ESG</p>
+    <h1>Diagnóstico da sua empresa</h1>
+    <p class="qz-intro">
+      Responda com dados reais do mesmo ano. Quando não tiver a informação,
+      marque “Não sei”: isso também aparece no relatório como uma oportunidade
+      de melhoria.
+    </p>
+  </header>
+
+  <div class="qz-cartao" id="quiz">
+    <button type="button" class="qz-pular" id="skip">Ir direto ao resultado</button>
+    <div class="qz-progresso-texto">
+      <span id="count"></span>
+      <span id="pct"></span>
+    </div>
+    <div class="qz-progresso" role="progressbar" aria-label="Progresso do diagnóstico"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div id="fill"></div>
+    </div>
+
+    <p class="qz-pilar" id="pillar"></p>
+    <h2 id="qtext" tabindex="-1"></h2>
+    <p class="qz-dica" id="qhint"></p>
+    <div class="qz-respostas" id="input"></div>
+
+    <div class="qz-nav">
+      <button type="button" class="qz-btn qz-btn--sec" id="back" disabled>Voltar</button>
+      <button type="button" class="qz-btn" id="next" disabled>Próxima</button>
+    </div>
+  </div>
+
+  <section class="qz-cartao qz-relatorio hidden" id="report" aria-live="polite">
+    <h2 id="rtitle"></h2>
+    <p class="qz-intro" id="rintro"></p>
+    <div class="qz-resultados" id="rbars"></div>
+    <div class="qz-pontos-atencao" id="tips"></div>
+    <div class="qz-acoes">
+      <button type="button" class="qz-btn qz-btn--sec" id="restart">Refazer diagnóstico</button>
+      <button type="button" class="qz-btn" id="pdf">Gerar PDF</button>
+    </div>
+  </section>
+
+  <noscript>
+    <p class="qz-erro">Este diagnóstico precisa de JavaScript ativado para funcionar.</p>
+  </noscript>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/questionario.js' %}"></script>
+{% endblock %}

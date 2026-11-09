@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import Contato
+from django.shortcuts import render, redirect
+
+
 
 
 def home(request):
@@ -14,6 +17,10 @@ def quem_somos(request):
 def simuladores(request):
     return render(request, 'stitch/simuladores.html')
 
+def questionario(request):
+    return render(request, "stitch/diagnostico.html")
+    
+    
 def contato(request):
     enviado = False
     if request.method == 'POST':
@@ -23,7 +30,7 @@ def contato(request):
         telefone = request.POST.get('telefone')
 
         assunto = request.POST.get('assunto')
-        if assunto == 'Outros':
+        if assunto and assunto.lower() == 'outros':
             assunto = request.POST.get('assunto_outro')
 
         mensagem = request.POST.get('mensagem')
@@ -38,5 +45,8 @@ def contato(request):
                 mensagem=mensagem,
             )
             enviado = True
-
     return render(request, 'stitch/contato.html', {'enviado': enviado})
+
+
+def comparador_pdf(request):
+    return render(request, 'stitch/comparador_pdf.html')
