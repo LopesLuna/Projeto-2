@@ -39,12 +39,12 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 
 ## Stack Tecnológica
 
-- **Backend:** Python, Django
+- **Backend:** Python, JavaScript, Aplicação Django
 - **Banco de Dados:** PostgreSQL (produção via Render) / SQLite (desenvolvimento local)
 - **Frontend:** HTML, CSS
 - **Hospedagem:** Render
 - **Gestão do Projeto:** Jira, GitHub Issues
-- **Prototipação:** Figma
+- **Prototipação:** Figma, FigJam
 
 ---
 
