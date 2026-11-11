@@ -1,12 +1,36 @@
 {% extends 'stitch/base.html' %}
 {% load static %}
 
-{% block content %}
+{% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
-<script src="{% static 'js/script.js' %}" defer></script>
+<link rel="stylesheet" href="{% static 'css/simuladores.css' %}">
+{% endblock %}
 
+{% block content %}
+<section class="simulacao" id="simulacao">
+  <h1 class="simulacao-titulo">Entenda simulando</h1>
+
+  <!--
+    data-state: neutral | simule | veja   (quem escreve é o simuladores.js)
+    Cada card tem data-role (idle | active | min) e data-started (true | false).
+  -->
+  <div class="duo-stage" id="simStage" data-state="neutral">
+
+    <!-- ===== SIMULE (jogo) ===== -->
+    <article class="duo-card duo-card--simule" id="cardSimule" data-card="simule" data-role="idle" data-started="false">
+      <button type="button" class="duo-open" data-action="open" aria-label="Abrir o simulador Simule"></button>
+      <button type="button" class="duo-back" data-action="back">&larr; Voltar</button>
+
+      <div class="duo-head">
+        <h2 class="duo-title">Simule!</h2>
+        <p class="duo-sub">Projeção aplicando ESG</p>
+        <span class="duo-badge">Em andamento</span>
+        <button type="button" class="duo-play" data-action="play">&#9654; Jogar</button>
+      </div>
+
+      <div class="duo-body" id="tramaGameContent">
 <div id="trama-game-container">
-  <main class="app">
+  <div class="app">
     <header class="topbar">
       <div class="brand">
         <div class="brand-mark">E</div>
@@ -134,6 +158,53 @@
     </section>
 
     <footer>Protótipo educativo ESG · Equilíbrio de indicadores reais.</footer>
-  </main>
+  </div>
 </div>
+      </div>
+    </article>
+
+    <!-- ===== VEJA (quiz) ===== -->
+    <article class="duo-card duo-card--veja" id="cardVeja" data-card="veja" data-role="idle" data-started="false">
+      <button type="button" class="duo-open" data-action="open" aria-label="Abrir o quiz Veja"></button>
+      <button type="button" class="duo-back" data-action="back">&larr; Voltar</button>
+
+      <div class="duo-head">
+        <h2 class="duo-title">Veja</h2>
+        <p class="duo-sub">Conheça os impactos ambientais na cadeia de produção têxtil</p>
+        <span class="duo-badge">Em andamento</span>
+        <button type="button" class="duo-play" data-action="play">&#9654; Começar quiz</button>
+      </div>
+
+      <div class="duo-body" id="quizContent">
+        <div class="quiz">
+          <div class="quiz-stage" id="quizQuestionStage">
+            <p class="quiz-progress" id="quizProgress"></p>
+            <h3 class="quiz-question" id="quizQuestion"></h3>
+            <div class="quiz-choices" id="quizChoices"></div>
+
+            <div class="quiz-feedback" id="quizFeedback" hidden>
+              <p class="quiz-feedback__title" id="quizFeedbackTitle"></p>
+              <p id="quizFeedbackText"></p>
+              <p class="quiz-source" id="quizSource"></p>
+              <button type="button" class="quiz-next" id="quizNext">Próxima pergunta</button>
+            </div>
+          </div>
+
+          <div class="quiz-stage" id="quizResultStage" hidden>
+            <p class="quiz-progress">Resultado</p>
+            <h3 class="quiz-question">Você acertou <span id="resultScore"></span></h3>
+            <p class="result-highlight"><span id="resultPercentage">0%</span> de acertos</p>
+            <p class="quiz-result-text" id="resultMessage"></p>
+            <button type="button" class="quiz-restart" id="quizRestart">Refazer o quiz</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <a href="{% url 'diagnostico' %}" class="duo-cta" id="simCta">simule com seus dados reais!</a>
+</section>
+
+<script src="{% static 'js/script.js' %}" defer></script>
+<script src="{% static 'js/simuladores.js' %}" defer></script>
 {% endblock %}

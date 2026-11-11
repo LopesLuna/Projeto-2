@@ -4,35 +4,204 @@
 {% block title %}Entenda ESG — Stitch{% endblock %}
 
 {% block content %}
-<!-- Adicionada centralização vertical com flexbox e espaçamento em relação ao header/footer -->
-<section id="entenda-esg" style="min-height: calc(100vh - 220px); display: flex; flex-direction: column; justify-content: center; padding: 40px 0;">
-    
-    <!-- Contêiner flex que coloca os dois painéis separados lado a lado -->
-    <div style="display: flex; gap: 24px; align-items: stretch; width: 100%;">
-        
-        <!-- SEÇÃO DA ESQUERDA: Preenchimento total (padding: 0 e overflow: hidden cortam a imagem no formato arredondado do card) -->
-        <div class="st-panel" style="flex: 2; padding: 0; overflow: hidden; display: flex;">
-            <img src="{% static 'img/Grafico-ESG.jpeg' %}" alt="Gráfico de Desempenho Financeiro ESG" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        </div>
+<style>
+/* ===== 1. DESIGN TOKENS ===== */
+:root {
+  --font-body: "Inter", system-ui, sans-serif;
+  --bg: #f0efdf;
+  --olive-900: #2b3512;
+  --olive-700: #4a5a1f;
+  --olive-500: #7a8a3a;
+  --olive-200: #d3d9b0;
+  --text-light: #ffffff;
+  --text-dark: #2e2a24;
+  --glow: rgba(160, 185, 70, .55);
+  
+  --card-w: 440px;                                   
+  --card-h: 600px;
+  --radius: 32px;                                    
+  --perspective: 2000px; /* Aumentado para suavizar o efeito 3D */
+  --ease: cubic-bezier(.22, .8, .24, 1);
+}
 
-        <!-- SEÇÃO DA DIREITA: Card para os itens -->
-        <div class="st-panel" style="flex: 1; padding: 24px; display: flex; flex-direction: column; justify-content: center;">
-            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; height: 100%; justify-content: space-around;">
-                <li style="padding: 14px 18px; background-color: #f4f5f1; border-radius: 8px; color: #333;">
-                    Item 1
-                </li>
-                <li style="padding: 14px 18px; background-color: #f4f5f1; border-radius: 8px; color: #333;">
-                    Item 2
-                </li>
-                <li style="padding: 14px 18px; background-color: #f4f5f1; border-radius: 8px; color: #333;">
-                    Item 3
-                </li>
-                <li style="padding: 14px 18px; background-color: #f4f5f1; border-radius: 8px; color: #333;">
-                    Item 4
-                </li>
-            </ul>
-        </div>
+/* ===== 2. SEÇÃO COM ALTURA EXPANDIDA GARANTIDA ===== */
+.esg-section {
+  padding: 80px 16px; 
+  background: radial-gradient(60% 50% at 50% 45%, rgba(122,138,58,.18), transparent 70%), var(--bg);
+  overflow: hidden;
+  min-height: 100vh; /* Ocupa a tela inteira para evitar esmagamento vertical */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+}
 
-    </div>
+/* ===== 3. 3D STAGE ===== */
+.carousel { position: relative; max-width: 1400px; margin: 0 auto; width: 100%; }
+.stage { 
+  position: relative; 
+  height: calc(var(--card-h) + 60px); 
+  perspective: var(--perspective); 
+  touch-action: pan-y; 
+  user-select: none; 
+  cursor: grab; 
+}
+.stage.dragging { cursor: grabbing; }
+
+.card { 
+  position: absolute; top: 20px; left: 50%; 
+  width: var(--card-w); height: var(--card-h); 
+  border-radius: var(--radius); 
+  overflow: hidden; 
+  border: 1px solid rgba(255,255,255,.35); 
+  box-shadow: 0 25px 60px rgba(43,53,18,.25); 
+  background: var(--olive-900) center / cover no-repeat; 
+  transition: transform .8s var(--ease), opacity .8s var(--ease), box-shadow .8s var(--ease); 
+  will-change: transform, opacity; 
+  cursor: pointer; 
+  transform-style: preserve-3d;
+}
+
+/* Sombra gradual escura para garantir contraste mesmo sem o efeito blur */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 20, 5, 0.95) 0%, rgba(15, 20, 5, 0.6) 45%, transparent 80%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.card.active { box-shadow: 0 0 0 1px rgba(255,255,255,.5), 0 0 54px var(--glow), 0 32px 70px rgba(43, 53, 18, 0.45); cursor: default; }
+.card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 1; }
+
+/* REESTRUTURADO: Removido o backdrop-filter instável e forçado isolamento 3D absoluto */
+.glass { 
+  position: absolute; 
+  left: 24px; 
+  right: 24px; 
+  bottom: 24px; 
+  padding: 24px; 
+  border-radius: calc(var(--radius) - 8px); 
+  background: rgba(30, 38, 12, 0.92); /* Cor sólida escura e elegante para evitar bugs de opacidade */
+  border: 1px solid rgba(255,255,255,.15); 
+  color: var(--text-light); 
+  z-index: 5; 
+  transform: translateZ(50px); /* Empurra fisicamente o bloco de texto 50px à frente da imagem */
+  backface-visibility: hidden;
+}
+.tag { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--olive-200); font-weight: 600; display: block; margin-bottom: 4px; }
+.glass h3 { font-size: 1.5rem; line-height: 1.25; margin: 4px 0 8px; font-weight: 700; }
+.glass p  { font-size: .95rem; line-height: 1.5; opacity: 0.95; }
+.cta { display: inline-block; margin-top: 16px; padding: 12px 28px; border-radius: 999px; background: var(--olive-500); color: #fff; font-weight: 600; font-size: .9rem; text-decoration: none; box-shadow: 0 0 20px var(--glow); transition: background .2s; }
+.cta:hover { background: var(--olive-700); }
+
+.arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 30; display: grid; place-items: center; width: 64px; height: 50px; border-radius: 999px; padding: 0; cursor: pointer; color: #fff; background: rgba(74, 90, 31, .65); border: 1px solid rgba(211, 217, 176, .7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 18px rgba(43, 53, 18, .22); transition: background .25s, transform .25s, box-shadow .25s; }
+.arrow svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.arrow:hover { background: rgba(74, 90, 31, .9); transform: translateY(-50%) translateX(var(--nudge, 0)); }
+.arrow.prev { left: -20px; --nudge: -4px; } .arrow.next { right: -20px; --nudge: 4px; }
+
+.dots { display: flex; justify-content: center; gap: 12px; margin-top: 36px; }
+.dot { width: 12px; height: 12px; border-radius: 999px; border: 0; padding: 0; cursor: pointer; background: var(--olive-200); transition: background .3s, box-shadow .3s; }
+.dot.active { background: var(--olive-500); box-shadow: 0 0 12px var(--glow); }
+.dot.stretch { animation: dot-stretch .8s var(--ease); }
+@keyframes dot-stretch { 0% { width: 12px; } 40% { width: 38px; } 100% { width: 12px; } }
+
+@media (max-width: 768px) {
+  :root { --card-w: 290px; --card-h: 440px; }
+  .arrow { width: 44px; height: 44px; }
+  .arrow.prev { left: 4px; } .arrow.next { right: 4px; }
+  .glass { left: 16px; right: 16px; bottom: 16px; padding: 16px; transform: translateZ(30px); }
+  .glass h3 { font-size: 1.2rem; }
+  .glass p { font-size: .85rem; }
+}
+</style>
+
+<section class="esg-section" aria-label="Jornada ESG">
+  <div class="carousel">
+    <button class="arrow prev" aria-label="Card anterior"><svg viewBox="0 0 24 24"><path d="M20 12H4M10 6l-6 6 6 6"/></svg></button>
+    <div class="stage" id="stage"></div>
+    <button class="arrow next" aria-label="Próximo card"><svg viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
+    <div class="dots" id="dots"></div>
+  </div>
 </section>
+
+<script>
+(() => {
+  const IMG = "{% static 'img/' %}"; 
+  const CARDS = [
+    { tag: "01 · História", title: "O passado da indústria", text: "Fábricas tradicionais, produção em larga escala e pouca atenção ao impacto ambiental e social.", img: "passado-textil.jpg", pos: "50% 50%" },
+    { tag: "02 · Origem", title: "O princípio do ESG", text: "Em 2004, Kofi Annan levou à ONU o chamado para integrar critérios ambientais e sociais.", img: "kofi-annan_historia_esg.jpg", pos: "43% 30%" },
+    { tag: "03 · Desafios", title: "As dores do cliente", text: "Pressão do mercado, incerteza dos gestores e exigências regulatórias crescentes.", img: "dor-do-cliente.jpg", pos: "13% 30%" },
+    { tag: "04 · Benefícios", title: "Benefícios do ESG", text: "Valor estratégico, resiliência, reputação e crescimento saudável para o seu negócio.", img: "beneficios-esg.png", pos: "50% 55%" },
+    { tag: "05 · Futuro", title: "O futuro da sustentabilidade", text: "Um ecossistema moderno, direitos trabalhistas assegurados e sustentabilidade", img: "futuro-esg.jpg", pos: "46% 40%" },
+    { tag: "06 · Entenda", title: "Como começar?", text: "Primeiros passos práticos e um roteiro estratégico para sua empresa. Faça uma avaliação agora.", img: "como-comecar.jpg", pos: "28% 25%", cta: { label: "Fazer o diagnóstico", href: "{% url 'diagnostico' %}" } }
+  ];
+  const stage = document.getElementById("stage");
+  const dotsEl = document.getElementById("dots");
+  const n = CARDS.length;
+  let active = 0, prev = 0;
+
+  const els = CARDS.map((c, i) => {
+    const el = document.createElement("article");
+    el.className = "card";
+    el.innerHTML = `<img src="${IMG + c.img}" style="object-position: ${c.pos}"><div class="glass"><span class="tag">${c.tag}</span><h3>${c.title}</h3><p>${c.text}</p>${c.cta ? `<a href="${c.cta.href}" class="cta">${c.cta.label}</a>` : ""}</div>`;
+    stage.appendChild(el);
+    const dot = document.createElement("button");
+    dot.className = "dot";
+    dotsEl.appendChild(dot);
+    return el;
+  });
+  function update() {
+    active = (active + n) % n;
+    els.forEach((el, i) => {
+      let offset = i - active;
+      if (offset > n / 2) offset -= n;
+      if (offset < -n / 2) offset += n;
+      const abs = Math.abs(offset);
+      
+      const tx = offset * 220 + (offset ? Math.sign(offset) * 30 : 0);
+      const tz = -abs * 200;
+      const ry = offset * -20;
+      
+      el.style.transform = `translateX(-50%) translate3d(${tx}px, 0, ${tz}px) rotateY(${ry}deg)`;
+      el.style.zIndex = 20 - abs;
+      el.style.opacity = abs > 2 ? 0 : abs === 2 ? 0.15 : abs === 1 ? 0.6 : 1;
+      el.classList.toggle("active", i === active);
+    });
+    Array.from(dotsEl.children).forEach((dot, i) => {
+      dot.classList.toggle("active", i === active);
+      if (i === active && active !== prev) {
+        dot.classList.remove("stretch");
+        void dot.offsetWidth; 
+        dot.classList.add("stretch");
+      }
+    });
+    prev = active;
+  }
+
+  document.querySelector(".arrow.prev").addEventListener("click", () => { active--; update(); });
+  document.querySelector(".arrow.next").addEventListener("click", () => { active++; update(); });
+  dotsEl.addEventListener("click", (e) => {
+    const idx = Array.from(dotsEl.children).indexOf(e.target);
+    if (idx >= 0) { active = idx; update(); }
+  });
+  els.forEach((el, i) => el.addEventListener("click", () => { if (i !== active) { active = i; update(); } }));
+
+  let startX = 0, currentX = 0, isDragging = false;
+  const getX = (e) => e.touches ? e.touches.clientX : e.clientX;
+  const dragStart = (e) => { if (e.target.closest('.cta')) return; isDragging = true; startX = getX(e); currentX = startX; stage.classList.add("dragging"); };
+  const dragMove = (e) => { if (!isDragging) return; currentX = getX(e); };
+  const dragEnd = () => { if (!isDragging) return; isDragging = false; stage.classList.remove("dragging"); const diff = currentX - startX; if (Math.abs(diff) > 50) { if (diff > 0) active--; else active++; } update(); };
+
+  stage.addEventListener("mousedown", dragStart);
+  window.addEventListener("mousemove", dragMove);
+  window.addEventListener("mouseup", dragEnd);
+  stage.addEventListener("touchstart", dragStart, { passive: true });
+  window.addEventListener("touchmove", dragMove, { passive: true });
+  window.addEventListener("touchend", dragEnd);
+
+  update();
+})();
+</script>
 {% endblock %}
