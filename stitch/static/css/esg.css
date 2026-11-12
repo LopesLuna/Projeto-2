@@ -1,0 +1,270 @@
+/* ==========================================================================
+   Carrossel de tópicos ESG (home) e páginas de tópicos (Entenda ESG)
+   ========================================================================== */
+
+/* ---------- Carrossel 3D (home) ---------- */
+.ec-section {
+    --card-w: 440px;
+    --card-h: 600px;
+    --radius: 32px;
+    --perspective: 2000px;
+    --ease: cubic-bezier(.22, .8, .24, 1);
+    --olive-900: #2b3512;
+    --olive-500: #7a8a3a;
+    --olive-200: #d3d9b0;
+    --glow: rgba(160, 185, 70, .55);
+
+    position: relative;
+    padding: 72px 16px 56px;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+.ec-carousel {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.ec-stage {
+    position: relative;
+    height: calc(var(--card-h) + 60px);
+    perspective: var(--perspective);
+    touch-action: pan-y;
+    user-select: none;
+    cursor: grab;
+}
+
+.ec-stage.dragging { cursor: grabbing; }
+
+.ec-card {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    display: block;
+    width: var(--card-w);
+    height: var(--card-h);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .35);
+    box-shadow: 0 25px 60px rgba(43, 53, 18, .25);
+    background: var(--olive-900);
+    color: #fff;
+    text-decoration: none;
+    transition: transform .8s var(--ease), opacity .8s var(--ease), box-shadow .8s var(--ease);
+    will-change: transform, opacity;
+    cursor: pointer;
+    transform-style: preserve-3d;
+}
+
+.ec-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 20, 5, .95) 0%, rgba(15, 20, 5, .6) 45%, transparent 80%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.ec-card.active {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .5), 0 0 54px var(--glow), 0 32px 70px rgba(43, 53, 18, .45);
+}
+
+.ec-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ec-glass {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    padding: 24px;
+    border-radius: calc(var(--radius) - 8px);
+    background: rgba(30, 38, 12, .92);
+    border: 1px solid rgba(255, 255, 255, .15);
+    color: #fff;
+    z-index: 5;
+    transform: translateZ(50px);
+    backface-visibility: hidden;
+}
+
+.ec-tag {
+    display: block;
+    margin-bottom: 4px;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--olive-200);
+}
+
+.ec-glass h3 {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin: 4px 0 8px;
+    font-weight: 700;
+}
+
+.ec-glass p {
+    font-size: .95rem;
+    line-height: 1.5;
+    opacity: .95;
+}
+
+.ec-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 50px;
+    border-radius: 999px;
+    padding: 0;
+    cursor: pointer;
+    color: #fff;
+    background: rgba(74, 90, 31, .65);
+    border: 1px solid rgba(211, 217, 176, .7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 6px 18px rgba(43, 53, 18, .22);
+    transition: background .25s;
+}
+
+.ec-arrow svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ec-arrow:hover { background: rgba(74, 90, 31, .9); }
+.ec-arrow.prev { left: 16px; }
+.ec-arrow.next { right: 16px; }
+
+.ec-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 36px;
+}
+
+.ec-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    background: var(--olive-200);
+    transition: background .3s, box-shadow .3s;
+}
+
+.ec-dot.active {
+    background: var(--olive-500);
+    box-shadow: 0 0 12px var(--glow);
+}
+
+.ec-dot.stretch { animation: ec-dot-stretch .8s var(--ease); }
+
+@keyframes ec-dot-stretch {
+    0% { width: 12px; }
+    40% { width: 38px; }
+    100% { width: 12px; }
+}
+
+@media (max-width: 768px) {
+    .ec-section { --card-w: 290px; --card-h: 440px; }
+    .ec-arrow { width: 44px; height: 44px; }
+    .ec-arrow.prev { left: 4px; }
+    .ec-arrow.next { right: 4px; }
+    .ec-glass { left: 16px; right: 16px; bottom: 16px; padding: 16px; transform: translateZ(30px); }
+    .ec-glass h3 { font-size: 1.2rem; }
+    .ec-glass p { font-size: .85rem; }
+}
+
+/* ---------- Página Entenda ESG (tópicos) ---------- */
+.ec-pagina-topo {
+    padding: 56px 0 24px;
+}
+
+.ec-pagina-topo h1 {
+    font-size: clamp(34px, 4vw, 56px);
+    font-weight: 700;
+    color: #2b3512;
+    margin-bottom: 16px;
+}
+
+.ec-pagina-topo p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #2e2a24;
+    max-width: 72ch;
+}
+
+.ec-topico {
+    position: relative;
+    padding: 56px 0;
+}
+
+/* linhas de cima e de baixo de cada tópico: mesmo brilho dos botões */
+.ec-topico::before,
+.ec-topico::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(222, 230, 140, .45);
+    box-shadow: 0 0 6px rgba(214, 224, 120, .25);
+    transition: background .6s, box-shadow .6s;
+    pointer-events: none;
+}
+.ec-topico::before { top: 0; }
+.ec-topico::after { bottom: 0; }
+
+/* já visitado */
+.ec-topico.visitado::before,
+.ec-topico.visitado::after {
+    background: rgba(222, 230, 140, .78);
+    box-shadow: 0 0 16px rgba(214, 224, 120, .4), inset 0 0 12px rgba(214, 224, 120, .16);
+}
+
+/* tópico em que a pessoa está agora */
+.ec-topico.ativo::before,
+.ec-topico.ativo::after {
+    background: #ecefa6;
+    box-shadow: 0 0 16px rgba(214, 224, 120, .65), 0 0 36px rgba(214, 224, 120, .45);
+}
+
+.ec-topico .ec-tag { color: var(--olive-500); }
+
+.ec-topico h2 {
+    font-size: clamp(28px, 3.3vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #2b3512;
+    margin: 8px 0 16px;
+}
+
+.ec-topico p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #2e2a24;
+    max-width: 72ch;
+    margin-bottom: 14px;
+}
+
