@@ -1,6 +1,10 @@
 {% extends 'stitch/base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/esg.css' %}">
+{% endblock %}
+
 {% block title %}Stitch | Sustentabilidade e Inovação{% endblock %}
 
 {% block hero %}
@@ -42,7 +46,7 @@
             <img class="st-logo-card" src="{% static 'img/logo-oliva.png' %}" alt="Stitch">
             <h2>O que é Stitch?</h2>
             <p>
-                Somos uma plataforma de consulta ESG ao setor têxtil. <br> 
+                Somos uma plataforma de consulta ESG ao setor têxtil. <br>
                 Ajudamos pequenas e médias empresas <br>
                 a implementar estratégias sustentáveis e viáveis.
             </p>
@@ -67,9 +71,75 @@
         </div>
     </section>
 </main>
+
+<section class="ec-section" aria-label="Tópicos sobre ESG">
+    <div class="ec-carousel">
+        <button class="ec-arrow prev" type="button" aria-label="Tópico anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4M10 6l-6 6 6 6"/></svg>
+        </button>
+
+        <div class="ec-stage" id="ec-stage">
+            <a class="ec-card" href="{% url 'entenda_esg' %}#historia">
+                <img src="{% static 'img/passado-textil.jpg' %}" alt="" style="object-position: 50% 50%">
+                <div class="ec-glass">
+                    <span class="ec-tag">01 · História</span>
+                    <h3>O passado da indústria</h3>
+                    <p>Fábricas tradicionais, produção em larga escala e pouca atenção ao impacto ambiental e social.</p>
+                </div>
+            </a>
+            <a class="ec-card" href="{% url 'entenda_esg' %}#origem">
+                <img src="{% static 'img/kofi-annan_historia_esg.jpg' %}" alt="" style="object-position: 43% 30%">
+                <div class="ec-glass">
+                    <span class="ec-tag">02 · Origem</span>
+                    <h3>O princípio do ESG</h3>
+                    <p>Em 2004, Kofi Annan levou à ONU o chamado para integrar critérios ambientais e sociais.</p>
+                </div>
+            </a>
+            <a class="ec-card" href="{% url 'entenda_esg' %}#desafios">
+                <img src="{% static 'img/dor-do-cliente.jpg' %}" alt="" style="object-position: 13% 30%">
+                <div class="ec-glass">
+                    <span class="ec-tag">03 · Desafios</span>
+                    <h3>As dores do cliente</h3>
+                    <p>Pressão do mercado, incerteza dos gestores e exigências regulatórias crescentes.</p>
+                </div>
+            </a>
+            <a class="ec-card" href="{% url 'entenda_esg' %}#beneficios">
+                <img src="{% static 'img/beneficios-esg.png' %}" alt="" style="object-position: 50% 55%">
+                <div class="ec-glass">
+                    <span class="ec-tag">04 · Benefícios</span>
+                    <h3>Benefícios do ESG</h3>
+                    <p>Valor estratégico, resiliência, reputação e crescimento saudável para o seu negócio.</p>
+                </div>
+            </a>
+            <a class="ec-card" href="{% url 'entenda_esg' %}#futuro">
+                <img src="{% static 'img/futuro-esg.jpg' %}" alt="" style="object-position: 46% 40%">
+                <div class="ec-glass">
+                    <span class="ec-tag">05 · Futuro</span>
+                    <h3>O futuro da sustentabilidade</h3>
+                    <p>Um ecossistema moderno, direitos trabalhistas assegurados e sustentabilidade.</p>
+                </div>
+            </a>
+            <a class="ec-card" href="{% url 'entenda_esg' %}#comecar">
+                <img src="{% static 'img/como-comecar.jpg' %}" alt="" style="object-position: 28% 25%">
+                <div class="ec-glass">
+                    <span class="ec-tag">06 · Entenda</span>
+                    <h3>Como começar?</h3>
+                    <p>Primeiros passos práticos e um roteiro estratégico para sua empresa.</p>
+                </div>
+            </a>
+        </div>
+
+        <button class="ec-arrow next" type="button" aria-label="Próximo tópico">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+        </button>
+    </div>
+
+    <div class="ec-dots" id="ec-dots"></div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/esg-carrossel.js' %}"></script>
 <script>
     (function () {
         var interval = 8000;
