@@ -11,4 +11,5 @@ urlpatterns = [
     path('comparador_pdf/', views.comparador_pdf, name= 'comparador_pdf'),
     path('entrar/', views.entrar, name='entrar'),
     path('cadastrar/', views.cadastrar, name='cadastrar'),
+    path('sair/', views.sair, name='sair'),
 ]

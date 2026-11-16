@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'stitch/home.html')
@@ -17,6 +19,7 @@ def quem_somos(request):
 def simuladores(request):
     return render(request, 'stitch/simuladores.html')
 
+@login_required(login_url='home')
 def questionario(request):
     return render(request, "stitch/diagnostico.html")
     
@@ -74,4 +77,8 @@ def cadastrar(request):
             user = User.objects.create_user(username=email, email=email, password=senha)
             login(request,user)
             return redirect('diagnostico')
+    return redirect('home')
+
+def sair(request):
+    logout(request)
     return redirect('home')

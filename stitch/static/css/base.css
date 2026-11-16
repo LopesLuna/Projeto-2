@@ -216,6 +216,7 @@ body.st-body {
         0 0 calc(14 * var(--u)) rgba(214, 224, 120, .42),
         inset 0 0 calc(10 * var(--u)) rgba(214, 224, 120, .16);
     cursor: pointer;
+    text-decoration: none;
     transition: .25s;
 }
 .st-btn-login:hover { box-shadow: 0 0 calc(22 * var(--u)) rgba(214, 224, 120, .65), inset 0 0 calc(10 * var(--u)) rgba(214, 224, 120, .22); }
