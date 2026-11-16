@@ -8,5 +8,7 @@ urlpatterns = [
     path('simuladores/', views.simuladores, name='simuladores'),
     path('entenda-esg/', views.entenda_esg, name='entenda_esg'),
     path('diagnostico/', views.questionario, name='diagnostico'),
-    path('comparador_pdf/', views.comparador_pdf, name= 'comparador_pdf')
+    path('comparador_pdf/', views.comparador_pdf, name= 'comparador_pdf'),
+    path('entrar/', views.entrar, name='entrar'),
+    path('cadastrar/', views.cadastrar, name='cadastrar'),
 ]
