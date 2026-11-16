@@ -54,28 +54,37 @@
             <path d="M57 75 C 70 63, 84 54, 92 47" stroke="#7f9136" stroke-opacity=".55" stroke-width="1.1"/>
         </svg>
     </footer>
-
+{% if messages %}
+<div class="st-mensagens">
+    {% for m in messages %}
+    <p class="st-mensagem">{{ m }}</p>
+    {% endfor %}
+</div>
+{% endif %}
     <!-- Popup de login -->
     <div class="st-modal" id="modal-login" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
         <div class="st-modal-fundo" data-fechar></div>
         <div class="st-modal-painel">
-            <button class="st-modal-fechar" data-fechar type="button" aria-label="Fechar">×</button>
+            <button class="st-modal-fechar" data-fechar type="button" aria-label="Fechar">x</button>
             <h2 id="titulo-login">Entrar no Stitch</h2>
             <p class="st-modal-sub">Acesse sua conta para continuar sua simulação ESG.</p>
 
-            <form>
+            <form method="post" action="{% url 'entrar' %}">
+                {% csrf_token %}
                 <div class="st-campo">
                     <label for="login-email">E-mail</label>
-                    <input id="login-email" type="email" placeholder="seu@email.com" autocomplete="email">
+                    <input id="login-email" name="email" type="email" placeholder="seu@email.com" autocomplete="email">
                 </div>
                 <div class="st-campo">
                     <label for="login-senha">Senha</label>
-                    <input id="login-senha" type="password" placeholder="Digite sua senha" autocomplete="current-password">
+                    <input id="login-senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password">
                 </div>
                 <button class="st-btn" type="submit">Entrar</button>
+                <p class="st-modal-rodape">Ainda não tem conta?
+                    <button type="submit" formaction="{% url 'cadastrar' %}">Criar conta</button>
+                </p>
             </form>
 
-            <p class="st-modal-rodape">Ainda não tem conta? <a href="#">Criar conta</a></p>
         </div>
     </div>
 
@@ -102,7 +111,6 @@
                 document.addEventListener('keydown', e => {
                     if (e.key === 'Escape' && modal.classList.contains('aberto')) fecharModal();
                 });
-                modal.querySelector('form').addEventListener('submit', e => e.preventDefault());
             }
 
             /* ---- menu no celular ---- */

@@ -1,0 +1,461 @@
+/* ==========================================================================
+   Página Simuladores — cards Simule / Veja
+
+   O leiaute é controlado por data-attributes que o simuladores.js escreve:
+     .duo-stage[data-state]  = neutral | simule | veja
+     .duo-card[data-role]    = idle | active | min
+     .duo-card[data-started] = true | false   (jogo/quiz já foi iniciado?)
+
+   O CSS do jogo em si continua em style.css (tudo escopado em
+   #trama-game-container). Aqui só mora o que é da página.
+   ========================================================================== */
+
+.simulacao {
+  --sim-ink: #2e3a0c;
+  --sim-paper: #fffdf7;
+  --sim-line: #e3e4d9;
+  --sim-ok: #2d6a4f;
+  --sim-err: #9b2226;
+  --sim-ease: cubic-bezier(.22, 1, .36, 1);
+  --sim-dur: .6s;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8px 0 56px;
+}
+
+/* display de autor ganha do [hidden] padrão do navegador; garante o oposto */
+.simulacao [hidden] { display: none !important; }
+
+.simulacao-titulo {
+  margin: 24px 0 28px;
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--verde-escuro);
+}
+
+/* ---------- Palco: os cards ficam em posição absoluta ----------
+   Assim left/top/width/height podem ser animados com transition e a troca
+   entre os 3 leiautes (lado a lado, topo+faixa, coluna+grande) é suave. */
+.duo-stage {
+  --gap: 24px;
+  --strip: 76px;   /* altura do card recolhido no modo Simule */
+  --rail: 150px;   /* largura do card recolhido no modo Veja  */
+  --h-neutral: 420px;
+  --h-active: clamp(620px, calc(100vh - 250px), 940px);
+
+  position: relative;
+  height: var(--h-neutral);
+  transition: height var(--sim-dur) var(--sim-ease);
+}
+
+.duo-stage[data-state="simule"],
+.duo-stage[data-state="veja"] {
+  height: var(--h-active);
+}
+
+.duo-card {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--sim-bg);
+  color: var(--sim-fg);
+  box-shadow: 0 0 0 rgba(28, 49, 39, 0);
+  transition:
+    left var(--sim-dur) var(--sim-ease),
+    top var(--sim-dur) var(--sim-ease),
+    width var(--sim-dur) var(--sim-ease),
+    height var(--sim-dur) var(--sim-ease),
+    background-color var(--sim-dur) ease,
+    color var(--sim-dur) ease,
+    box-shadow var(--sim-dur) ease,
+    transform .25s ease;
+}
+
+/* 1) Neutro: lado a lado */
+.duo-card--simule {
+  --sim-bg: var(--verde-claro);
+  --sim-fg: var(--sim-ink);
+  left: 0;
+  top: 0;
+  width: calc(50% - var(--gap) / 2);
+  height: 100%;
+}
+
+.duo-card--veja {
+  --sim-bg: var(--verde-escuro);
+  --sim-fg: #fff;
+  left: calc(50% + var(--gap) / 2);
+  top: 0;
+  width: calc(50% - var(--gap) / 2);
+  height: 100%;
+}
+
+/* 2) Simule ativo: Simule grande em cima, Veja vira uma faixa embaixo */
+.duo-stage[data-state="simule"] .duo-card--simule {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(100% - var(--strip) - var(--gap));
+}
+
+.duo-stage[data-state="simule"] .duo-card--veja {
+  left: 0;
+  top: calc(100% - var(--strip));
+  width: 100%;
+  height: var(--strip);
+}
+
+/* 3) Veja ativo: Simule vira uma coluna estreita, Veja ocupa o resto */
+.duo-stage[data-state="veja"] .duo-card--simule {
+  left: 0;
+  top: 0;
+  width: var(--rail);
+  height: 100%;
+}
+
+.duo-stage[data-state="veja"] .duo-card--veja {
+  left: calc(var(--rail) + var(--gap));
+  top: 0;
+  width: calc(100% - var(--rail) - var(--gap));
+  height: 100%;
+}
+
+/* card ativo ganha fundo claro (o jogo e o quiz foram feitos para fundo creme) */
+.duo-card[data-role="active"] {
+  --sim-bg: var(--sim-paper);
+  --sim-fg: var(--sim-ink);
+  box-shadow: 0 20px 50px rgba(28, 49, 39, .14);
+}
+
+.duo-stage[data-state="neutral"] .duo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(28, 49, 39, .18);
+}
+
+.duo-card[data-role="min"]:hover { filter: brightness(1.08); }
+
+/* ---------- Botão invisível que cobre o card quando ele não está ativo ---------- */
+.duo-open {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.duo-open:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: -8px;
+}
+
+.duo-card[data-role="active"] .duo-open { display: none; }
+
+/* ---------- Cabeçalho do card (título + subtítulo + Jogar) ---------- */
+.duo-head {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.duo-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.05;
+  transition: font-size var(--sim-dur) var(--sim-ease);
+}
+
+.duo-sub {
+  max-width: 28ch;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.duo-card[data-role="active"] .duo-sub { max-width: 44ch; }
+
+/* recolhido: só o título (e a etiqueta, se houver progresso) */
+.duo-card[data-role="min"] .duo-head { padding: 8px; gap: 4px; }
+.duo-card[data-role="min"] .duo-title { font-size: 1.35rem; }
+.duo-card[data-role="min"] .duo-sub { display: none; }
+
+/* progresso guardado: mostra a etiqueta enquanto o card não está ativo */
+.duo-badge {
+  display: none;
+  padding: 3px 12px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.duo-card[data-started="true"]:not([data-role="active"]) .duo-badge { display: inline-block; }
+
+.duo-play {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 14px 32px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--verde-escuro);
+  color: #fff;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .2s ease, background-color .2s ease;
+}
+
+.duo-card[data-role="active"][data-started="false"] .duo-play { display: inline-flex; }
+.duo-play:hover { transform: translateY(-2px); background: var(--verde-medio); }
+.duo-play:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 3px; }
+
+/* depois de iniciado, o cabeçalho some e entra o conteúdo (jogo / quiz) */
+.duo-card[data-role="active"][data-started="true"] .duo-head { display: none; }
+
+/* ---------- Voltar ao modo neutro ---------- */
+.duo-back {
+  display: none;
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  z-index: 4;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  background: var(--sim-paper);
+  color: var(--sim-ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+
+.duo-card[data-role="active"] .duo-back { display: inline-flex; }
+.duo-back:hover { background: #eef0e1; }
+.duo-back:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 2px; }
+
+/* ---------- Corpo (jogo / quiz): rola por dentro do card ---------- */
+.duo-body {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: auto;
+  padding: 68px 20px 24px;
+}
+
+.duo-card[data-role="active"][data-started="true"] .duo-body {
+  display: block;
+  animation: sim-in .5s .25s both;
+}
+
+@keyframes sim-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Link "simule com seus dados reais!" ---------- */
+.duo-cta {
+  display: block;
+  width: fit-content;
+  margin: 28px auto 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--verde-escuro);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+.duo-cta:hover { color: var(--verde-medio); }
+.duo-cta:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 4px; border-radius: 4px; }
+
+/* ==========================================================================
+   Quiz (card Veja)
+   ========================================================================== */
+.quiz {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+  color: var(--sim-ink);
+}
+
+.quiz-progress {
+  margin-bottom: 10px;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--verde-medio);
+}
+
+.quiz-question {
+  margin-bottom: 22px;
+  font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.quiz-choices { display: grid; gap: 12px; }
+
+.quiz-choice {
+  position: relative;
+  padding: 16px 52px 16px 20px;
+  border: 2px solid var(--sim-line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--sim-ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+.quiz-choice:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--verde-medio); }
+.quiz-choice:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 2px; }
+.quiz-choice:disabled { cursor: default; color: var(--sim-ink); }
+.quiz-choice:disabled:not(.is-correct):not(.is-wrong) { opacity: .55; }
+
+.quiz-choice.is-correct { border-color: var(--sim-ok); background: #eaf3e8; }
+.quiz-choice.is-wrong   { border-color: var(--sim-err); background: #fbede8; }
+
+/* ícone além da cor, para não depender só de cor */
+.quiz-choice.is-correct::after,
+.quiz-choice.is-wrong::after {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.quiz-choice.is-correct::after { content: "✓"; color: var(--sim-ok); }
+.quiz-choice.is-wrong::after   { content: "✗"; color: var(--sim-err); }
+
+.quiz-feedback {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border-left: 5px solid var(--sim-ok);
+  border-radius: 14px;
+  background: #f3f1e6;
+  line-height: 1.5;
+}
+
+.quiz-feedback.is-wrong { border-left-color: var(--sim-err); }
+.quiz-feedback__title { margin-bottom: 6px; font-weight: 800; }
+.quiz-source { margin-top: 8px; font-size: .8rem; font-weight: 500; opacity: .75; }
+
+.quiz-next,
+.quiz-restart {
+  margin-top: 16px;
+  padding: 12px 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--verde-escuro);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .2s ease, transform .2s ease;
+}
+
+.quiz-next:hover,
+.quiz-restart:hover { background: var(--verde-medio); transform: translateY(-2px); }
+.quiz-next:focus-visible,
+.quiz-restart:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 3px; }
+
+.result-highlight { margin: 6px 0 14px; font-size: 1.2rem; font-weight: 600; }
+
+.result-highlight span {
+  display: block;
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--verde-escuro);
+}
+
+.quiz-result-text { line-height: 1.5; max-width: 52ch; }
+
+/* ==========================================================================
+   Celular: os cards empilham (neutro) e a coluna estreita vira faixa no topo
+   ========================================================================== */
+@media (max-width: 720px) {
+  .duo-stage {
+    --gap: 16px;
+    --strip: 68px;
+    --h-neutral: 480px;
+    --h-active: clamp(560px, calc(100vh - 200px), 900px);
+  }
+
+  .duo-card--simule {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(50% - var(--gap) / 2);
+  }
+
+  .duo-card--veja {
+    left: 0;
+    top: calc(50% + var(--gap) / 2);
+    width: 100%;
+    height: calc(50% - var(--gap) / 2);
+  }
+
+  .duo-stage[data-state="veja"] .duo-card--simule {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: var(--strip);
+  }
+
+  .duo-stage[data-state="veja"] .duo-card--veja {
+    left: 0;
+    top: calc(var(--strip) + var(--gap));
+    width: 100%;
+    height: calc(100% - var(--strip) - var(--gap));
+  }
+
+  .duo-body { padding: 64px 12px 20px; }
+  .duo-title { font-size: 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .duo-stage,
+  .duo-card,
+  .duo-title { transition: none; }
+
+  .duo-card[data-role="active"][data-started="true"] .duo-body { animation: none; }
+}
+@media (max-width: 860px){
+  .duo-card #trama-game-container .dashboard {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+}
+
+.duo-card #trama-game-container .choices {
+    align-content: start;
+    grid-auto-rows: min-content;
+  }

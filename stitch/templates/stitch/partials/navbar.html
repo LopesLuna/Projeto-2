@@ -15,6 +15,7 @@
     </ul>
 
     <div class="st-nav-right">
+        {% if not user.is_authenticated %}
         <button class="st-btn-login" id="abrir-login" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="12" cy="8" r="4"/>
@@ -22,6 +23,9 @@
             </svg>
             Login
         </button>
+        {% else %}
+        <a class="st-btn-login" href="{% url 'sair' %}">Sair</a>
+        {% endif %}
         <button class="st-menu-btn" id="abrir-menu" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="st-nav-links">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
                 <path d="M4 7h16M4 12h16M4 17h16"/>

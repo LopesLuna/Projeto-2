@@ -39,12 +39,12 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 
 ## Stack Tecnológica
 
-- **Backend:** Python, Django
+- **Backend:** Python, JavaScript, Aplicação Django
 - **Banco de Dados:** PostgreSQL (produção via Render) / SQLite (desenvolvimento local)
 - **Frontend:** HTML, CSS
 - **Hospedagem:** Render
 - **Gestão do Projeto:** Jira, GitHub Issues
-- **Prototipação:** Figma
+- **Prototipação:** Figma, FigJam
 
 ---
 
@@ -86,7 +86,14 @@ Ao final, a plataforma indica os pontos fortes do negócio e as oportunidades de
 ---
 
 ### Entrega 04
-*(Em desenvolvimento)*
+
+**Status da infraestrutura:**
+- Testes de sistema (E2E) com Selenium.
+- Integração e deploy contínuos.
+
+**Acompanhamento:**
+- [Quadro do Jira](https://fdsmari.atlassian.net/jira/software/projects/FRAG/boards/2?filter=&groupBy=none)
+- [Screencast #5](https://youtu.be/Oorc_vXUeJ4?si=SLVnoFFFr9VPlo6g)
 
 ---
 
