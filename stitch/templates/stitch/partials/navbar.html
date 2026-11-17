@@ -24,6 +24,7 @@
             Login
         </button>
         {% else %}
+        <a class="st-btn-login" href="{% url 'minha_conta' %}">Minha conta</a>
         <a class="st-btn-login" href="{% url 'sair' %}">Sair</a>
         {% endif %}
         <button class="st-menu-btn" id="abrir-menu" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="st-nav-links">
