@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .models import Contato, Perfil
 
 def home(request):
     return render(request, 'stitch/home.html')
@@ -81,4 +82,23 @@ def cadastrar(request):
 
 def sair(request):
     logout(request)
+    return redirect('home')
+
+@login_required(login_url='home')
+def minha_conta(request):
+    perfil, _ = Perfil.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        request.user.first_name = request.POST.get('nome', '').strip()
+        request.user.save()
+        perfil.empresa = request.POST.get('empresa', '').strip()
+        perfil.save()
+        return redirect('minha_conta')
+    return render(request, 'stitch/minha_conta.html', {'perfil': perfil})
+
+@login_required(login_url='home')
+def excluir_conta(request):
+    if request.method == 'POST':
+        user = request.user
+        logout(request)
+        user.delete()
     return redirect('home')
