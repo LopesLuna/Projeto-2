@@ -178,7 +178,7 @@
       erro(e.message || 'Não foi possível ler os PDFs.');
     } finally {
       botao.disabled = false;
-      botao.textContent = 'Comparar';
+      botao.textContent = 'Comparar PDF';
     }
   });
 })();

@@ -69,9 +69,9 @@ function montarGrafico(atual){
   const pdf=$("pdf");
   let btn=$("btn-comparar");
   if(!btn){
-    btn=document.createElement("button");btn.id="btn-comparar";btn.type="button";btn.textContent="Comparar";
+    btn=document.createElement("button");btn.id="btn-comparar";btn.type="button";btn.textContent="Comparar PDF";
     btn.title="Comparar com um diagnóstico anterior (PDF gerado por esta página)";
-    if($("restart"))btn.className=$("restart").className; // mesmo visual do botão "Refazer questionário"
+      if(pdf)btn.className=pdf.className; // mesmo visual do botão "Gerar PDF" (verde)
     if(pdf&&pdf.parentElement){
       let grupo=$("acoes-dir");
       if(!grupo){ // agrupa "Comparar" e "Gerar PDF" lado a lado, à direita
