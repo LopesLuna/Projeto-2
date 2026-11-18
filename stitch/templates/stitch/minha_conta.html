@@ -2,7 +2,10 @@
 
 {% block title %}Minha conta - Stitch{% endblock %}
 
-{% block content %}
+{% block block %}
+<div class="st-portal">
+    {% include 'stitch/partials/portalnav.html' %}
+    <section class="st-portal-conteudo">
 <h1 class="st-title">Minha conta</h1>
 <p class="st-lead">{{ user.email }}</p>
 

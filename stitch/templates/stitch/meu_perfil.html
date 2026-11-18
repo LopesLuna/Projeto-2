@@ -1,0 +1,23 @@
+{% extends 'stitch/base.html' %}
+
+{% block title %}Meu perfil - Stitch{% endblock %}
+
+{% block main %}
+<div class="st-portal">
+    {% include 'stitch/partials/portalnav.html' %}
+
+    <section class="st-portal-conteudo">
+        <h1 class="st-title">Olá{% if user.first_name %}, {{ user.first_name }}{% endif %}!</h1>
+
+        <div class="st-panel">
+            <p class="st-lead">Pronto para avaliar sua empresa?</p>
+            <a class="st-btn" href="{% url 'diagnostico' %}">Fazer diagnóstico</a>
+        </div>
+
+        <div class="st-panel" id="historico">
+            <h2>Histórico</h2>
+            <p class="st-lead">Seus diagnósticos anteriores vão aparecer aqui.</p>
+        </div>
+    </section>
+</div>
+{% endblock %}

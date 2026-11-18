@@ -1,0 +1,8 @@
+<aside class="st-portal-menu">
+    <p class="st-portal-nome">{{ user.first_name|default:user.email }}</p>
+    <a href="{% url 'meu_perfil' %}">Início</a>
+    <a href="{% url 'diagnostico' %}">Diagnóstico</a>
+    <a href="{% url 'meu_perfil' %}#historico">Histórico</a>
+    <a href="{% url 'minha_conta' %}">Configurações</a>
+    <a href="{% url 'sair' %}">Sair</a>
+</aside>
