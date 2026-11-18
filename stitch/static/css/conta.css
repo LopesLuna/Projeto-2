@@ -1,0 +1,247 @@
+/* ==========================================================================
+   Minha conta: evolução (ondas por pilar) e lista de relatórios
+   (cores da logo: #19401f, #699e2f, #ebebd7)
+   ========================================================================== */
+.st-conta {
+    position: relative;   /* referência para a dica do gráfico */
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.st-conta-topo { margin-bottom: 22px; text-align: center; }
+.st-conta-topo .st-title { margin-bottom: 4px; }
+.st-conta-email { font-size: 14px; color: #6b7a6c; }
+
+.st-conta-bloco {
+    margin-top: 18px;
+    padding: 24px 26px;
+    border-radius: 23px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .74), rgba(255, 255, 255, .5));
+    border: 1.5px solid rgba(255, 255, 255, .9);
+    box-shadow:
+        0 0 0 1px rgba(185, 215, 150, .4),
+        0 8px 28px rgba(25, 64, 31, .10);
+}
+
+.st-conta-cab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.st-conta-cab h2 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    color: #19401f;
+}
+
+/* ---------- faixas de nota (sempre com o rótulo, nunca só a cor) ---------- */
+.st-faixa--critico { --faixa: #c6534d; }
+.st-faixa--preocupante { --faixa: #d28a42; }
+.st-faixa--estavel,
+.st-faixa--excelente { --faixa: #3b785b; }
+.st-faixa--sem-dados { --faixa: #b9bfb0; }
+
+/* ---------- evolução ---------- */
+.st-cmp-filtros { display: flex; align-items: center; gap: 8px; color: #6b7a6c; }
+.st-cmp-filtros select {
+    height: 36px;
+    padding: 0 10px;
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #19401f;
+    background: #fffef8;
+    border: 1.2px solid rgba(25, 64, 31, .2);
+    border-radius: 999px;
+    cursor: pointer;
+}
+.st-cmp-filtros select:focus { outline: none; border-color: #699e2f; box-shadow: 0 0 0 3px rgba(105, 158, 47, .25); }
+
+.st-cmp-geral {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: #1e3322;
+}
+.st-cmp-geral-rot { font-size: 14px; color: #6b7a6c; }
+.st-cmp-geral strong { font-size: 24px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.st-cmp-var { font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.st-cmp-var.sobe { color: #2f6147; }
+.st-cmp-var.desce { color: #873a35; }
+.st-cmp-var.igual { color: #4a5a4b; }
+
+.st-cmp-legenda { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: #1e3322; }
+.st-cmp-leg { display: inline-flex; align-items: center; gap: 7px; }
+.st-cmp-amostra { display: inline-block; width: 12px; height: 12px; border-radius: 4px; }
+
+.st-onda { width: 100%; margin-top: 4px; }
+.st-onda svg { display: block; max-width: 100%; height: auto; overflow: visible; }
+.st-onda-grade { stroke: rgba(25, 64, 31, .10); stroke-width: 1; }
+.st-onda-escala { font-size: 11px; fill: #6b7a6c; font-variant-numeric: tabular-nums; }
+.st-onda-area { opacity: .16; }
+.st-onda-linha { fill: none; stroke-width: 2.5; stroke-linecap: round; }
+.st-onda-ponto { stroke: #fbfbf3; stroke-width: 2; }
+.st-onda-pilar { font-size: 12.5px; font-weight: 600; fill: #1e3322; }
+.st-onda-semdados { font-size: 12px; font-style: italic; fill: #6b7a6c; }
+.st-onda-mira { stroke: rgba(25, 64, 31, .35); stroke-width: 1; stroke-dasharray: 3 3; }
+.st-onda-alvo { fill: transparent; cursor: default; outline: none; }
+.st-onda-alvo:focus-visible { fill: rgba(105, 158, 47, .08); }
+
+.st-cmp-dica {
+    position: absolute;
+    z-index: 20;
+    max-width: 300px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #ebebd7;
+    background: #19401f;
+    box-shadow: 0 8px 20px rgba(10, 28, 14, .25);
+    pointer-events: none;
+}
+
+/* ---------- lista de relatórios ---------- */
+.st-rel-lista { display: grid; }
+.st-rel-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 18px;
+    padding: 12px 4px;
+    border-top: 1px solid rgba(25, 64, 31, .09);
+}
+.st-rel-item:first-child { border-top: 0; }
+
+.st-rel-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.st-rel-info strong { font-size: 15px; color: #19401f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.st-rel-info span { font-size: 12.5px; color: #6b7a6c; }
+
+.st-rel-nota { display: flex; align-items: baseline; gap: 8px; }
+.st-rel-nota strong { font-size: 20px; font-weight: 700; color: #1e3322; font-variant-numeric: tabular-nums; }
+.st-rel-nota span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4a5a4b;
+    white-space: nowrap;
+}
+.st-rel-nota span::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--faixa); }
+
+.st-rel-acoes { display: flex; align-items: center; gap: 4px; }
+.st-rel-acoes form { margin: 0; }
+.st-rel-baixar,
+.st-rel-excluir {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 34px;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, box-shadow .2s;
+}
+.st-rel-baixar {
+    padding: 0 14px;
+    color: #fff;
+    background: linear-gradient(180deg, #2f5f27, #19401f);
+    border: 1.2px solid rgba(185, 220, 140, .8);
+    box-shadow: 0 0 10px rgba(150, 200, 90, .3);
+}
+.st-rel-baixar:hover { box-shadow: 0 0 16px rgba(150, 200, 90, .6); }
+.st-rel-baixar:disabled { opacity: .6; cursor: progress; }
+.st-rel-excluir { width: 34px; padding: 0; color: #873a35; background: transparent; border: 1px solid transparent; }
+.st-rel-excluir:hover { background: #f8e6e3; border-color: #e6b8b0; }
+.st-rel-baixar svg,
+.st-rel-excluir svg { width: 16px; height: 16px; }
+.st-rel-baixar:focus-visible,
+.st-rel-excluir:focus-visible { outline: 2px solid #699e2f; outline-offset: 2px; }
+
+.st-conta-rodape {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(25, 64, 31, .09);
+    text-align: center;
+}
+.st-conta-dica { font-size: 13.5px; color: #6b7a6c; }
+.st-conta-erro {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    color: #873a35;
+    background: #fff4f2;
+    border: 1px solid #e6b8b0;
+}
+.st-conta-vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 10px 6px;
+    text-align: center;
+    color: #4a5a4b;
+}
+
+/* ---------- excluir conta (discreto, no fim da página) ---------- */
+.st-conta-perigo { margin: 26px auto 0; text-align: center; font-size: 13.5px; }
+/* "Excluir conta" é um botão (contorno vermelho); abre a confirmação embaixo */
+.st-conta-perigo summary {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 22px;
+    border-radius: 999px;
+    border: 1.4px solid #e6b8b0;
+    background: rgba(255, 255, 255, .7);
+    color: #873a35;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    transition: background .2s, box-shadow .2s;
+}
+.st-conta-perigo summary:hover { background: #fff4f2; box-shadow: 0 0 12px rgba(198, 83, 77, .2); }
+.st-conta-perigo summary:focus-visible { outline: 2px solid #c6534d; outline-offset: 3px; }
+.st-conta-perigo[open] summary { background: #fff4f2; }
+.st-conta-perigo summary::-webkit-details-marker { display: none; }
+.st-conta-perigo form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    color: #4a5a4b;
+}
+.st-conta-confirma { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.st-conta-confirma input { accent-color: #873a35; }
+.st-btn--perigo {
+    background: linear-gradient(180deg, #a5443d, #873a35);
+    border-color: rgba(230, 184, 176, .9);
+    box-shadow: 0 0 12px rgba(198, 83, 77, .25);
+}
+.st-btn--perigo:hover { box-shadow: 0 0 18px rgba(198, 83, 77, .45); }
+
+/* ---------- celular ---------- */
+@media (max-width: 640px) {
+    .st-conta-bloco { padding: 20px 14px; }
+    .st-cmp-filtros { width: 100%; }
+    .st-cmp-filtros select { flex: 1; min-width: 0; }
+    .st-rel-item { grid-template-columns: 1fr auto; gap: 8px 12px; }
+    .st-rel-acoes { grid-column: 1 / -1; justify-content: flex-end; margin-top: -4px; }
+}

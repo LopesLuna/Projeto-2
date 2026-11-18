@@ -2,7 +2,7 @@
   width: min(100%, 860px);
   margin: 0 auto;
   padding: clamp(32px, 6vw, 72px) 0;
-  color: #3a4230;
+  color: #1e3322;
 }
 
 .qz-topo {
@@ -11,7 +11,7 @@
 
 .qz-eyebrow,
 .qz-pilar {
-  color: #657637;
+  color: #416f27;
   font-size: .78rem;
   font-weight: 700;
   letter-spacing: .1em;
@@ -20,24 +20,24 @@
 
 .qz-topo h1 {
   margin: 8px 0 12px;
-  color: #3e4632;
+  color: #19401f;
   font-size: clamp(2rem, 5vw, 3rem);
   line-height: 1.1;
 }
 
 .qz-intro,
 .qz-dica {
-  color: #575b4c;
+  color: #4a5a4b;
   line-height: 1.65;
 }
 
 .qz-cartao {
   position: relative;
   padding: clamp(22px, 5vw, 40px);
-  border: 1px solid rgba(76, 87, 24, .16);
+  border: 1px solid rgba(25, 64, 31, .16);
   border-radius: 20px;
   background: #fffef8;
-  box-shadow: 0 12px 36px rgba(58, 66, 48, .08);
+  box-shadow: 0 12px 36px rgba(25, 64, 31, .08);
 }
 
 .qz-progresso-texto {
@@ -46,7 +46,7 @@
   gap: 16px;
   padding-top: 18px;
   margin-bottom: 10px;
-  color: #575b4c;
+  color: #4a5a4b;
   font-size: .9rem;
 }
 
@@ -54,14 +54,14 @@
   height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: #e7e8dc;
+  background: #e3e6d6;
 }
 
 .qz-progresso > div {
   width: 0;
   height: 100%;
   border-radius: inherit;
-  background: #758642;
+  background: #699e2f;
   transition: width .2s ease;
 }
 
@@ -72,7 +72,7 @@
 
 .qz-cartao > h2:not(#rtitle) {
   margin: 0 0 12px;
-  color: #3e4632;
+  color: #19401f;
   font-size: clamp(1.3rem, 3.5vw, 1.8rem);
   line-height: 1.35;
 }
@@ -90,10 +90,10 @@
 .qz-respostas .opt {
   width: 100%;
   padding: 14px 16px;
-  border: 1px solid #d8dccb;
+  border: 1px solid #d5ddc8;
   border-radius: 12px;
   background: #fff;
-  color: #3a4230;
+  color: #1e3322;
   cursor: pointer;
   font: inherit;
   text-align: left;
@@ -102,14 +102,14 @@
 
 .qz-respostas .opt:hover,
 .qz-respostas .opt[aria-pressed="true"] {
-  border-color: #758642;
-  background: #f0f2e7;
+  border-color: #699e2f;
+  background: #eef3e4;
 }
 
 .qz-respostas .opt:focus-visible,
 .qz-btn:focus-visible,
 .qz-respostas input:focus-visible {
-  outline: 3px solid rgba(117, 134, 66, .35);
+  outline: 3px solid rgba(105, 158, 47, .35);
   outline-offset: 2px;
 }
 
@@ -123,15 +123,15 @@
   width: min(100%, 380px);
   min-height: 48px;
   padding: 10px 12px;
-  border: 1px solid #cbd0bc;
+  border: 1px solid #c9d3bf;
   border-radius: 10px;
   background: #fff;
-  color: #3a4230;
+  color: #1e3322;
   font: inherit;
 }
 
 .qz-respostas .unit {
-  color: #575b4c;
+  color: #4a5a4b;
 }
 
 .qz-nav {
@@ -141,26 +141,48 @@
   margin-top: 30px;
 }
 
+/* mesmo estilo dos botões do resto do site (.st-btn em base.css):
+   verde da logo em degradê, borda clara e brilho verde */
 .qz-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 46px;
-  padding: 10px 20px;
-  border: 1px solid #4c5718;
+  padding: 10px 26px;
+  border: 1.4px solid rgba(185, 220, 140, .8);
   border-radius: 999px;
-  background: #4c5718;
+  background: linear-gradient(180deg, #2f5f27, #19401f);
+  box-shadow: 0 0 16px rgba(150, 200, 90, .4), inset 0 0 12px rgba(150, 200, 90, .16);
   color: #fff;
   cursor: pointer;
   font: inherit;
   font-weight: 600;
+  text-decoration: none;
+  transition: transform .25s, box-shadow .25s;
 }
 
+.qz-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px rgba(150, 200, 90, .65), inset 0 0 12px rgba(150, 200, 90, .22);
+}
+
+/* secundário: vidro claro com borda verde (como o "Voltar" de Simulações) */
 .qz-btn--sec {
-  background: transparent;
-  color: #4c5718;
+  background: rgba(255, 255, 255, .7);
+  border-color: rgba(25, 64, 31, .35);
+  box-shadow: 0 4px 14px rgba(25, 64, 31, .08);
+  color: #19401f;
+}
+
+.qz-btn--sec:hover:not(:disabled) {
+  background: #fff;
+  box-shadow: 0 0 16px rgba(150, 200, 90, .35);
 }
 
 .qz-btn:disabled {
   cursor: not-allowed;
   opacity: .48;
+  box-shadow: none;
 }
 
 .qz-pular {
@@ -170,7 +192,7 @@
   padding: 3px 0;
   border: 0;
   background: transparent;
-  color: #575b4c;
+  color: #4a5a4b;
   cursor: pointer;
   font: inherit;
   font-size: .78rem;
@@ -184,13 +206,13 @@
 }
 
 .qz-pular:focus-visible {
-  outline: 2px solid #758642;
+  outline: 2px solid #699e2f;
   outline-offset: 3px;
 }
 
 .qz-relatorio h2 {
   margin-bottom: 12px;
-  color: #3e4632;
+  color: #19401f;
   font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
@@ -212,7 +234,7 @@
   display: grid;
   gap: 8px;
   padding: 16px;
-  border: 1px solid #e1e3d8;
+  border: 1px solid #dde3d3;
   border-radius: 12px;
   background: #fff;
 }
@@ -277,7 +299,7 @@
 }
 
 .qz .qz-bar--empty {
-  background-color: #e7e8dc;
+  background-color: #e3e6d6;
 }
 
 .qz .qz-score {
@@ -290,12 +312,102 @@
 }
 
 .qz .tip {
-  color: #575b4c;
+  color: #4a5a4b;
   line-height: 1.5;
 }
 
 .qz .hidden {
   display: none !important;
+}
+
+.qz-status {
+  min-height: 1.4em;
+  margin-top: 14px;
+  color: #19401f;
+  font-weight: 600;
+}
+.qz-status a { color: #19401f; text-decoration: underline; }
+
+.qz-relatorio .qz-dica { margin: 22px 0 0; font-size: .92rem; }
+.qz-relatorio .qz-dica a { color: #19401f; font-weight: 600; text-decoration: underline; }
+
+/* ==========================================================================
+   Comparador de relatórios (comparador_pdf.html + comparador.js)
+   Só as duas áreas para soltar os PDFs e os botões: o resultado sai em PDF.
+   ========================================================================== */
+.qz-titulo {
+  margin: 8px 0 10px;
+  color: #19401f;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+
+.cmp { width: min(100%, 760px); }
+
+.cmp-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+/* área de arrastar: o input de arquivo cobre a área toda (clique e soltar funcionam) */
+.cmp-zona {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 190px;
+  padding: 24px 18px;
+  text-align: center;
+  border: 2px dashed rgba(25, 64, 31, .28);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .75), rgba(255, 255, 255, .5));
+  transition: border-color .2s, background .2s, box-shadow .2s;
+}
+.cmp-zona:hover,
+.cmp-zona.arrastando { border-color: #699e2f; background: #fff; box-shadow: 0 0 0 4px rgba(105, 158, 47, .14); }
+.cmp-zona:focus-within { outline: 3px solid rgba(105, 158, 47, .45); outline-offset: 2px; }
+.cmp-zona.tem-arquivo { border-style: solid; border-color: #699e2f; background: #f4f8ec; }
+
+.cmp-arquivo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.cmp-zona-icone { width: 34px; height: 34px; color: #699e2f; }
+.cmp-zona.tem-arquivo .cmp-zona-icone { color: #19401f; }
+.cmp-zona strong { font-size: 1.05rem; color: #19401f; }
+.cmp-zona-nome {
+  max-width: 100%;
+  font-size: .9rem;
+  color: #4a5a4b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cmp-zona.tem-arquivo .cmp-zona-nome { color: #19401f; font-weight: 600; }
+
+.cmp-erro,
+.cmp-ok {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  line-height: 1.45;
+}
+.cmp-erro { color: #873a35; background: #f3d9d7; border: 1px solid #e6b8b0; }
+.cmp-ok { color: #19401f; background: #eef5e4; border: 1px solid rgba(105, 158, 47, .45); font-weight: 600; }
+
+.cmp-acoes { margin-top: 22px; }
+
+@media (max-width: 620px) {
+  .cmp-campos { grid-template-columns: 1fr; }
+  .cmp-zona { min-height: 150px; }
 }
 
 .qz-erro {

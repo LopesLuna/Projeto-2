@@ -9,15 +9,18 @@
     --radius: 32px;
     --perspective: 2000px;
     --ease: cubic-bezier(.22, .8, .24, 1);
-    --olive-900: #2b3512;
-    --olive-500: #7a8a3a;
-    --olive-200: #d3d9b0;
-    --glow: rgba(160, 185, 70, .55);
+    --olive-900: #19401f;
+    --olive-500: #699e2f;
+    --olive-200: #cfe0b5;
+    --glow: rgba(105, 158, 47, .55);
 
     position: relative;
     padding: 72px 16px 56px;
     box-sizing: border-box;
-    overflow: visible;
+    /* os cards de trás passam da largura da tela: corta só na horizontal
+       (sem criar barra de rolagem lateral) e deixa o brilho vazar em cima/embaixo */
+    overflow-x: clip;
+    overflow-y: visible;
 }
 
 .ec-carousel {
@@ -48,7 +51,7 @@
     border-radius: var(--radius);
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, .35);
-    box-shadow: 0 25px 60px rgba(43, 53, 18, .25);
+    box-shadow: 0 25px 60px rgba(25, 64, 31, .25);
     background: var(--olive-900);
     color: #fff;
     text-decoration: none;
@@ -62,13 +65,14 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(15, 20, 5, .95) 0%, rgba(15, 20, 5, .6) 45%, transparent 80%);
+    background: linear-gradient(to top, rgba(8, 24, 10, .95) 0%, rgba(8, 24, 10, .6) 45%, transparent 80%);
     z-index: 2;
     pointer-events: none;
 }
 
 .ec-card.active {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, .5), 0 0 54px var(--glow), 0 32px 70px rgba(43, 53, 18, .45);
+    /* sem o brilho verde em volta: só a borda clara e a sombra */
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .5), 0 32px 70px rgba(25, 64, 31, .35);
 }
 
 .ec-card img {
@@ -88,7 +92,7 @@
     bottom: 24px;
     padding: 24px;
     border-radius: calc(var(--radius) - 8px);
-    background: rgba(30, 38, 12, .92);
+    background: rgba(16, 42, 22, .92);
     border: 1px solid rgba(255, 255, 255, .15);
     color: #fff;
     z-index: 5;
@@ -132,11 +136,11 @@
     padding: 0;
     cursor: pointer;
     color: #fff;
-    background: rgba(74, 90, 31, .65);
-    border: 1px solid rgba(211, 217, 176, .7);
+    background: rgba(25, 64, 31, .65);
+    border: 1px solid rgba(207, 224, 181, .7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 6px 18px rgba(43, 53, 18, .22);
+    box-shadow: 0 6px 18px rgba(25, 64, 31, .22);
     transition: background .25s;
 }
 
@@ -150,7 +154,7 @@
     stroke-linejoin: round;
 }
 
-.ec-arrow:hover { background: rgba(74, 90, 31, .9); }
+.ec-arrow:hover { background: rgba(25, 64, 31, .9); }
 .ec-arrow.prev { left: 16px; }
 .ec-arrow.next { right: 16px; }
 
@@ -168,22 +172,15 @@
     border: 0;
     padding: 0;
     cursor: pointer;
-    background: var(--olive-200);
-    transition: background .3s, box-shadow .3s;
+    /* iguais às bolinhas do banner (base.css): brancas, sem animação */
+    background: rgba(255, 255, 255, .4);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .35);
+    transition: background .3s;
 }
 
-.ec-dot.active {
-    background: var(--olive-500);
-    box-shadow: 0 0 12px var(--glow);
-}
+.ec-dot:hover { background: rgba(255, 255, 255, .75); }
 
-.ec-dot.stretch { animation: ec-dot-stretch .8s var(--ease); }
-
-@keyframes ec-dot-stretch {
-    0% { width: 12px; }
-    40% { width: 38px; }
-    100% { width: 12px; }
-}
+.ec-dot.active { background: #fff; }
 
 @media (max-width: 768px) {
     .ec-section { --card-w: 290px; --card-h: 440px; }
@@ -203,14 +200,14 @@
 .ec-pagina-topo h1 {
     font-size: clamp(34px, 4vw, 56px);
     font-weight: 700;
-    color: #2b3512;
+    color: #19401f;
     margin-bottom: 16px;
 }
 
 .ec-pagina-topo p {
     font-size: 18px;
     line-height: 1.7;
-    color: #2e2a24;
+    color: #1e3322;
     max-width: 72ch;
 }
 
@@ -228,8 +225,8 @@
     right: 0;
     height: 2px;
     border-radius: 2px;
-    background: rgba(222, 230, 140, .45);
-    box-shadow: 0 0 6px rgba(214, 224, 120, .25);
+    background: rgba(185, 220, 140, .45);
+    box-shadow: 0 0 6px rgba(150, 200, 90, .25);
     transition: background .6s, box-shadow .6s;
     pointer-events: none;
 }
@@ -239,31 +236,31 @@
 /* já visitado */
 .ec-topico.visitado::before,
 .ec-topico.visitado::after {
-    background: rgba(222, 230, 140, .78);
-    box-shadow: 0 0 16px rgba(214, 224, 120, .4), inset 0 0 12px rgba(214, 224, 120, .16);
+    background: rgba(185, 220, 140, .78);
+    box-shadow: 0 0 16px rgba(150, 200, 90, .4), inset 0 0 12px rgba(150, 200, 90, .16);
 }
 
 /* tópico em que a pessoa está agora */
 .ec-topico.ativo::before,
 .ec-topico.ativo::after {
-    background: #ecefa6;
-    box-shadow: 0 0 16px rgba(214, 224, 120, .65), 0 0 36px rgba(214, 224, 120, .45);
+    background: #cfe8a6;
+    box-shadow: 0 0 16px rgba(150, 200, 90, .65), 0 0 36px rgba(150, 200, 90, .45);
 }
 
-.ec-topico .ec-tag { color: var(--olive-500); }
+.ec-topico .ec-tag { color: #699e2f; }
 
 .ec-topico h2 {
     font-size: clamp(28px, 3.3vw, 44px);
     font-weight: 700;
     line-height: 1.15;
-    color: #2b3512;
+    color: #19401f;
     margin: 8px 0 16px;
 }
 
 .ec-topico p {
     font-size: 18px;
     line-height: 1.7;
-    color: #2e2a24;
+    color: #1e3322;
     max-width: 72ch;
     margin-bottom: 14px;
 }

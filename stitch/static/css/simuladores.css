@@ -11,11 +11,11 @@
    ========================================================================== */
 
 .simulacao {
-  --sim-ink: #2e3814;
-  --sim-olive: #4c5718;
-  --sim-olive-mid: #687937;
+  --sim-ink: #1e3322;
+  --sim-olive: #19401f;
+  --sim-olive-mid: #416f27;
   --sim-paper: rgba(255, 253, 247, 0.94);
-  --sim-line: rgba(76, 87, 24, 0.16);
+  --sim-line: rgba(25, 64, 31, 0.16);
   --sim-ok: #2d6a4f;
   --sim-err: #9b2226;
   --sim-ease: cubic-bezier(.22, 1, .36, 1);
@@ -28,7 +28,7 @@
   margin: 0 auto;
   padding: 12px 24px 64px;
   font-family: inherit; /* Herda 'Inter' do body.st-body (base.css) */
-  color: var(--st-text, #3a4230);
+  color: var(--st-text, #1e3322);
 }
 
 /* Pontos de luz oliva ao fundo para realçar a transparência do vidro fosco */
@@ -45,7 +45,7 @@
 .simulacao::before {
   width: 380px;
   height: 380px;
-  background: rgba(146, 168, 72, 0.32);
+  background: rgba(105, 158, 47, 0.32);
   top: 90px;
   left: 6%;
 }
@@ -53,7 +53,7 @@
 .simulacao::after {
   width: 420px;
   height: 420px;
-  background: rgba(76, 87, 24, 0.24);
+  background: rgba(25, 64, 31, 0.24);
   bottom: 40px;
   right: 6%;
 }
@@ -71,7 +71,7 @@
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -.035em;
-  color: var(--st-title, #3e4632);
+  color: var(--st-title, #19401f);
 }
 
 /* ---------- Palco: os cards ficam em posição absoluta ----------
@@ -147,13 +147,13 @@
 .duo-card--simule {
   --card-photo: url('../img/bg-simule.jpeg');
   --card-photo-pos: center 20%;
-  --sim-bg: linear-gradient(145deg, rgba(138, 158, 74, 0.26) 0%, rgba(92, 110, 42, 0.17) 100%);
+  --sim-bg: linear-gradient(145deg, rgba(105, 158, 47, 0.26) 0%, rgba(65, 111, 39, 0.17) 100%);
   --sim-fg: var(--sim-ink);
   --sim-border: rgba(255, 255, 255, 0.78);
   --sim-shadow:
-    0 0 0 1px rgba(138, 158, 74, 0.25),
-    0 16px 38px rgba(60, 70, 30, 0.12),
-    0 0 18px rgba(244, 248, 190, 0.45);
+    0 0 0 1px rgba(105, 158, 47, 0.25),
+    0 16px 38px rgba(25, 64, 31, 0.12),
+    0 0 18px rgba(225, 240, 200, 0.45);
   left: 0;
   top: 0;
   width: calc(50% - var(--gap) / 2);
@@ -163,13 +163,13 @@
 .duo-card--veja {
   --card-photo: url('../img/bg-entenda.jpeg');
   --card-photo-pos: center 25%;
-  --sim-bg: linear-gradient(145deg, rgba(72, 86, 30, 0.62) 0%, rgba(48, 60, 18, 0.54) 100%);
+  --sim-bg: linear-gradient(145deg, rgba(25, 64, 31, 0.62) 0%, rgba(16, 42, 22, 0.54) 100%);
   --sim-fg: #fffdf7;
-  --sim-border: rgba(222, 230, 140, 0.52);
+  --sim-border: rgba(185, 220, 140, 0.52);
   --sim-shadow:
-    0 0 0 1px rgba(76, 87, 24, 0.25),
-    0 16px 38px rgba(46, 58, 18, 0.18),
-    0 0 18px rgba(214, 224, 120, 0.22);
+    0 0 0 1px rgba(25, 64, 31, 0.25),
+    0 16px 38px rgba(18, 48, 24, 0.18),
+    0 0 18px rgba(150, 200, 90, 0.22);
   left: calc(50% + var(--gap) / 2);
   top: 0;
   width: calc(50% - var(--gap) / 2);
@@ -212,8 +212,8 @@
   --sim-fg: var(--sim-ink);
   --sim-border: rgba(255, 255, 255, 0.92);
   --sim-shadow:
-    0 0 0 1px rgba(222, 228, 160, 0.45),
-    0 20px 50px rgba(60, 70, 30, 0.16);
+    0 0 0 1px rgba(185, 215, 150, 0.45),
+    0 20px 50px rgba(25, 64, 31, 0.16);
 }
 
 /* Ativa a foto meio transparente de fundo na tela de abertura do simulador */
@@ -224,21 +224,21 @@
 
 .duo-stage[data-state="neutral"] .duo-card--simule:hover {
   transform: translateY(-5px);
-  --sim-bg: linear-gradient(145deg, rgba(138, 158, 74, 0.34) 0%, rgba(92, 110, 42, 0.24) 100%);
+  --sim-bg: linear-gradient(145deg, rgba(105, 158, 47, 0.34) 0%, rgba(65, 111, 39, 0.24) 100%);
   --sim-shadow:
-    0 0 0 1px rgba(138, 158, 74, 0.35),
-    0 22px 44px rgba(60, 70, 30, 0.16),
-    0 0 22px rgba(244, 248, 190, 0.65);
+    0 0 0 1px rgba(105, 158, 47, 0.35),
+    0 22px 44px rgba(25, 64, 31, 0.16),
+    0 0 22px rgba(225, 240, 200, 0.65);
 }
 
 .duo-stage[data-state="neutral"] .duo-card--veja:hover {
   transform: translateY(-5px);
-  --sim-bg: linear-gradient(145deg, rgba(72, 86, 30, 0.72) 0%, rgba(48, 60, 18, 0.64) 100%);
-  --sim-border: rgba(236, 240, 166, 0.72);
+  --sim-bg: linear-gradient(145deg, rgba(25, 64, 31, 0.72) 0%, rgba(16, 42, 22, 0.64) 100%);
+  --sim-border: rgba(207, 232, 166, 0.72);
   --sim-shadow:
-    0 0 0 1px rgba(76, 87, 24, 0.35),
-    0 22px 44px rgba(46, 58, 18, 0.24),
-    0 0 24px rgba(214, 224, 120, 0.35);
+    0 0 0 1px rgba(25, 64, 31, 0.35),
+    0 22px 44px rgba(18, 48, 24, 0.24),
+    0 0 24px rgba(150, 200, 90, 0.35);
 }
 
 .duo-card[data-role="min"]:hover { filter: brightness(1.06); }
@@ -258,7 +258,7 @@
 }
 
 .duo-open:focus-visible {
-  outline: 2px solid #ecefa6;
+  outline: 2px solid #cfe8a6;
   outline-offset: -8px;
 }
 
@@ -300,23 +300,23 @@
 
 .duo-card--simule .duo-icon {
   background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(76, 87, 24, 0.22);
+  border: 1px solid rgba(25, 64, 31, 0.22);
   color: var(--sim-olive);
 }
 
 .duo-card--veja .duo-icon {
   background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(222, 230, 140, 0.38);
-  color: #ecefa6;
+  border: 1px solid rgba(185, 220, 140, 0.38);
+  color: #cfe8a6;
 }
 
 .duo-card[data-role="active"] .duo-icon {
   background: rgba(255, 253, 247, 0.92);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(76, 87, 24, 0.24);
+  border: 1px solid rgba(25, 64, 31, 0.24);
   color: var(--sim-olive);
-  box-shadow: 0 4px 14px rgba(46, 56, 20, 0.10);
+  box-shadow: 0 4px 14px rgba(18, 48, 24, 0.10);
 }
 
 .duo-stage[data-state="neutral"] .duo-card:hover .duo-icon {
@@ -378,10 +378,10 @@
   margin-top: 14px;
   height: 48px;
   padding: 0 34px;
-  border: 1.4px solid rgba(222, 230, 140, .8);
+  border: 1.4px solid rgba(185, 220, 140, .8);
   border-radius: 999px;
-  background: linear-gradient(180deg, #687937, #4c5a22);
-  box-shadow: 0 4px 18px rgba(46, 58, 18, 0.25), 0 0 16px rgba(214, 224, 120, .4), inset 0 0 12px rgba(214, 224, 120, .16);
+  background: linear-gradient(180deg, #2f5f27, #19401f);
+  box-shadow: 0 4px 18px rgba(18, 48, 24, 0.25), 0 0 16px rgba(150, 200, 90, .4), inset 0 0 12px rgba(150, 200, 90, .16);
   color: #fff;
   font: inherit;
   font-size: 1rem;
@@ -393,9 +393,9 @@
 .duo-card[data-role="active"][data-started="false"] .duo-play { display: inline-flex; }
 .duo-play:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(46, 58, 18, 0.3), 0 0 24px rgba(214, 224, 120, .65), inset 0 0 12px rgba(214, 224, 120, .22);
+  box-shadow: 0 6px 22px rgba(18, 48, 24, 0.3), 0 0 24px rgba(150, 200, 90, .65), inset 0 0 12px rgba(150, 200, 90, .22);
 }
-.duo-play:focus-visible { outline: 2px solid #ecefa6; outline-offset: 3px; }
+.duo-play:focus-visible { outline: 2px solid #cfe8a6; outline-offset: 3px; }
 
 /* depois de iniciado, o cabeçalho some e entra o conteúdo (jogo / quiz) */
 .duo-card[data-role="active"][data-started="true"] .duo-head { display: none; }
@@ -410,7 +410,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 18px;
-  border: 1.4px solid rgba(76, 87, 24, 0.35);
+  border: 1.4px solid rgba(25, 64, 31, 0.35);
   border-radius: 999px;
   background: rgba(255, 253, 247, 0.90);
   -webkit-backdrop-filter: blur(8px);
@@ -462,22 +462,22 @@
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.48));
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border: 1.4px solid rgba(76, 87, 24, 0.28);
-  box-shadow: 0 6px 20px rgba(96, 106, 56, 0.12);
+  border: 1.4px solid rgba(25, 64, 31, 0.28);
+  box-shadow: 0 6px 20px rgba(25, 64, 31, 0.12);
   font-family: inherit;
   font-size: 15px;
   font-weight: 600;
-  color: var(--st-olive, #4c5718);
+  color: var(--st-olive, #19401f);
   text-decoration: none;
   transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
 }
 
 .duo-cta:hover {
   transform: translateY(-2px);
-  background: linear-gradient(180deg, #687937, #4c5a22);
-  border-color: rgba(222, 230, 140, .8);
+  background: linear-gradient(180deg, #2f5f27, #19401f);
+  border-color: rgba(185, 220, 140, .8);
   color: #fff;
-  box-shadow: 0 0 20px rgba(214, 224, 120, .55);
+  box-shadow: 0 0 20px rgba(150, 200, 90, .55);
 }
 
 .duo-cta:focus-visible { outline: 2px solid var(--sim-olive); outline-offset: 4px; }
@@ -552,7 +552,7 @@
   padding: 18px 20px;
   border-left: 5px solid var(--sim-ok);
   border-radius: 14px;
-  background: #f3f1e6;
+  background: #f1f2e4;
   line-height: 1.5;
 }
 
@@ -564,9 +564,9 @@
 .quiz-restart {
   margin-top: 16px;
   padding: 12px 28px;
-  border: 1.4px solid rgba(222, 230, 140, .8);
+  border: 1.4px solid rgba(185, 220, 140, .8);
   border-radius: 999px;
-  background: linear-gradient(180deg, #687937, #4c5a22);
+  background: linear-gradient(180deg, #2f5f27, #19401f);
   color: #fff;
   font: inherit;
   font-weight: 600;
@@ -577,7 +577,7 @@
 .quiz-next:hover,
 .quiz-restart:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(214, 224, 120, .55);
+  box-shadow: 0 0 18px rgba(150, 200, 90, .55);
 }
 
 .result-highlight { margin: 6px 0 14px; font-size: 1.2rem; font-weight: 600; }
@@ -658,4 +658,26 @@
 .duo-card #trama-game-container .choices {
   align-content: start;
   grid-auto-rows: min-content;
+}
+/* Tons do jogo alinhados à logo (sobrescreve as variáveis do style.css só dentro
+   desta página). Vermelho/laranja/verde dos carimbos e do positivo/negativo
+   continuam iguais, porque indicam resultado. */
+.duo-card #trama-game-container {
+  --ink: #1e3322;
+  --muted: #6b7a6c;
+  --paper: #f4f4e6;
+  --line: #e3e6d6;
+  --deep: #19401f;
+}
+
+/* Jogo no celular: sem as setas laterais (a carta ganha a largura toda) e as
+   duas escolhas uma embaixo da outra, para nenhuma sair da carta */
+@media (max-width: 720px) {
+  .duo-card #trama-game-container .stage-arrow { display: none; }
+  .duo-card #trama-game-container .card-stage { gap: 0; }
+  .duo-card #trama-game-container .choices { grid-template-columns: 1fr; }
+  /* os 4 indicadores cabem na largura do card (o selo "Estável" desce se faltar espaço) */
+  .duo-card #trama-game-container .dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .duo-card #trama-game-container .indicator { min-width: 0; padding: 12px; }
+  .duo-card #trama-game-container .indicator-head { flex-wrap: wrap; }
 }

@@ -1,35 +1,103 @@
 {% extends 'stitch/base.html' %}
+{% load static %}
 
 {% block title %}Minha conta - Stitch{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/conta.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1 class="st-title">Minha conta</h1>
-<p class="st-lead">{{ user.email }}</p>
+<div class="st-conta" id="minha-conta" data-logo="{% static 'img/logo-s-creme.png' %}">
 
-<div class="st-panel">
-    <form method="post" class="st-form">
-        {% csrf_token %}
-        
-        <label for="nome">Seu nome*</label>
-        <input type="text" name="nome" id="nome" value="{{ user.first_name }}" maxlength="150" required>
+    <header class="st-conta-topo">
+        <h1 class="st-title">Olá{% if user.first_name %}, {{ user.first_name }}{% endif %}!</h1>
+        <p class="st-conta-email">{{ user.email }}</p>
+    </header>
 
-        <label for="empresa">Nome da empresa</label>
-        <input type="text" name="empresa" id="empresa" value="{{ perfil.empresa }}" maxlength="150">
+    {% if relatorios|length >= 2 %}
+    <!-- ===== Evolução: duas ondas por pilar ===== -->
+    <section class="st-conta-bloco" id="comparacao" aria-labelledby="titulo-comparacao">
+        <div class="st-conta-cab">
+            <h2 id="titulo-comparacao">Evolução</h2>
+            <div class="st-cmp-filtros">
+                <select id="cmp-antes" aria-label="Relatório de antes"></select>
+                <span aria-hidden="true">→</span>
+                <select id="cmp-depois" aria-label="Relatório de depois"></select>
+            </div>
+        </div>
+        <p class="st-cmp-geral" id="cmp-geral" aria-live="polite"></p>
+        <div class="st-cmp-legenda" id="cmp-legenda"></div>
+        <div class="st-onda" id="cmp-onda"></div>
+        <div class="st-cmp-dica" id="cmp-dica" role="tooltip" hidden></div>
+    </section>
+    {% endif %}
 
-        <button class="st-btn" type="submit">Salvar</button>
-    </form>
-</div>
-
-<div class="st-panel">
-    <form method="post" action="{% url 'excluir_conta' %}" class="st-form">
-        {% csrf_token %}
-
-        <div class="st-radio-item">
-            <input type="checkbox" name="confirmar" id="confirmar" required>
-            <label for="confirmar">Entendo que isso apaga minha conta para sempre.</label>
+    <!-- ===== Relatórios ===== -->
+    <section class="st-conta-bloco" id="biblioteca" aria-labelledby="titulo-biblioteca">
+        <div class="st-conta-cab">
+            <h2 id="titulo-biblioteca">Seus relatórios</h2>
         </div>
 
-        <button class="st-btn" type="submit">Excluir conta</button>
-    </form>
+        {% if relatorios %}
+        <ul class="st-rel-lista">
+            {% for r in relatorios %}
+            <li class="st-rel-item">
+                <div class="st-rel-info">
+                    <strong>{{ r.empresa }}</strong>
+                    <span>{% if r.ano %}{{ r.ano }}{% else %}Sem ano{% endif %} · {{ r.criado_em|date:"d/m/Y" }}</span>
+                </div>
+                <div class="st-rel-nota st-faixa--{{ r.estado_geral.slug }}">
+                    <strong>{% if r.geral is not None %}{{ r.geral }}{% else %}–{% endif %}</strong>
+                    <span>{{ r.estado_geral.rotulo }}</span>
+                </div>
+                <div class="st-rel-acoes">
+                    <button type="button" class="st-rel-baixar" data-relatorio="{{ r.id }}" aria-label="Baixar o PDF de {{ r.empresa }}{% if r.ano %} ({{ r.ano }}){% endif %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+                        <span>PDF</span>
+                    </button>
+                    <form method="post" action="{% url 'excluir_relatorio' r.id %}" data-confirmar="Excluir este relatório da sua biblioteca? O PDF que você já baixou continua com você.">
+                        {% csrf_token %}
+                        <button type="submit" class="st-rel-excluir" aria-label="Excluir o relatório de {{ r.empresa }}{% if r.ano %} ({{ r.ano }}){% endif %}" title="Excluir">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+                        </button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <p class="st-conta-erro" id="baixar-erro" role="alert" hidden></p>
+        <div class="st-conta-rodape">
+            {% if relatorios|length == 1 %}
+            <p class="st-conta-dica">Faça outro diagnóstico (de outro ano, por exemplo) para ver a evolução aqui.</p>
+            {% endif %}
+            <a class="st-btn" href="{% url 'diagnostico' %}">Fazer o diagnóstico</a>
+        </div>
+        {% else %}
+        <div class="st-conta-vazio">
+            <p>Seus relatórios aparecem aqui depois do diagnóstico.</p>
+            <a class="st-btn" href="{% url 'diagnostico' %}">Fazer o diagnóstico</a>
+        </div>
+        {% endif %}
+    </section>
+
+    <details class="st-conta-perigo">
+        <summary>Excluir conta</summary>
+        <form method="post" action="{% url 'excluir_conta' %}">
+            {% csrf_token %}
+            <p>Apaga a sua conta e todos os relatórios.</p>
+            <label class="st-conta-confirma"><input type="checkbox" name="confirmar" required> Entendo que isso é para sempre.</label>
+            <button class="st-btn st-btn--perigo" type="submit">Confirmar exclusão</button>
+        </form>
+    </details>
+
 </div>
+
+{{ relatorios_json|json_script:"relatorios-dados" }}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="{% static 'js/relatorio-pdf.js' %}"></script>
+<script src="{% static 'js/minha-conta.js' %}"></script>
 {% endblock %}

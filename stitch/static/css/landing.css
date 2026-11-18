@@ -1,8 +1,8 @@
 :root {
-  --verde-escuro: #495A17;
-  --verde-medio: #758642;
-  --verde-claro: #9CB15E;
-  --fundo: #F0EEE2;
+  --verde-escuro: #19401f;
+  --verde-medio: #416f27;
+  --verde-claro: #699e2f;
+  --fundo: #ebebd7;
   --branco: #FFFFFF;
   --gutter: 16px;
 }
@@ -87,7 +87,7 @@ a { color: inherit; text-decoration: none; }
 .modal-fundo {
   position: absolute;
   inset: 0;
-  background: rgba(73, 90, 23, 0.55);
+  background: rgba(25, 64, 31, 0.55);
   backdrop-filter: blur(3px);
 }
 
@@ -213,9 +213,9 @@ a { color: inherit; text-decoration: none; }
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgba(73, 90, 23, 0.92) 0%,
-    rgba(73, 90, 23, 0.70) 45%,
-    rgba(73, 90, 23, 0.15) 100%
+    rgba(25, 64, 31, 0.92) 0%,
+    rgba(25, 64, 31, 0.70) 45%,
+    rgba(25, 64, 31, 0.15) 100%
   );
 }
 
@@ -288,7 +288,7 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 900px) {
   .hero-texto { max-width: 100%; }
   .hero::before {
-    background: linear-gradient(180deg, rgba(73, 90, 23, 0.55) 0%, rgba(73, 90, 23, 0.92) 100%);
+    background: linear-gradient(180deg, rgba(25, 64, 31, 0.55) 0%, rgba(25, 64, 31, 0.92) 100%);
   }
   .sobre { grid-template-columns: 1fr; }
   .card-reciclagem { min-height: 320px; }

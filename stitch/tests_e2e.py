@@ -46,6 +46,19 @@ class SiteE2ETest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url + reverse("home"))
         self.assertIn("Stitch", self.browser.title)
 
+    def test_diagnostico_sem_login_abre_o_popup_com_aviso(self):
+        self.browser.get(self.live_server_url + reverse("home"))
+        self.browser.find_element(By.CSS_SELECTOR, "#st-nav-links a[href='%s']" % reverse("diagnostico")).click()
+        # o painel aparece com uma animacao (comeca transparente), entao esperamos
+        # o texto do aviso ficar visivel em vez de le-lo no primeiro instante
+        WebDriverWait(self.browser, 10).until(
+            lambda d: "acessar o diagnóstico" in d.find_element(By.ID, "modal-login").text
+        )
+        # a aba "Criar conta" troca o formulário
+        self.browser.find_element(By.ID, "aba-cadastro").click()
+        self.assertTrue(self.browser.find_element(By.ID, "cad-nome").is_displayed())
+        self.assertFalse(self.browser.find_element(By.ID, "login-senha").is_displayed())
+
     def test_menu_leva_para_entenda_esg(self):
         self.browser.get(self.live_server_url + reverse("home"))
         self.browser.find_element(By.LINK_TEXT, "Entenda ESG").click()
