@@ -18,7 +18,7 @@ def quem_somos(request):
 def simuladores(request):
     return render(request, 'stitch/simuladores.html')
 
-@login_required(login_url='home')
+@login_required(login_url='entrar')
 def questionario(request):
     return render(request, "stitch/diagnostico.html")
     
@@ -96,7 +96,7 @@ def sair(request):
     logout(request)
     return redirect('home')
 
-@login_required(login_url='home')
+@login_required(login_url='entrar')
 def minha_conta(request):
     perfil, _ = Perfil.objects.get_or_create(user=request.user)
     if request.method == 'POST':
@@ -107,7 +107,7 @@ def minha_conta(request):
         return redirect('minha_conta')
     return render(request, 'stitch/minha_conta.html', {'perfil': perfil})
 
-@login_required(login_url='home')
+@login_required(login_url='entrar')
 def excluir_conta(request):
     if request.method == 'POST':
         user = request.user
