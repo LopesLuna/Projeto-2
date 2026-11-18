@@ -108,6 +108,10 @@ def minha_conta(request):
     return render(request, 'stitch/minha_conta.html', {'perfil': perfil})
 
 @login_required(login_url='entrar')
+def meu_perfil(request):
+    return render(request, 'stitch/meu_perfil.html')
+
+@login_required(login_url='entrar')
 def excluir_conta(request):
     if request.method == 'POST':
         user = request.user

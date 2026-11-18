@@ -861,3 +861,27 @@ body.st-body {
     border: 1px solid var(--st-erro-borda); border-radius: 10px;
     background: var(--st-erro-fundo); color: var(--st-erro);
 }
+
+.st-portal {
+    display: grid; grid-template-columns: 220px 1fr; gap: 24px;
+    max-width: 1100px; margin: 24px auto; padding: 0 20px;
+}
+
+.st-portal-menu {
+    display: flex; flex-direction: column; gap: 6px; align-self: start;
+    padding: 20px; border-radius: 20px;
+    background: rgba(255, 255, 255, .6);
+}
+
+.st-portal-menu a {
+    padding: 10px 14px; border-radius: 12px;
+    color: var(--st-title); font-weight: 600; text-decoration: none;
+}
+
+.st-portal-menu a:hover { background: rgba(76, 87, 24, .1); }
+
+.st-portal-nome { margin: 0 0 8px; padding: 0 14px; font-weight: 700; color: var(--st-olive); }
+
+@media (max-width: 700px) {
+    .st-portal { grid-template-columns: 1fr; }
+}
