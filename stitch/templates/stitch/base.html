@@ -80,11 +80,8 @@
                     <input id="login-senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password">
                 </div>
                 <button class="st-btn" type="submit">Entrar</button>
-                <p class="st-modal-rodape">Ainda não tem conta?
-                    <button type="submit" formaction="{% url 'cadastrar' %}">Criar conta</button>
-                </p>
             </form>
-
+            <p class="st-modal-rodape">Ainda não tem conta? <a href="{% url 'cadastrar' %}">Criar conta</a></p>
         </div>
     </div>
 
