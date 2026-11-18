@@ -1,0 +1,26 @@
+{% extends 'stitch/base.html' %}
+
+{% block title %}Entrar - Stitch{% endblock %}
+
+{% block content %}
+<h1 class="st-title">Entrar no Stitch</h1>
+<p class="st-lead">Entre para fazer o diagnóstico com os dados da sua empresa.</p>
+
+<div class="st-panel">
+    <form method="post" class="st-form">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <label for="email">E-mail*</label>
+        <input type="email" name="email" id="email" value="{{ email }}" required autocomplete="email">
+
+        <label for="senha">Senha*</label>
+        <input type="password" name="senha" id="senha" required autocomplete="current-password">
+
+        <button class="st-btn" type="submit">Entrar</button>
+    </form>
+    <p class="st-lead">Ainda não tem conta?
+        <a href="{% url 'cadastrar' %}{% if next %}?next={{ next|urlencode }}{% endif %}">Criar conta</a>
+    </p>
+</div>
+{% endblock %}

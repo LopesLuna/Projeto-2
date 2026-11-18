@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Contato
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.utils.http import url_has_allowed_host_and_scheme
 from .models import Contato, Perfil
 
 def home(request):
@@ -55,30 +53,44 @@ def contato(request):
 def comparador_pdf(request):
     return render(request, 'stitch/comparador_pdf.html')
 
+def _destino(request):
+    proximo = request.POST.get('next') or request.GET.get('next')
+    if proximo and url_has_allowed_host_and_scheme(proximo, allowed_hosts={request.get_host()}):
+        return proximo
+    return 'diagnostico'
+
+
 def entrar(request):
+    proximo = request.POST.get('next') or request.GET.get('next', '')
+    email = ''
     if request.method == 'POST':
         email = request.POST.get('email', '').strip().lower()
         senha = request.POST.get('senha', '')
         user = authenticate(request, username=email, password=senha)
         if user is not None:
             login(request, user)
-            return redirect('diagnostico')
+            return redirect(_destino(request))
         messages.error(request, 'E-mail ou senha incorretos.')
-    return redirect('home')
+    return render(request, 'stitch/entrar.html', {'next': proximo, 'email': email})
+
 
 def cadastrar(request):
+    proximo = request.POST.get('next') or request.GET.get('next', '')
     if request.method == 'POST':
+        nome = request.POST.get('nome', '').strip()
         email = request.POST.get('email', '').strip().lower()
         senha = request.POST.get('senha', '')
-        if not email or not senha:
+        empresa = request.POST.get('empresa', '').strip()
+        if not nome or not email or not senha:
             messages.error(request, 'Campos com * são obrigatórios.')
         elif User.objects.filter(username=email).exists():
             messages.error(request, 'Já existe uma conta com este e-mail.')
         else:
-            user = User.objects.create_user(username=email, email=email, password=senha)
-            login(request,user)
-            return redirect('diagnostico')
-    return redirect('home')
+            user = User.objects.create_user(username=email, email=email, password=senha, first_name=nome)
+            Perfil.objects.create(user=user, empresa=empresa)
+            login(request, user)
+            return redirect(_destino(request))
+    return render(request, 'stitch/cadastrar.html', {'next': proximo, 'dados': request.POST})
 
 def sair(request):
     logout(request)
