@@ -22,6 +22,11 @@
       <button type="button" class="duo-back" data-action="back">&larr; Voltar</button>
 
       <div class="duo-head">
+        <div class="duo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/>
+          </svg>
+        </div>
         <h2 class="duo-title">Simule!</h2>
         <p class="duo-sub">Projeção aplicando ESG</p>
         <span class="duo-badge">Em andamento</span>
@@ -176,6 +181,12 @@
       <button type="button" class="duo-back" data-action="back">&larr; Voltar</button>
 
       <div class="duo-head">
+        <div class="duo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
         <h2 class="duo-title">Veja</h2>
         <p class="duo-sub">Conheça os impactos ambientais na cadeia de produção têxtil</p>
         <span class="duo-badge">Em andamento</span>
@@ -209,7 +220,7 @@
     </article>
   </div>
 
-  <a href="{% url 'diagnostico' %}" class="duo-cta" id="simCta">simule com seus dados reais!</a>
+  <a href="{% url 'diagnostico' %}" class="duo-cta" id="simCta">Simule com seus dados reais!</a>
 </section>
 
 <script src="{% static 'js/script.js' %}" defer></script>

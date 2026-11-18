@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Página Simuladores — cards Simule / Veja
+   Página Simuladores — cards Simule / Veja (Estilo Vidro Fosco Verde)
 
    O leiaute é controlado por data-attributes que o simuladores.js escreve:
      .duo-stage[data-state]  = neutral | simule | veja
@@ -11,29 +11,67 @@
    ========================================================================== */
 
 .simulacao {
-  --sim-ink: #2e3a0c;
-  --sim-paper: #fffdf7;
-  --sim-line: #e3e4d9;
+  --sim-ink: #2e3814;
+  --sim-olive: #4c5718;
+  --sim-olive-mid: #687937;
+  --sim-paper: rgba(255, 253, 247, 0.94);
+  --sim-line: rgba(76, 87, 24, 0.16);
   --sim-ok: #2d6a4f;
   --sim-err: #9b2226;
   --sim-ease: cubic-bezier(.22, 1, .36, 1);
   --sim-dur: .6s;
 
-  max-width: 1200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 1160px;
   margin: 0 auto;
-  padding: 8px 0 56px;
+  padding: 12px 24px 64px;
+  font-family: inherit; /* Herda 'Inter' do body.st-body (base.css) */
+  color: var(--st-text, #3a4230);
+}
+
+/* Pontos de luz oliva ao fundo para realçar a transparência do vidro fosco */
+.simulacao::before,
+.simulacao::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(75px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.simulacao::before {
+  width: 380px;
+  height: 380px;
+  background: rgba(146, 168, 72, 0.32);
+  top: 90px;
+  left: 6%;
+}
+
+.simulacao::after {
+  width: 420px;
+  height: 420px;
+  background: rgba(76, 87, 24, 0.24);
+  bottom: 40px;
+  right: 6%;
 }
 
 /* display de autor ganha do [hidden] padrão do navegador; garante o oposto */
 .simulacao [hidden] { display: none !important; }
 
 .simulacao-titulo {
-  margin: 24px 0 28px;
+  position: relative;
+  z-index: 1;
+  margin: 22px 0 32px;
   text-align: center;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-family: inherit;
+  font-size: clamp(30px, 3.6vw, 44px);
   font-weight: 700;
-  line-height: 1.1;
-  color: var(--verde-escuro);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  color: var(--st-title, #3e4632);
 }
 
 /* ---------- Palco: os cards ficam em posição absoluta ----------
@@ -43,10 +81,11 @@
   --gap: 24px;
   --strip: 76px;   /* altura do card recolhido no modo Simule */
   --rail: 150px;   /* largura do card recolhido no modo Veja  */
-  --h-neutral: 420px;
+  --h-neutral: 410px;
   --h-active: clamp(620px, calc(100vh - 250px), 940px);
 
   position: relative;
+  z-index: 1;
   height: var(--h-neutral);
   transition: height var(--sim-dur) var(--sim-ease);
 }
@@ -59,25 +98,62 @@
 .duo-card {
   position: absolute;
   overflow: hidden;
-  border-radius: 24px;
+  border-radius: 26px;
   background: var(--sim-bg);
   color: var(--sim-fg);
-  box-shadow: 0 0 0 rgba(28, 49, 39, 0);
+  border: 1.5px solid var(--sim-border);
+  box-shadow: var(--sim-shadow);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  backdrop-filter: blur(18px) saturate(125%);
   transition:
     left var(--sim-dur) var(--sim-ease),
     top var(--sim-dur) var(--sim-ease),
     width var(--sim-dur) var(--sim-ease),
     height var(--sim-dur) var(--sim-ease),
-    background-color var(--sim-dur) ease,
+    background var(--sim-dur) ease,
+    border-color var(--sim-dur) ease,
     color var(--sim-dur) ease,
     box-shadow var(--sim-dur) ease,
     transform .25s ease;
 }
 
-/* 1) Neutro: lado a lado */
+/* Foto transparente de fundo (aparece quando o card é aberto antes de iniciar) */
+.duo-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--card-photo, none);
+  background-size: cover;
+  background-position: var(--card-photo-pos, center);
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity .75s ease, transform 8s ease-out;
+  pointer-events: none;
+}
+
+/* Reflexo interno sutil na borda superior do vidro */
+.duo-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* 1) Neutro: lado a lado em vidro fosco verde translúcido */
 .duo-card--simule {
-  --sim-bg: var(--verde-claro);
+  --card-photo: url('../img/bg-simule.jpeg');
+  --card-photo-pos: center 20%;
+  --sim-bg: linear-gradient(145deg, rgba(138, 158, 74, 0.26) 0%, rgba(92, 110, 42, 0.17) 100%);
   --sim-fg: var(--sim-ink);
+  --sim-border: rgba(255, 255, 255, 0.78);
+  --sim-shadow:
+    0 0 0 1px rgba(138, 158, 74, 0.25),
+    0 16px 38px rgba(60, 70, 30, 0.12),
+    0 0 18px rgba(244, 248, 190, 0.45);
   left: 0;
   top: 0;
   width: calc(50% - var(--gap) / 2);
@@ -85,8 +161,15 @@
 }
 
 .duo-card--veja {
-  --sim-bg: var(--verde-escuro);
-  --sim-fg: #fff;
+  --card-photo: url('../img/bg-entenda.jpeg');
+  --card-photo-pos: center 25%;
+  --sim-bg: linear-gradient(145deg, rgba(72, 86, 30, 0.62) 0%, rgba(48, 60, 18, 0.54) 100%);
+  --sim-fg: #fffdf7;
+  --sim-border: rgba(222, 230, 140, 0.52);
+  --sim-shadow:
+    0 0 0 1px rgba(76, 87, 24, 0.25),
+    0 16px 38px rgba(46, 58, 18, 0.18),
+    0 0 18px rgba(214, 224, 120, 0.22);
   left: calc(50% + var(--gap) / 2);
   top: 0;
   width: calc(50% - var(--gap) / 2);
@@ -123,19 +206,42 @@
   height: 100%;
 }
 
-/* card ativo ganha fundo claro (o jogo e o quiz foram feitos para fundo creme) */
+/* card ativo ganha fundo claro fosco (o jogo e o quiz foram feitos para fundo creme) */
 .duo-card[data-role="active"] {
   --sim-bg: var(--sim-paper);
   --sim-fg: var(--sim-ink);
-  box-shadow: 0 20px 50px rgba(28, 49, 39, .14);
+  --sim-border: rgba(255, 255, 255, 0.92);
+  --sim-shadow:
+    0 0 0 1px rgba(222, 228, 160, 0.45),
+    0 20px 50px rgba(60, 70, 30, 0.16);
 }
 
-.duo-stage[data-state="neutral"] .duo-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 34px rgba(28, 49, 39, .18);
+/* Ativa a foto meio transparente de fundo na tela de abertura do simulador */
+.duo-card[data-role="active"][data-started="false"]::before {
+  opacity: 0.30;
+  transform: scale(1);
 }
 
-.duo-card[data-role="min"]:hover { filter: brightness(1.08); }
+.duo-stage[data-state="neutral"] .duo-card--simule:hover {
+  transform: translateY(-5px);
+  --sim-bg: linear-gradient(145deg, rgba(138, 158, 74, 0.34) 0%, rgba(92, 110, 42, 0.24) 100%);
+  --sim-shadow:
+    0 0 0 1px rgba(138, 158, 74, 0.35),
+    0 22px 44px rgba(60, 70, 30, 0.16),
+    0 0 22px rgba(244, 248, 190, 0.65);
+}
+
+.duo-stage[data-state="neutral"] .duo-card--veja:hover {
+  transform: translateY(-5px);
+  --sim-bg: linear-gradient(145deg, rgba(72, 86, 30, 0.72) 0%, rgba(48, 60, 18, 0.64) 100%);
+  --sim-border: rgba(236, 240, 166, 0.72);
+  --sim-shadow:
+    0 0 0 1px rgba(76, 87, 24, 0.35),
+    0 22px 44px rgba(46, 58, 18, 0.24),
+    0 0 24px rgba(214, 224, 120, 0.35);
+}
+
+.duo-card[data-role="min"]:hover { filter: brightness(1.06); }
 
 /* ---------- Botão invisível que cobre o card quando ele não está ativo ---------- */
 .duo-open {
@@ -152,13 +258,13 @@
 }
 
 .duo-open:focus-visible {
-  outline: 3px solid currentColor;
+  outline: 2px solid #ecefa6;
   outline-offset: -8px;
 }
 
 .duo-card[data-role="active"] .duo-open { display: none; }
 
-/* ---------- Cabeçalho do card (título + subtítulo + Jogar) ---------- */
+/* ---------- Cabeçalho do card (ícone + título + subtítulo + Jogar) ---------- */
 .duo-head {
   position: absolute;
   inset: 0;
@@ -168,39 +274,99 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 24px;
+  padding: 28px;
   text-align: center;
 }
 
+/* Halo suave atrás do texto na tela inicial com foto, garantindo leitura perfeita */
+.duo-card[data-role="active"][data-started="false"] .duo-head {
+  background: radial-gradient(
+    ellipse 62% 56% at 50% 50%,
+    rgba(255, 253, 247, 0.84) 0%,
+    rgba(255, 253, 247, 0.45) 60%,
+    rgba(255, 253, 247, 0.12) 100%
+  );
+}
+
+.duo-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 4px;
+  transition: transform .25s ease, background .25s ease;
+}
+
+.duo-card--simule .duo-icon {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(76, 87, 24, 0.22);
+  color: var(--sim-olive);
+}
+
+.duo-card--veja .duo-icon {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(222, 230, 140, 0.38);
+  color: #ecefa6;
+}
+
+.duo-card[data-role="active"] .duo-icon {
+  background: rgba(255, 253, 247, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(76, 87, 24, 0.24);
+  color: var(--sim-olive);
+  box-shadow: 0 4px 14px rgba(46, 56, 20, 0.10);
+}
+
+.duo-stage[data-state="neutral"] .duo-card:hover .duo-icon {
+  transform: scale(1.07);
+}
+
+.duo-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .duo-title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-family: inherit;
+  font-size: clamp(2rem, 3.6vw, 2.85rem);
   font-weight: 700;
+  letter-spacing: -.03em;
   line-height: 1.05;
   transition: font-size var(--sim-dur) var(--sim-ease);
 }
 
 .duo-sub {
-  max-width: 28ch;
-  font-size: clamp(1rem, 1.5vw, 1.25rem);
-  font-weight: 600;
-  line-height: 1.35;
+  max-width: 30ch;
+  font-size: clamp(.98rem, 1.35vw, 1.12rem);
+  font-weight: 500;
+  line-height: 1.45;
+  opacity: .92;
 }
 
 .duo-card[data-role="active"] .duo-sub { max-width: 44ch; }
 
 /* recolhido: só o título (e a etiqueta, se houver progresso) */
-.duo-card[data-role="min"] .duo-head { padding: 8px; gap: 4px; }
-.duo-card[data-role="min"] .duo-title { font-size: 1.35rem; }
+.duo-card[data-role="min"] .duo-head { padding: 8px; gap: 4px; background: none; }
+.duo-card[data-role="min"] .duo-icon { display: none; }
+.duo-card[data-role="min"] .duo-title { font-size: 1.25rem; }
 .duo-card[data-role="min"] .duo-sub { display: none; }
 
 /* progresso guardado: mostra a etiqueta enquanto o card não está ativo */
 .duo-badge {
   display: none;
-  padding: 3px 12px;
+  padding: 4px 12px;
   border: 1px solid currentColor;
   border-radius: 999px;
-  font-size: .78rem;
-  font-weight: 700;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .02em;
 }
 
 .duo-card[data-started="true"]:not([data-role="active"]) .duo-badge { display: inline-block; }
@@ -209,22 +375,27 @@
   display: none;
   align-items: center;
   gap: 10px;
-  margin-top: 12px;
-  padding: 14px 32px;
-  border: 0;
+  margin-top: 14px;
+  height: 48px;
+  padding: 0 34px;
+  border: 1.4px solid rgba(222, 230, 140, .8);
   border-radius: 999px;
-  background: var(--verde-escuro);
+  background: linear-gradient(180deg, #687937, #4c5a22);
+  box-shadow: 0 4px 18px rgba(46, 58, 18, 0.25), 0 0 16px rgba(214, 224, 120, .4), inset 0 0 12px rgba(214, 224, 120, .16);
   color: #fff;
   font: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: transform .2s ease, background-color .2s ease;
+  transition: transform .25s ease, box-shadow .25s ease;
 }
 
 .duo-card[data-role="active"][data-started="false"] .duo-play { display: inline-flex; }
-.duo-play:hover { transform: translateY(-2px); background: var(--verde-medio); }
-.duo-play:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 3px; }
+.duo-play:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(46, 58, 18, 0.3), 0 0 24px rgba(214, 224, 120, .65), inset 0 0 12px rgba(214, 224, 120, .22);
+}
+.duo-play:focus-visible { outline: 2px solid #ecefa6; outline-offset: 3px; }
 
 /* depois de iniciado, o cabeçalho some e entra o conteúdo (jogo / quiz) */
 .duo-card[data-role="active"][data-started="true"] .duo-head { display: none; }
@@ -238,20 +409,23 @@
   z-index: 4;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  border: 2px solid currentColor;
+  padding: 8px 18px;
+  border: 1.4px solid rgba(76, 87, 24, 0.35);
   border-radius: 999px;
-  background: var(--sim-paper);
+  background: rgba(255, 253, 247, 0.90);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   color: var(--sim-ink);
   font: inherit;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color .2s ease;
+  transition: background-color .2s ease, transform .2s ease;
 }
 
 .duo-card[data-role="active"] .duo-back { display: inline-flex; }
-.duo-back:hover { background: #eef0e1; }
-.duo-back:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 2px; }
+.duo-back:hover { background: #fff; transform: translateY(-1px); }
+.duo-back:focus-visible { outline: 2px solid var(--sim-olive); outline-offset: 2px; }
 
 /* ---------- Corpo (jogo / quiz): rola por dentro do card ---------- */
 .duo-body {
@@ -273,21 +447,40 @@
   to   { opacity: 1; transform: none; }
 }
 
-/* ---------- Link "simule com seus dados reais!" ---------- */
+/* ---------- Botão "simule com seus dados reais!" ---------- */
 .duo-cta {
-  display: block;
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   width: fit-content;
-  margin: 28px auto 0;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--verde-escuro);
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 5px;
+  margin: 30px auto 0;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.48));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1.4px solid rgba(76, 87, 24, 0.28);
+  box-shadow: 0 6px 20px rgba(96, 106, 56, 0.12);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--st-olive, #4c5718);
+  text-decoration: none;
+  transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
 }
 
-.duo-cta:hover { color: var(--verde-medio); }
-.duo-cta:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 4px; border-radius: 4px; }
+.duo-cta:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #687937, #4c5a22);
+  border-color: rgba(222, 230, 140, .8);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(214, 224, 120, .55);
+}
+
+.duo-cta:focus-visible { outline: 2px solid var(--sim-olive); outline-offset: 4px; }
 
 /* ==========================================================================
    Quiz (card Veja)
@@ -305,7 +498,7 @@
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--verde-medio);
+  color: var(--sim-olive-mid);
 }
 
 .quiz-question {
@@ -313,6 +506,7 @@
   font-size: clamp(1.35rem, 2.6vw, 1.85rem);
   font-weight: 700;
   line-height: 1.25;
+  letter-spacing: -.02em;
 }
 
 .quiz-choices { display: grid; gap: 12px; }
@@ -320,9 +514,9 @@
 .quiz-choice {
   position: relative;
   padding: 16px 52px 16px 20px;
-  border: 2px solid var(--sim-line);
-  border-radius: 14px;
-  background: #fff;
+  border: 1.5px solid var(--sim-line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.85);
   color: var(--sim-ink);
   font: inherit;
   font-size: 1rem;
@@ -332,15 +526,14 @@
   transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
 }
 
-.quiz-choice:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--verde-medio); }
-.quiz-choice:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 2px; }
+.quiz-choice:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--sim-olive-mid); background: #fff; }
+.quiz-choice:focus-visible { outline: 2px solid var(--sim-olive); outline-offset: 2px; }
 .quiz-choice:disabled { cursor: default; color: var(--sim-ink); }
 .quiz-choice:disabled:not(.is-correct):not(.is-wrong) { opacity: .55; }
 
 .quiz-choice.is-correct { border-color: var(--sim-ok); background: #eaf3e8; }
 .quiz-choice.is-wrong   { border-color: var(--sim-err); background: #fbede8; }
 
-/* ícone além da cor, para não depender só de cor */
 .quiz-choice.is-correct::after,
 .quiz-choice.is-wrong::after {
   position: absolute;
@@ -370,21 +563,22 @@
 .quiz-next,
 .quiz-restart {
   margin-top: 16px;
-  padding: 12px 26px;
-  border: 0;
+  padding: 12px 28px;
+  border: 1.4px solid rgba(222, 230, 140, .8);
   border-radius: 999px;
-  background: var(--verde-escuro);
+  background: linear-gradient(180deg, #687937, #4c5a22);
   color: #fff;
   font: inherit;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color .2s ease, transform .2s ease;
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .quiz-next:hover,
-.quiz-restart:hover { background: var(--verde-medio); transform: translateY(-2px); }
-.quiz-next:focus-visible,
-.quiz-restart:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 3px; }
+.quiz-restart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(214, 224, 120, .55);
+}
 
 .result-highlight { margin: 6px 0 14px; font-size: 1.2rem; font-weight: 600; }
 
@@ -393,7 +587,7 @@
   font-size: clamp(2.8rem, 8vw, 4.2rem);
   font-weight: 800;
   line-height: 1;
-  color: var(--verde-escuro);
+  color: var(--sim-olive);
 }
 
 .quiz-result-text { line-height: 1.5; max-width: 52ch; }
@@ -402,10 +596,14 @@
    Celular: os cards empilham (neutro) e a coluna estreita vira faixa no topo
    ========================================================================== */
 @media (max-width: 720px) {
+  .simulacao {
+    padding: 8px 16px 48px;
+  }
+
   .duo-stage {
     --gap: 16px;
     --strip: 68px;
-    --h-neutral: 480px;
+    --h-neutral: 500px;
     --h-active: clamp(560px, calc(100vh - 200px), 900px);
   }
 
@@ -438,17 +636,19 @@
   }
 
   .duo-body { padding: 64px 12px 20px; }
-  .duo-title { font-size: 2rem; }
+  .duo-title { font-size: 1.9rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .duo-stage,
   .duo-card,
+  .duo-card::before,
   .duo-title { transition: none; }
 
   .duo-card[data-role="active"][data-started="true"] .duo-body { animation: none; }
 }
-@media (max-width: 860px){
+
+@media (max-width: 860px) {
   .duo-card #trama-game-container .dashboard {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
@@ -456,6 +656,6 @@
 }
 
 .duo-card #trama-game-container .choices {
-    align-content: start;
-    grid-auto-rows: min-content;
-  }
+  align-content: start;
+  grid-auto-rows: min-content;
+}
