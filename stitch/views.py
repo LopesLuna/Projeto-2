@@ -57,7 +57,7 @@ def _destino(request):
     proximo = request.POST.get('next') or request.GET.get('next')
     if proximo and url_has_allowed_host_and_scheme(proximo, allowed_hosts={request.get_host()}):
         return proximo
-    return 'diagnostico'
+    return 'minha_conta'
 
 
 def entrar(request):

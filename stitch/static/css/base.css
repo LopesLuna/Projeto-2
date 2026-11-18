@@ -514,6 +514,12 @@ body.st-body {
     color: var(--st-muted);
 }
 
+.st-lead a { 
+    color: var(--st-olive); 
+    font-weight: 600; 
+    text-decoration: underline; 
+}
+
 .st-panel {
     position: relative;
     background: linear-gradient(180deg, rgba(255, 255, 255, .74), rgba(255, 255, 255, .5));
@@ -622,6 +628,7 @@ body.st-body {
 
 .st-form input[type="text"],
 .st-form input[type="email"],
+.st-form input[type="password"],
 .st-form select,
 .st-form textarea,
 .st-modal-painel input {
