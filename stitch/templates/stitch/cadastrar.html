@@ -1,0 +1,32 @@
+{% extends 'stitch/base.html' %}
+
+{% block title %}Criar conta - Stitch{% endblock %}
+
+{% block content %}
+<h1 class="st-title">Criar conta</h1>
+<p class="st-lead">Crie sua conta para fazer o diagnóstico com os dados da sua empresa.</p>
+
+<div class="st-panel">
+    <form method="post" class="st-form">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <label for="nome">Seu nome*</label>
+        <input type="text" name="nome" id="nome" value="{{ dados.nome }}" maxlength="150" required>
+
+        <label for="email">E-mail*</label>
+        <input type="email" name="email" id="email" value="{{ dados.email }}" required autocomplete="email">
+
+        <label for="senha">Senha*</label>
+        <input type="password" name="senha" id="senha" required autocomplete="new-password">
+
+        <label for="empresa">Nome da empresa</label>
+        <input type="text" name="empresa" id="empresa" value="{{ dados.empresa }}" maxlength="150">
+
+        <button class="st-btn" type="submit">Criar conta</button>
+    </form>
+    <p class="st-lead">Já tem conta?
+        <a href="{% url 'entrar' %}{% if next %}?next={{ next|urlencode }}{% endif %}">Entrar</a>
+    </p>
+</div>
+{% endblock %}
