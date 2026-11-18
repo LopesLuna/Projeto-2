@@ -14,5 +14,5 @@ urlpatterns = [
     path('sair/', views.sair, name='sair'),
     path('minha-conta/', views.minha_conta, name='minha_conta'),
     path('minha-conta/excluir/', views.excluir_conta, name='excluir_conta'),
-    path('meu-perfil/', views.meu_perfil, name='meu_perfil.html'),
+    path('meu-perfil/', views.meu_perfil, name='meu_perfil'),
 ]
