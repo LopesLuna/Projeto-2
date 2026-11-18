@@ -1,0 +1,35 @@
+{% extends 'stitch/base.html' %}
+
+{% block title %}Minha conta - Stitch{% endblock %}
+
+{% block content %}
+<h1 class="st-title">Minha conta</h1>
+<p class="st-lead">{{ user.email }}</p>
+
+<div class="st-panel">
+    <form method="post" class="st-form">
+        {% csrf_token %}
+        
+        <label for="nome">Seu nome*</label>
+        <input type="text" name="nome" id="nome" value="{{ user.first_name }}" maxlength="150" required>
+
+        <label for="empresa">Nome da empresa</label>
+        <input type="text" name="empresa" id="empresa" value="{{ perfil.empresa }}" maxlength="150">
+
+        <button class="st-btn" type="submit">Salvar</button>
+    </form>
+</div>
+
+<div class="st-panel">
+    <form method="post" action="{% url 'excluir_conta' %}" class="st-form">
+        {% csrf_token %}
+
+        <div class="st-radio-item">
+            <input type="checkbox" name="confirmar" id="confirmar" required>
+            <label for="confirmar">Entendo que isso apaga minha conta para sempre.</label>
+        </div>
+
+        <button class="st-btn" type="submit">Excluir conta</button>
+    </form>
+</div>
+{% endblock %}

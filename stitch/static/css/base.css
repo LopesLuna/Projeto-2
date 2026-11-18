@@ -9,13 +9,16 @@
    ========================================================================== */
 
 :root {
-    --u: calc(100vw / 1532);
+    --u: clamp(0.7px, calc(100vw / 1532), 1px);
 
     --st-cream: #f0eee2;
     --st-olive: #4c5718;
     --st-text: #3a4230;
     --st-title: #3e4632;
     --st-muted: #575b4c;
+    --st-erro: #8a2c1d;
+    --st-erro-fundo: #fff4f2;
+    --st-erro-borda: #e6b8b0;
 
     /* imagens (caminhos relativos a este arquivo: static/css -> static/img) */
     --img-slide-1: url('../img/slide-1.jpg');
@@ -213,6 +216,7 @@ body.st-body {
         0 0 calc(14 * var(--u)) rgba(214, 224, 120, .42),
         inset 0 0 calc(10 * var(--u)) rgba(214, 224, 120, .16);
     cursor: pointer;
+    text-decoration: none;
     transition: .25s;
 }
 .st-btn-login:hover { box-shadow: 0 0 calc(22 * var(--u)) rgba(214, 224, 120, .65), inset 0 0 calc(10 * var(--u)) rgba(214, 224, 120, .22); }
@@ -723,7 +727,12 @@ body.st-body {
 .st-modal-painel .st-btn { width: 100%; margin-top: 24px; }
 .st-modal-rodape { margin-top: 18px; text-align: center; font-size: 14px; color: var(--st-muted); }
 .st-modal-rodape a { color: var(--st-olive); font-weight: 600; text-decoration: underline; }
-
+.st-modal-rodape button {
+    background: none; border: none; padding: 0;
+    font: inherit; font-weight: 600;
+    color: var(--st-olive);
+    text-decoration: underline; cursor: pointer;
+}
 .st-modal-fechar {
     position: absolute; top: 14px; right: 16px;
     width: 36px; height: 36px;
@@ -741,7 +750,7 @@ body.st-body {
 /* ==========================================================================
    MOBILE
    ========================================================================== */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     :root { --u: 0.62px; }
 
     .st-hero { height: 480px; }
@@ -833,4 +842,15 @@ body.st-body {
 
 .footer-column {
     flex: 0 1 auto;
+}
+
+.st-mensagens {
+    position: fixed; top: 90px; left: 50%; transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.st-mensagem {
+    padding: 12px 20px;
+    border: 1px solid var(--st-erro-borda); border-radius: 10px;
+    background: var(--st-erro-fundo); color: var(--st-erro);
 }
