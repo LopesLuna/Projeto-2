@@ -1,4 +1,4 @@
-{% load static %}
+{% load static stitch_login %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Stitch | Sustentabilidade e Inovação{% endblock %}</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,60 +56,143 @@
             <path d="M57 75 C 70 63, 84 54, 92 47" stroke="#7f9136" stroke-opacity=".55" stroke-width="1.1"/>
         </svg>
     </footer>
-{% if messages %}
-<div class="st-mensagens">
-    {% for m in messages %}
-    <p class="st-mensagem">{{ m }}</p>
-    {% endfor %}
-</div>
-{% endif %}
-    <!-- Popup de login -->
-    <div class="st-modal" id="modal-login" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
+    {% if messages %}
+    <div class="st-mensagens" id="st-mensagens" role="status">
+        {% for m in messages %}
+        <p class="st-mensagem st-mensagem--{{ m.level_tag }}">{{ m }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if not user.is_authenticated %}
+    {% popup_login as pl %}
+    <!-- Popup de login: abas "Entrar" e "Criar conta".
+         data-abrir faz o popup abrir sozinho (erro no login/cadastro ou página que exige login). -->
+    <div class="st-modal" id="modal-login" role="dialog" aria-modal="true" aria-labelledby="titulo-login"{% if pl.aba %} data-abrir="{{ pl.aba }}"{% endif %}>
         <div class="st-modal-fundo" data-fechar></div>
         <div class="st-modal-painel">
-            <button class="st-modal-fechar" data-fechar type="button" aria-label="Fechar">x</button>
-            <h2 id="titulo-login">Entrar no Stitch</h2>
-            <p class="st-modal-sub">Acesse sua conta para continuar sua simulação ESG.</p>
+            <button class="st-modal-fechar" data-fechar type="button" aria-label="Fechar">×</button>
+            <h2 id="titulo-login">Acesse o Stitch</h2>
+            {% if pl.aviso %}
+            <p class="st-modal-aviso">{{ pl.aviso }}</p>
+            {% else %}
+            <p class="st-modal-sub">Entre ou crie sua conta para fazer o diagnóstico ESG da sua empresa.</p>
+            {% endif %}
 
-            <form method="post" action="{% url 'entrar' %}">
+            <div class="st-abas" role="tablist" aria-label="Entrar ou criar conta">
+                <button type="button" class="st-aba" role="tab" id="aba-entrar" aria-controls="painel-entrar" aria-selected="true" data-aba="entrar">Entrar</button>
+                <button type="button" class="st-aba" role="tab" id="aba-cadastro" aria-controls="painel-cadastro" aria-selected="false" tabindex="-1" data-aba="cadastro">Criar conta</button>
+            </div>
+
+            <form method="post" action="{% url 'entrar' %}" id="painel-entrar" role="tabpanel" aria-labelledby="aba-entrar">
                 {% csrf_token %}
+                <input type="hidden" name="voltar" value="{{ request.get_full_path }}">
+                {% if pl.aba == 'entrar' and pl.erro %}<p class="st-modal-erro" role="alert">{{ pl.erro }}</p>{% endif %}
                 <div class="st-campo">
                     <label for="login-email">E-mail</label>
-                    <input id="login-email" name="email" type="email" placeholder="seu@email.com" autocomplete="email">
+                    <input id="login-email" name="email" type="email" placeholder="seu@email.com" autocomplete="email" required{% if pl.aba == 'entrar' and pl.email %} value="{{ pl.email }}"{% endif %}>
                 </div>
                 <div class="st-campo">
                     <label for="login-senha">Senha</label>
-                    <input id="login-senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password">
+                    <input id="login-senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password" required>
                 </div>
                 <button class="st-btn" type="submit">Entrar</button>
             </form>
-            <p class="st-modal-rodape">Ainda não tem conta? <a href="{% url 'cadastrar' %}">Criar conta</a></p>
+
+            <form method="post" action="{% url 'cadastrar' %}" id="painel-cadastro" role="tabpanel" aria-labelledby="aba-cadastro" hidden>
+                {% csrf_token %}
+                <input type="hidden" name="voltar" value="{{ request.get_full_path }}">
+                {% if pl.aba == 'cadastro' and pl.erro %}<p class="st-modal-erro" role="alert">{{ pl.erro }}</p>{% endif %}
+                <div class="st-campo">
+                    <label for="cad-nome">Seu nome</label>
+                    <input id="cad-nome" name="nome" type="text" placeholder="Como quer ser chamado(a)" autocomplete="name" maxlength="150" required{% if pl.aba == 'cadastro' and pl.nome %} value="{{ pl.nome }}"{% endif %}>
+                </div>
+                <div class="st-campo">
+                    <label for="cad-email">E-mail</label>
+                    <input id="cad-email" name="email" type="email" placeholder="seu@email.com" autocomplete="email" required{% if pl.aba == 'cadastro' and pl.email %} value="{{ pl.email }}"{% endif %}>
+                </div>
+                <div class="st-campo">
+                    <label for="cad-senha">Senha</label>
+                    <input id="cad-senha" name="senha" type="password" placeholder="Crie uma senha" autocomplete="new-password" minlength="8" required aria-describedby="cad-senha-dica">
+                    <p class="st-modal-dica" id="cad-senha-dica">Pelo menos 8 caracteres, sem ser só números.</p>
+                </div>
+                <div class="st-campo">
+                    <label for="cad-confirmar">Confirme a senha</label>
+                    <input id="cad-confirmar" name="confirmar" type="password" placeholder="Digite a senha de novo" autocomplete="new-password" minlength="8" required>
+                </div>
+                <button class="st-btn" type="submit">Criar conta</button>
+            </form>
         </div>
     </div>
+    {% endif %}
 
     <script>
         (function () {
-            /* ---- popup de login ---- */
+            /* ---- popup de login (abas Entrar / Criar conta) ---- */
             const modal = document.getElementById('modal-login');
             const abrir = document.getElementById('abrir-login');
-            if (modal && abrir) {
-                function abrirModal() {
+            if (modal) {
+                const abas = Array.from(modal.querySelectorAll('.st-aba'));
+                const painel = nome => document.getElementById('painel-' + nome);
+
+                function mostrarAba(nome, focarAba) {
+                    abas.forEach(aba => {
+                        const ativa = aba.dataset.aba === nome;
+                        aba.setAttribute('aria-selected', ativa ? 'true' : 'false');
+                        aba.tabIndex = ativa ? 0 : -1;
+                        painel(aba.dataset.aba).hidden = !ativa;
+                        if (ativa && focarAba) aba.focus();
+                    });
+                }
+
+                function focarPrimeiroCampo(nome) {
+                    // com erro, foca o primeiro campo vazio (ex.: a senha); senão, o primeiro campo
+                    const campos = Array.from(painel(nome).querySelectorAll('input:not([type="hidden"])'));
+                    const alvo = campos.find(c => !c.value) || campos[0];
+                    if (alvo) alvo.focus();
+                }
+
+                function abrirModal(nome) {
+                    mostrarAba(nome || 'entrar');
                     modal.classList.add('aberto');
                     document.body.style.overflow = 'hidden';
-                    modal.querySelector('input').focus();
+                    focarPrimeiroCampo(nome || 'entrar');
                 }
 
                 function fecharModal() {
                     modal.classList.remove('aberto');
                     document.body.style.overflow = '';
-                    abrir.focus();
+                    if (abrir) abrir.focus();
                 }
 
-                abrir.addEventListener('click', abrirModal);
+                if (abrir) abrir.addEventListener('click', () => abrirModal('entrar'));
+                abas.forEach(aba => aba.addEventListener('click', () => {
+                    mostrarAba(aba.dataset.aba);
+                    focarPrimeiroCampo(aba.dataset.aba);
+                }));
+                // setas do teclado trocam de aba
+                modal.querySelector('.st-abas').addEventListener('keydown', e => {
+                    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+                    const atual = abas.findIndex(a => a.getAttribute('aria-selected') === 'true');
+                    const prox = abas[(atual + (e.key === 'ArrowRight' ? 1 : abas.length - 1)) % abas.length];
+                    mostrarAba(prox.dataset.aba, true);
+                });
                 modal.querySelectorAll('[data-fechar]').forEach(el => el.addEventListener('click', fecharModal));
                 document.addEventListener('keydown', e => {
                     if (e.key === 'Escape' && modal.classList.contains('aberto')) fecharModal();
                 });
+
+                // "Confirme a senha" avisa na hora se não bate (o servidor confere de novo)
+                const senha = document.getElementById('cad-senha');
+                const confirmar = document.getElementById('cad-confirmar');
+                const conferir = () => confirmar.setCustomValidity(
+                    confirmar.value && confirmar.value !== senha.value ? 'As senhas não são iguais.' : ''
+                );
+                senha.addEventListener('input', conferir);
+                confirmar.addEventListener('input', conferir);
+
+                // abre sozinho quando o servidor pediu (erro ou página que exige login)
+                if (modal.dataset.abrir) abrirModal(modal.dataset.abrir);
             }
 
             /* ---- menu no celular ---- */
@@ -123,6 +208,53 @@
                 document.addEventListener('click', e => { if (!nav.contains(e.target)) setMenu(false); });
                 document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
             }
+
+            /* ---- menu da conta (ícone de perfil) ---- */
+            const perfil = document.getElementById('st-perfil');
+            const perfilBtn = document.getElementById('abrir-perfil');
+            const perfilMenu = document.getElementById('menu-perfil');
+            if (perfil && perfilBtn && perfilMenu) {
+                const itens = () => Array.from(perfilMenu.querySelectorAll('.st-perfil-item'));
+
+                function setPerfil(aberto, focar) {
+                    perfilMenu.hidden = !aberto;
+                    perfilBtn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+                    perfilBtn.setAttribute('aria-label', aberto ? 'Fechar menu da conta' : 'Abrir menu da conta');
+                    if (aberto && focar) itens()[0].focus();
+                }
+
+                perfilBtn.addEventListener('click', () => {
+                    const abrindo = perfilMenu.hidden;
+                    // não deixa os dois menus abertos ao mesmo tempo (celular)
+                    if (abrindo && nav && menuBtn && nav.classList.contains('menu-aberto')) menuBtn.click();
+                    setPerfil(abrindo, false);
+                });
+                // teclado: seta para baixo abre e entra no menu; setas navegam; Esc fecha
+                perfilBtn.addEventListener('keydown', e => {
+                    if (e.key === 'ArrowDown') { e.preventDefault(); setPerfil(true, true); }
+                });
+                perfilMenu.addEventListener('keydown', e => {
+                    const lista = itens();
+                    const i = lista.indexOf(document.activeElement);
+                    if (e.key === 'ArrowDown') { e.preventDefault(); lista[(i + 1) % lista.length].focus(); }
+                    if (e.key === 'ArrowUp') { e.preventDefault(); lista[(i - 1 + lista.length) % lista.length].focus(); }
+                });
+                document.addEventListener('click', e => { if (!perfil.contains(e.target)) setPerfil(false); });
+                document.addEventListener('keydown', e => {
+                    if (e.key === 'Escape' && !perfilMenu.hidden) { setPerfil(false); perfilBtn.focus(); }
+                });
+                if (menuBtn) menuBtn.addEventListener('click', () => setPerfil(false));
+            }
+
+            /* ---- avisos do topo somem depois de alguns segundos ---- */
+            const avisos = document.getElementById('st-mensagens');
+            if (avisos) {
+                setTimeout(() => {
+                    avisos.classList.add('saindo');
+                    setTimeout(() => avisos.remove(), 500);
+                }, 6000);
+            }
+
         })();
     </script>
 

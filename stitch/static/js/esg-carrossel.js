@@ -40,11 +40,6 @@
         });
         dots.forEach(function (dot, i) {
             dot.classList.toggle('active', i === active);
-            if (i === active && active !== prev) {
-                dot.classList.remove('stretch');
-                void dot.offsetWidth;
-                dot.classList.add('stretch');
-            }
         });
         prev = active;
     }

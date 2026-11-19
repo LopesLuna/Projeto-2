@@ -14,5 +14,6 @@ urlpatterns = [
     path('sair/', views.sair, name='sair'),
     path('minha-conta/', views.minha_conta, name='minha_conta'),
     path('minha-conta/excluir/', views.excluir_conta, name='excluir_conta'),
-    path('meu-perfil/', views.meu_perfil, name='meu_perfil'),
+    path('minha-conta/relatorios/', views.salvar_relatorio, name='salvar_relatorio'),
+    path('minha-conta/relatorios/<int:pk>/excluir/', views.excluir_relatorio, name='excluir_relatorio'),
 ]

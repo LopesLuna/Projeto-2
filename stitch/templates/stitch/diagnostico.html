@@ -4,11 +4,14 @@
 {% block title %}Diagnóstico ESG | Stitch{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/questionario.css' %}">
+<link rel="stylesheet" href="{% static 'css/questionario.css' %}?v=2">
 {% endblock %}
 
 {% block content %}
-<section class="qz" id="diagnostico">
+<section class="qz" id="diagnostico"
+         data-salvar-url="{% url 'salvar_relatorio' %}"
+         data-csrf="{{ csrf_token }}"
+         data-logo="{% static 'img/logo-s-creme.png' %}">
   <header class="qz-topo">
     <p class="qz-eyebrow">DIAGNÓSTICO ESG</p>
     <h1>Diagnóstico da sua empresa</h1>
@@ -48,8 +51,10 @@
     <div class="qz-pontos-atencao" id="tips"></div>
     <div class="qz-acoes">
       <button type="button" class="qz-btn qz-btn--sec" id="restart">Refazer diagnóstico</button>
-      <button type="button" class="qz-btn" id="pdf">Gerar PDF</button>
+      <button type="button" class="qz-btn" id="pdf">Baixar relatório em PDF</button>
     </div>
+    <p class="qz-status" id="pdf-status" role="status"></p>
+    <p class="qz-dica">Quer ver a evolução? Faça o diagnóstico de novo com dados de outro ano e compare os dois em <a href="{% url 'minha_conta' %}#comparacao">Minha conta</a>.</p>
   </section>
 
   <noscript>
@@ -60,6 +65,6 @@
 
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="{% static 'js/questionario.js' %}"></script>
-<script src="{% static 'js/grafico-esg.js' %}?v=2"></script>
+<script src="{% static 'js/relatorio-pdf.js' %}"></script>
+<script src="{% static 'js/questionario.js' %}?v=2"></script>
 {% endblock %}

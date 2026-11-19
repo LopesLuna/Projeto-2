@@ -1,59 +1,49 @@
 {% extends 'stitch/base.html' %}
 {% load static %}
- 
+
 {% block title %}Comparar relatórios ESG | Stitch{% endblock %}
- 
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/questionario.css' %}">
+<link rel="stylesheet" href="{% static 'css/questionario.css' %}?v=2">
 {% endblock %}
- 
+
 {% block content %}
-<div class="qz" id="comparador-esg">
-  <p class="qz-eyebrow">COMPARADOR</p>
-  <h1 class="qz-titulo">Compare dois relatórios ESG</h1>
-  <p class="qz-intro">
-    Envie dois PDFs gerados pelo diagnóstico ESG do Stitch (por exemplo, de anos
-    diferentes). A comparação acontece no seu navegador: os arquivos não são
-    enviados para nenhum servidor.
-  </p>
- 
+<div class="qz cmp" id="comparador-esg" data-logo="{% static 'img/logo-s-creme.png' %}">
+  <h1 class="qz-titulo">Comparar relatórios</h1>
+  <p class="qz-intro">Arraste os PDFs de dois diagnósticos e baixe a comparação.</p>
+
   <div class="cmp-campos">
-    <label class="cmp-campo">
-      <span>Relatório 1</span>
-      <input type="file" id="pdfA" accept="application/pdf">
+    <label class="cmp-zona" for="pdfA">
+      <input type="file" id="pdfA" class="cmp-arquivo" accept="application/pdf">
+      <svg class="cmp-zona-icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 14h6M9 17h4"/>
+      </svg>
+      <strong>Relatório 1</strong>
+      <span class="cmp-zona-nome">Arraste o PDF ou clique</span>
     </label>
-    <label class="cmp-campo">
-      <span>Relatório 2</span>
-      <input type="file" id="pdfB" accept="application/pdf">
+    <label class="cmp-zona" for="pdfB">
+      <input type="file" id="pdfB" class="cmp-arquivo" accept="application/pdf">
+      <svg class="cmp-zona-icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 14h6M9 17h4"/>
+      </svg>
+      <strong>Relatório 2</strong>
+      <span class="cmp-zona-nome">Arraste o PDF ou clique</span>
     </label>
   </div>
- 
+
   <p id="cmp-erro" class="cmp-erro" role="alert" hidden></p>
- 
-  <div class="qz-acoes">
+  <p id="cmp-ok" class="cmp-ok" role="status" hidden></p>
+
+  <div class="qz-acoes cmp-acoes">
+    <a class="qz-btn qz-btn--sec" href="{% url 'diagnostico' %}">Fazer diagnóstico</a>
     <button id="comparar" type="button" class="qz-btn">Comparar</button>
-    <a class="qz-btn qz-btn--sec" href="{% url 'questionario' %}">Fazer o diagnóstico</a>
   </div>
- 
-  <section id="cmp-resultado" hidden>
-    <div id="cmp-avisos"></div>
-    <h2 class="qz-subtitulo" id="cmp-titulo"></h2>
-    <div id="cmp-resumo" class="cmp-resumo"></div>
-    <div id="cmp-pilares"></div>
- 
-    <h3 class="qz-subtitulo">O que melhorou</h3>
-    <div id="cmp-melhoras"></div>
- 
-    <h3 class="qz-subtitulo">O que piorou</h3>
-    <div id="cmp-pioras"></div>
- 
-    <p id="cmp-iguais" class="tip"></p>
-  </section>
 </div>
 {% endblock %}
- 
+
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="{% static 'js/comparador.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="{% static 'js/relatorio-pdf.js' %}"></script>
+<script src="{% static 'js/comparador.js' %}?v=2"></script>
 {% endblock %}
- 
