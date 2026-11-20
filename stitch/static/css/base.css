@@ -386,20 +386,22 @@ body.st-body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     z-index: 6;
 }
 .st-dots button {
-    width: 12px;
-    height: 12px;
+    position: relative;
+    width: 8px;
+    height: 8px;
     border: 0;
     border-radius: 999px;
     background: rgba(255, 255, 255, .4);
-    box-shadow: 0 0 5px rgba(0, 0, 0, .35);
+    box-shadow: 0 0 4px rgba(0, 0, 0, .3);
     cursor: pointer;
     padding: 0;
     transition: background .3s;
 }
+.st-dots button::before { content: ""; position: absolute; inset: -6px; }
 .st-dots button:hover { background: rgba(255, 255, 255, .75); }
 .st-dots button.on { background: #fff; }
 
@@ -1059,14 +1061,14 @@ body.st-body {
     .st-card { height: auto; border-radius: 22px; }
     .st-card p br { display: none; }
 
-    .st-card-about { display: flex; flex-direction: column-reverse; background: linear-gradient(180deg, #ebebd7 0%, #e3e3cd 48%, #a9c08a 74%, #5f8a45 100%); }
+    .st-card-about { display: flex; flex-direction: column-reverse; background: linear-gradient(180deg, #ebebd7 0%, #e5e5cf 45%, #c3d2a6 78%, #a9bf8a 100%); }
     .st-recycle { position: static; width: 78%; max-width: 320px; margin: 0 auto -6px; -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); }
     .st-card-about .st-content { padding: 26px 24px 0; }
     .st-logo-card { width: 170px; margin-left: 0; }
     .st-card-about h2 { font-size: 22px; margin-left: 0; margin-top: 10px; }
     .st-card-about p { font-size: 14.5px; line-height: 22px; margin-left: 0; margin-top: 8px; }
 
-    .st-card-join { min-height: 320px; }
+    .st-card-join { min-height: clamp(320px, 40vw, 420px); background-position: 65% 50%; }
     .st-card-join .st-content { padding: 34px 24px 30px; }
     .st-card-join h3 { font-size: 22px; line-height: 27px; }
     .st-card-join p { font-size: 14.5px; line-height: 21px; margin-top: 14px; max-width: 220px; }
