@@ -461,10 +461,23 @@ body.st-body {
 .st-card-about .st-content {
     position: relative;
     z-index: 2;
-    padding: calc(34.5 * var(--u)) 0 0 calc(57 * var(--u));
+    padding: calc(100 * var(--u)) 0 0 calc(100 * var(--u));
 }
 
-.st-logo-card { display: block; width: calc(176 * var(--u)); height: auto; margin-left: calc(2 * var(--u)); }
+.st-logo-card {
+    position: absolute;
+    left: calc(943 * var(--u));
+    top: 50%;
+    width: calc(118 * var(--u));
+    height: auto;
+    transform: translate(-50%, -50%);
+    opacity: .5;
+    pointer-events: none;
+}
+
+@media (max-width: 1849px) {
+    .st-logo-card { display: none; }
+}
 
 .st-card-about h2 {
     margin-top: calc(4 * var(--u));
@@ -1051,7 +1064,7 @@ body.st-body {
 
     .st-hero-content { left: 24px; right: 24px; top: 150px; }
     .st-hero-content h1 { font-size: 56px; line-height: .9; }
-    .st-hero-content p { font-size: 16px; margin-top: 16px; margin-left: 2px; }
+    .st-logo-card { display: block; left: auto; right: 24px; top: auto; bottom: 28px; width: 64px; transform: none; }
     .st-btn-outline { height: 46px; font-size: 14px; padding: 0 24px; }
     .st-hero-content .st-btn-outline { margin-top: 22px; margin-left: 0; }
     .st-btn-outline svg { width: 17px; height: 17px; }
