@@ -1,7 +1,7 @@
 // SVG Icons
 const SVG_ICONS = {
   supplier: `<svg viewBox="0 0 24 24"><path d="M16 16l3-8 3 8H16z"/><path d="M2 16l3-8 3 8H2z"/><path d="M7 21h10"/><path d="M12 3v18"/></svg>`,
-  workload: `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  workload: `<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
   waste: `<svg viewBox="0 0 24 24"><path d="M7 19a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7z"/><path d="M12 9v6"/><path d="M9 12h6"/></svg>`,
   investor: `<svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
   privacy: `<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
@@ -9,9 +9,9 @@ const SVG_ICONS = {
   energy: `<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 10 12 10 13 2"/></svg>`,
   warning: `<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`
 };
-
+ 
 const CARDS_PER_GAME = 5; // Quantidade de cartas sorteadas por partida
-
+ 
 const NAMES = { profit: "Lucro", environment: "Meio ambiente", people: "Social", governance: "Governança" };
 const STATES = [
   { max: 0, label: "Crítico", color: "#c6534d" },
@@ -20,21 +20,21 @@ const STATES = [
   { max: 74, label: "Estável", color: "#497eb0" },
   { max: 100, label: "Excelente", color: "#3b785b" }
 ];
-
+ 
 const INDICATOR_DESCRIPTIONS = {
   profit: "Saúde financeira e capacidade de investimento.",
   environment: "Ecoeficiência, redução de pegada e capital natural.",
   people: "Produtividade, retenção, clima e direitos humanos.",
   governance: "Conformidade, transparência e controle de riscos."
 };
-
+ 
 const CRISIS_EVENTS = {
   profit_min: { title: "Falência Financeira", text: "A empresa esgotou a liquidez por decisões inconsequentes. A gestão sustentável exige estabilidade financeira." },
   environment_min: { title: "Interdição Ambiental", text: "Acúmulo de contaminação provocou um desastre ecológico. As autoridades suspenderam a licença da empresa." },
   people_min: { title: "Greve Geral e Fuga de Talentos", text: "A insatisfação e demissões em massa paralisaram a empresa. O pilar social ruiu." },
   governance_min: { title: "Prisão por Fraude e Perda de Licença", text: "Falta de transparência e quebra de regras resultaram em intervenção judicial imediata." }
 };
-
+ 
 // BANCO DE CARTAS (POOL PRINCIPAL DE EVENTOS ESG)
 const RAW_EVENTS = [
   {
@@ -326,9 +326,9 @@ const RAW_EVENTS = [
     ]
   }
 ];
-
+ 
 const $ = id => document.getElementById(id);
-
+ 
 const game = {
   values: { profit: 60, environment: 60, people: 60, governance: 60 },
   passives: { profit: 0, environment: 0, people: 0, governance: 0 },
@@ -339,21 +339,21 @@ const game = {
   snapshots: [],
   gameOver: false
 };
-
+ 
 let card, leftBtn, rightBtn;
 let startX = 0, startY = 0, dragX = 0, dragging = false;
-
+ 
 function stateOf(v) {
   return STATES.find(s => v <= s.max) || STATES[STATES.length - 1];
 }
-
+ 
 function apply(effects = {}) {
   for (const [k, v] of Object.entries(effects)) {
     game.values[k] = Math.max(0, Math.min(100, game.values[k] + v));
   }
   renderBars();
 }
-
+ 
 function applyPassives() {
   for (const [k, v] of Object.entries(game.passives)) {
     if (v !== 0) {
@@ -365,7 +365,7 @@ function applyPassives() {
   }
   renderBars();
 }
-
+ 
 function renderBars() {
   for (const [k, v] of Object.entries(game.values)) {
     const wrap = document.querySelector(`[data-key="${k}"]`);
@@ -380,7 +380,7 @@ function renderBars() {
       strong.style.color = s.color;
       strong.style.background = s.color + "20";
     }
-
+ 
     const passiveVal = game.passives[k];
     const passEl = $("passive-" + k);
     if (passEl) {
@@ -389,7 +389,7 @@ function renderBars() {
     }
   }
 }
-
+ 
 function shuffle(array) {
   const a = JSON.parse(JSON.stringify(array));
   for (let i = a.length - 1; i > 0; i--) {
@@ -398,7 +398,7 @@ function shuffle(array) {
   }
   return a;
 }
-
+ 
 function updateUndoBtn() {
   const btn = $("undoButton");
   if (!btn) return;
@@ -406,7 +406,7 @@ function updateUndoBtn() {
   btn.disabled = !canUndo;
   btn.classList.toggle("disabled", !canUndo);
 }
-
+ 
 function undo() {
   if (!game.snapshots || game.snapshots.length === 0) return;
   const prev = game.snapshots.pop();
@@ -417,15 +417,15 @@ function undo() {
   game.index = prev.index;
   game.history = prev.history;
   game.gameOver = false;
-
+ 
   $("report").classList.add("hidden");
   $("gameArea").classList.remove("hidden");
-
+ 
   renderBars();
   renderEvent();
   updateUndoBtn();
 }
-
+ 
 function newGame() {
   game.values = { profit: 60, environment: 60, people: 60, governance: 60 };
   game.passives = { profit: 0, environment: 0, people: 0, governance: 0 };
@@ -434,28 +434,28 @@ function newGame() {
   game.snapshots = [];
   game.index = 0;
   game.gameOver = false;
-
+ 
   // Sorteia um subconjunto de cartas (CARDS_PER_GAME) do banco completo de cartas
   const pool = shuffle(RAW_EVENTS);
   game.events = pool.slice(0, Math.min(CARDS_PER_GAME, pool.length));
-
+ 
   $("report").classList.add("hidden");
   $("gameArea").classList.remove("hidden");
   renderBars();
   renderEvent();
   updateUndoBtn();
 }
-
+ 
 function renderEvent() {
   const e = game.events[game.index];
   if (!e) return finishGame(false);
-
+ 
   const swap = Math.random() < 0.5;
   e._renderChoices = swap ? [e.choices[1], e.choices[0]] : [e.choices[0], e.choices[1]];
-
+ 
   const leftChoice = e._renderChoices[0];
   const rightChoice = e._renderChoices[1];
-
+ 
   const totalCards = game.events.length;
   $("roundLabel").textContent = `Partida · ${game.index + 1} de ${totalCards}`;
   $("progressText").textContent = `Decisão ${game.index + 1} de ${totalCards}`;
@@ -468,29 +468,29 @@ function renderEvent() {
   $("symbol").innerHTML = SVG_ICONS[e.iconKey] || SVG_ICONS.warning;
   $("eventTitle").textContent = e.title;
   $("eventDescription").textContent = e.description;
-
+ 
   $("leftPreviewText").textContent = leftChoice.label;
   $("rightPreviewText").textContent = rightChoice.label;
-
+ 
   leftBtn.querySelector("span").textContent = leftChoice.label;
   rightBtn.querySelector("span").textContent = rightChoice.label;
-
+ 
   card.style.transition = "none";
   card.style.transform = "translateX(0) rotate(0)";
   card.style.opacity = "1";
   card.classList.remove("drag-left", "drag-right");
   requestAnimationFrame(() => card.style.transition = "");
-
+ 
   clearHighlights();
   updateUndoBtn();
 }
-
+ 
 function choose(side) {
   if (game.gameOver) return;
-
+ 
   const e = game.events[game.index];
   if (!e || !e._renderChoices) return;
-
+ 
   // Guarda o estado atual no histórico de snapshots para permitir desfazer
   game.snapshots.push(JSON.parse(JSON.stringify({
     values: game.values,
@@ -500,11 +500,11 @@ function choose(side) {
     index: game.index,
     history: game.history
   })));
-
+ 
   const c = side === "left" ? e._renderChoices[0] : e._renderChoices[1];
-
+ 
   let finalEffects = { ...c.effects };
-
+ 
   game.history.push({
     title: e.title,
     choice: c.label,
@@ -513,29 +513,29 @@ function choose(side) {
     effects: finalEffects,
     passive: c.passive
   });
-
+ 
   apply(finalEffects);
-
+ 
   if (c.passive) {
     for (const [k, v] of Object.entries(c.passive)) {
       game.passives[k] += v;
     }
   }
-
+ 
   applyPassives();
-
+ 
   // Insere desdobramento (followUp) imediatamente após a carta atual, caso exista
   if (c.followUp) {
     const insertAt = game.index + 1;
     game.events.splice(insertAt, 0, c.followUp);
   }
-
+ 
   const crisis = checkGameOver();
   if (crisis) {
     finishGame(true, crisis);
     return;
   }
-
+ 
   game.index++;
   if (game.index >= game.events.length) {
     finishGame(false);
@@ -543,7 +543,7 @@ function choose(side) {
     renderEvent();
   }
 }
-
+ 
 function checkGameOver() {
   for (const [k, v] of Object.entries(game.values)) {
     if (v <= 0 && CRISIS_EVENTS[`${k}_min`]) {
@@ -552,12 +552,12 @@ function checkGameOver() {
   }
   return null;
 }
-
+ 
 function finishGame(isCrisis = false, crisisData = null) {
   game.gameOver = true;
   $("gameArea").classList.add("hidden");
   $("report").classList.remove("hidden");
-
+ 
   if (isCrisis && crisisData) {
     $("roundLabel").textContent = "Fim de Jogo · Crise";
     $("reportEyebrow").textContent = "CRISE DE GESTÃO";
@@ -569,9 +569,9 @@ function finishGame(isCrisis = false, crisisData = null) {
     $("reportTitle").textContent = "Desempenho da Gestão";
     $("reportIntro").textContent = "Análise consolidada do impacto das suas decisões e do equilíbrio entre pilares.";
   }
-
+ 
   $("roiText").innerHTML = `As suas decisões acumularam <strong>+${game.totalPassiveProfitGained} pontos de lucro recorrente</strong>.<br><br>Um desempenho sólido em ESG exige equilibrar pilares concorrentes sem permitir que nenhum indicador chegue a zero.`;
-
+ 
   const bars = $("reportBars");
   bars.innerHTML = "";
   for (const [k, v] of Object.entries(game.values)) {
@@ -588,7 +588,7 @@ function finishGame(isCrisis = false, crisisData = null) {
     `;
     bars.append(item);
   }
-
+ 
   const list = $("decisionSummary");
   list.innerHTML = "";
   game.history.forEach(h => {
@@ -602,24 +602,24 @@ function finishGame(isCrisis = false, crisisData = null) {
     `;
     list.append(item);
   });
-
+ 
   const lessons = [...new Set(game.history.map(h => h.lesson))];
   $("learningText").textContent = isCrisis
     ? `A gestão colapsou por falta de equilíbrio num dos pilares. Lembre-se: ${lessons.slice(-2).join(" ")}`
     : lessons.join(" ");
-
+ 
   updateUndoBtn();
 }
-
+ 
 function highlightAffected(side) {
   clearHighlights();
   const e = game.events[game.index];
   if (!e || !e._renderChoices) return;
-
+ 
   const choice = side === "left" ? e._renderChoices[0] : e._renderChoices[1];
   const effects = choice.effects || {};
   const passives = choice.passive || {};
-
+ 
   const keys = new Set([...Object.keys(effects), ...Object.keys(passives)]);
   for (const k of keys) {
     if ((effects[k] && effects[k] !== 0) || (passives[k] && passives[k] !== 0)) {
@@ -628,18 +628,18 @@ function highlightAffected(side) {
     }
   }
 }
-
+ 
 function clearHighlights() {
   document.querySelectorAll(".indicator").forEach(el => el.classList.remove("highlight"));
 }
-
+ 
 function endDrag(commit) {
   if (!dragging) return;
   dragging = false;
   const side = dragX < -95 ? "left" : dragX > 95 ? "right" : null;
   card.classList.remove("drag-left", "drag-right");
   clearHighlights();
-
+ 
   if (commit && side) {
     choose(side);
   } else {
@@ -647,12 +647,12 @@ function endDrag(commit) {
     card.style.opacity = "1";
   }
 }
-
+ 
 document.addEventListener("DOMContentLoaded", () => {
   card = $("decisionCard");
   leftBtn = $("leftButton");
   rightBtn = $("rightButton");
-
+ 
   card.addEventListener("pointerdown", e => {
     if (e.target.closest(".choice")) return;
     if (game.gameOver || $("gameArea").classList.contains("hidden")) return;
@@ -663,35 +663,35 @@ document.addEventListener("DOMContentLoaded", () => {
     card.setPointerCapture(e.pointerId);
     card.style.transition = "none";
   });
-
+ 
   card.addEventListener("pointermove", e => {
     if (!dragging) return;
     dragX = e.clientX - startX;
     const dy = e.clientY - startY;
-
+ 
     if (Math.abs(dy) > Math.abs(dragX) * 1.2 && Math.abs(dragX) < 35) return;
-
+ 
     card.style.transform = `translateX(${dragX}px) rotate(${dragX * .035}deg)`;
-
+ 
     const isLeft = dragX < -25;
     const isRight = dragX > 25;
-
+ 
     card.classList.toggle("drag-left", isLeft);
     card.classList.toggle("drag-right", isRight);
-
+ 
     if (isLeft) highlightAffected("left");
     else if (isRight) highlightAffected("right");
     else clearHighlights();
   });
-
+ 
   card.addEventListener("pointerup", () => { card.style.transition = ""; endDrag(true); });
   card.addEventListener("pointercancel", () => { card.style.transition = ""; endDrag(false); });
-
+ 
   card.addEventListener("keydown", e => {
     if (e.key === "ArrowLeft") choose("left");
     if (e.key === "ArrowRight") choose("right");
   });
-
+ 
   const bindChoiceBtn = (btn, side) => {
     if (!btn) return;
     btn.addEventListener("mouseenter", () => highlightAffected(side));
@@ -702,12 +702,12 @@ document.addEventListener("DOMContentLoaded", () => {
       choose(side);
     });
   };
-
+ 
   bindChoiceBtn(leftBtn, "left");
   bindChoiceBtn(rightBtn, "right");
-
+ 
   $("restartButton").addEventListener("click", newGame);
-
+ 
   const undoBtn = $("undoButton");
   if (undoBtn) {
     undoBtn.addEventListener("pointerdown", e => e.stopPropagation());
@@ -716,16 +716,16 @@ document.addEventListener("DOMContentLoaded", () => {
       undo();
     });
   }
-
+ 
   const reloadPage = e => {
     if (e) e.stopPropagation();
     window.location.reload();
   };
-
+ 
   const brandLogo = $("brandLogo");
   if (brandLogo) {
     brandLogo.addEventListener("click", reloadPage);
   }
-
+ 
   newGame();
 });
