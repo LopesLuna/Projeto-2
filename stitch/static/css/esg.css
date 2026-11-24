@@ -268,3 +268,60 @@
     margin-bottom: 14px;
 }
 
+/* fontes citadas no meio do texto */
+.ec-pagina-topo p a,
+.ec-topico p a {
+    color: #3d7a1f;
+    text-decoration: underline;
+    text-decoration-color: rgba(105, 158, 47, .5);
+    text-underline-offset: 3px;
+}
+.ec-pagina-topo p a:hover,
+.ec-topico p a:hover {
+    color: #19401f;
+    text-decoration-color: currentColor;
+}
+
+/* lista de fontes no fim da página */
+.ec-fontes {
+    padding: 56px 0 72px;
+}
+.ec-fontes .ec-tag { color: #699e2f; }
+.ec-fontes h2 {
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 700;
+    color: #19401f;
+    margin: 8px 0 16px;
+}
+.ec-fontes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 82ch;
+}
+.ec-fontes li {
+    font-size: 14.5px;
+    line-height: 1.55;
+    margin-bottom: 8px;
+    padding-left: 14px;
+    position: relative;
+}
+.ec-fontes li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .62em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #9bc46a;
+}
+.ec-fontes a {
+    color: #1e3322;
+    text-decoration: underline;
+    text-decoration-color: rgba(105, 158, 47, .5);
+    text-underline-offset: 3px;
+    word-break: break-word;
+}
+.ec-fontes a:hover { color: #3d7a1f; }
+
