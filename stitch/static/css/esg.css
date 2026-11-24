@@ -212,6 +212,10 @@
     line-height: 1.7;
     color: #1e3322;
     max-width: 72ch;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
 }
 
 .ec-topico {
@@ -266,6 +270,20 @@
     color: #1e3322;
     max-width: 72ch;
     margin-bottom: 14px;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+}
+
+/* celular: coluna estreita, alinhado à esquerda para não abrir buracos */
+@media (max-width: 600px) {
+    .ec-pagina-topo p,
+    .ec-topico p {
+        text-align: left;
+        hyphens: manual;
+        -webkit-hyphens: manual;
+    }
 }
 
 /* fontes citadas no meio do texto */
