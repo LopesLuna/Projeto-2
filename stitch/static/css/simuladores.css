@@ -439,7 +439,15 @@
 
 .duo-card[data-role="active"][data-started="true"] .duo-body {
   display: block;
-  animation: sim-in .5s .25s both;
+  animation: sim-in .35s both;
+}
+
+/* Enquanto o card está se mexendo (data-moving, ligado pelo JS), o conteúdo
+   fica escondido e só aparece quando o card chega no tamanho final.
+   Assim o navegador mede o jogo UMA vez, no tamanho certo, e não no meio da
+   animação (que deixava os botões coloridos esticados até passar o mouse). */
+.duo-stage[data-moving="true"] .duo-card .duo-body {
+  display: none;
 }
 
 @keyframes sim-in {
