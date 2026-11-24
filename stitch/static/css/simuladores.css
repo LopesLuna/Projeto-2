@@ -265,7 +265,15 @@
 
 .duo-card[data-role="active"][data-started="true"] .duo-body {
   display: block;
-  animation: sim-in .5s .25s both;
+  animation: sim-in .35s both;
+}
+
+/* Enquanto o card está se mexendo (data-moving, ligado pelo JS), o conteúdo
+   fica escondido e só aparece quando o card chega no tamanho final.
+   Assim o navegador mede o jogo UMA vez, no tamanho certo, e não no meio da
+   animação (que deixava os botões coloridos esticados até passar o mouse). */
+.duo-stage[data-moving="true"] .duo-card .duo-body {
+  display: none;
 }
 
 @keyframes sim-in {
@@ -448,14 +456,25 @@
 
   .duo-card[data-role="active"][data-started="true"] .duo-body { animation: none; }
 }
-@media (max-width: 860px){
+
+/* ==========================================================================
+   Encaixe do jogo dentro do card
+   (fica aqui para não mexer no style.css do jogo; a regra com .duo-card é
+   mais específica e ganha da original)
+   ========================================================================== */
+
+/* Os botões coloridos nunca esticam além do próprio conteúdo */
+.duo-card #trama-game-container .choices {
+  align-content: start;
+  grid-auto-rows: min-content;
+}
+
+/* O painel de indicadores passa a 2 colunas já em 860px.
+   (O CSS do jogo só faz isso em 700px, e entre 700 e ~860 o 4º indicador
+   estourava para fora do card.) */
+@media (max-width: 860px) {
   .duo-card #trama-game-container .dashboard {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
   }
 }
-
-.duo-card #trama-game-container .choices {
-    align-content: start;
-    grid-auto-rows: min-content;
-  }
