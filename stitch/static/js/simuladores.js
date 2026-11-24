@@ -83,9 +83,27 @@
   }
   window.addEventListener('resize', ajustarAltura);
 
+  // Duração da animação do CSS (--sim-dur), em milissegundos.
+  function duracaoAnimacao() {
+    const v = getComputedStyle(stage).getPropertyValue('--sim-dur').trim();
+    const n = parseFloat(v);
+    if (isNaN(n)) return 600;
+    return v.endsWith('ms') ? n : n * 1000;
+  }
+
+  let temporizadorMovimento;
+
+  // Troca o leiaute. Durante a animação o conteúdo dos cards fica escondido
+  // (data-moving) e volta quando o card termina de se mexer.
   function irPara(novoEstado) {
     estado = novoEstado;
+    stage.dataset.moving = 'true';
     render();
+    clearTimeout(temporizadorMovimento);
+    temporizadorMovimento = setTimeout(function () {
+      delete stage.dataset.moving;
+      ajustarAltura();
+    }, duracaoAnimacao() + 50);
   }
 
   function jogar(nome) {
