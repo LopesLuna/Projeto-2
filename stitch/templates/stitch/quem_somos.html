@@ -4,7 +4,7 @@
 {% block title %}Quem Somos - Stitch{% endblock %}
 
 {% block content %}
-{% with site_projeto="https://sites.google.com/cesar.school/projetos-2-g13/equipe" %}
+{% with site_base="https://sites.google.com/cesar.school/projetos-2-g13" site_projeto="https://sites.google.com/cesar.school/projetos-2-g13/equipe" %}
 <div class="st-quem">
 
 <h1 class="st-title st-title--caps">QUEM SOMOS?</h1>
@@ -20,9 +20,9 @@
         <h2 id="ponte-titulo">Conheça o Stitch por dentro</h2>
         <p>Veja quem faz o Stitch na página da equipe. No mesmo site estão as entregas de cada sprint e o nosso processo.</p>
         <ul class="st-ponte-lista">
-            <li>Equipe</li>
-            <li>Entregas da SR1 e da SR2</li>
-            <li>Declaração de uso de IA</li>
+            <li><a href="{{ site_base }}/sr1" target="_blank" rel="noopener">Entregas da SR1</a></li>
+            <li><a href="{{ site_base }}/sr2" target="_blank" rel="noopener">Entregas da SR2</a></li>
+            <li><a href="{{ site_base }}/declara%C3%A7%C3%A3o-de-ia" target="_blank" rel="noopener">Declaração de uso de IA</a></li>
         </ul>
         <a class="st-btn st-ponte-btn" href="{{ site_projeto }}" target="_blank" rel="noopener">
             Conhecer a equipe
