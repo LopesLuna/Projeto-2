@@ -37,7 +37,7 @@
   border: 1px solid rgba(25, 64, 31, .16);
   border-radius: 20px;
   background: #fffef8;
-  box-shadow: 0 12px 36px rgba(25, 64, 31, .08);
+  box-shadow: var(--st-sombra-card), var(--st-brilho-card);
 }
 
 .qz-progresso-texto {

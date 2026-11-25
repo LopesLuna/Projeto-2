@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}?v=5">
     <link rel="stylesheet" href="{% static 'css/landing.css' %}">
 
     {% block extra_css %}
@@ -44,12 +44,12 @@
         </svg>
 
         <ul class="st-footer-links">
-            <li><span>Stitch</span></li>
+            <li><a href="{% url 'home' %}">Stitch</a></li>
             <li><a href="{% url 'quem_somos' %}">Sobre o Stitch</a></li>
             <li><a href="{% url 'entenda_esg' %}">Entenda ESG</a></li>
             <li><a href="{% url 'simuladores' %}">Simulações</a></li>
             <li><a href="{% url 'diagnostico' %}">Diagnóstico</a></li>
-            <li><span>Suporte</span></li>
+            <li><a href="{% url 'contato' %}">Suporte</a></li>
             <li><a href="{% url 'contato' %}">Fale Conosco</a></li>
         </ul>
         <svg class="st-wave-r" viewBox="0 0 92 75" fill="none" stroke-linecap="round" aria-hidden="true">
@@ -261,7 +261,7 @@
         })();
     </script>
 
-    <script src="{% static 'js/stitch-ui.js' %}"></script>
+    <script src="{% static 'js/stitch-ui.js' %}?v=5"></script>
 
     {% block extra_js %}
     {% endblock %}

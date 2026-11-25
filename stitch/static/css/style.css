@@ -286,7 +286,7 @@
   background: radial-gradient(circle at 100% 0%, #d8dfc37a, transparent 46%),
               repeating-linear-gradient(0deg, transparent, transparent 31px, #324e3a06 32px),
               var(--panel);
-  box-shadow: var(--shadow);
+  box-shadow: var(--st-sombra-card), var(--st-brilho-card);
   touch-action: pan-y;
   user-select: none;
   cursor: grab;
@@ -489,7 +489,7 @@
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 22px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--st-sombra-card), var(--st-brilho-card);
 }
 
 #trama-game-container .panel h2 {
