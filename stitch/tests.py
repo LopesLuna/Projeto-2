@@ -72,6 +72,28 @@ class HomeTest(SimpleTestCase):
 
 
 @override_settings(STORAGES=STORAGE_TESTE)
+class BoasVindasNaHomeTest(TestCase):
+    def test_deslogado_ve_o_titulo_da_capa(self):
+        html = self.client.get(reverse("home")).content.decode()
+        self.assertIn("Têxtil.<br>Sustentável.<br>Ao seu alcance.", html)
+        self.assertNotIn("Bem-vindo(a)", html)
+
+    def test_logado_ve_boas_vindas_com_o_primeiro_nome(self):
+        User.objects.create_user(username="ana@empresa.com", email="ana@empresa.com",
+                                 password="senhaforte1", first_name="Ana Clara Souza")
+        self.client.login(username="ana@empresa.com", password="senhaforte1")
+        html = self.client.get(reverse("home")).content.decode()
+        self.assertIn("Bem-vindo(a)<br>de volta,<br>Ana!", html)
+        self.assertNotIn("Ao seu alcance.", html)
+
+    def test_card_juntos_tem_atalhos_para_o_entenda_esg(self):
+        html = self.client.get(reverse("home")).content.decode()
+        url = reverse("entenda_esg")
+        self.assertIn(f'href="{url}#beneficios"', html)
+        self.assertIn(f'href="{url}#futuro"', html)
+
+
+@override_settings(STORAGES=STORAGE_TESTE)
 class IdentidadeVisualTest(SimpleTestCase):
     def test_navbar_usa_o_monograma_creme(self):
         for nome in PAGINAS:

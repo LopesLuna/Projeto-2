@@ -334,6 +334,8 @@ body.st-body {
     text-shadow: 0 calc(3 * var(--u)) calc(22 * var(--u)) rgba(0, 0, 0, .22);
 }
 
+.st-hero-boasvindas { overflow-wrap: anywhere; max-width: calc(900 * var(--u)); }
+
 .st-hero-content p {
     margin-top: calc(25 * var(--u));
     margin-left: calc(3 * var(--u));
@@ -493,6 +495,16 @@ body.st-body {
     transition: transform .2s ease, background-color .2s ease;
 }
 .st-card .st-card-links a:hover { transform: var(--st-btn-sobe); background: rgba(25, 64, 31, .13); }
+/* mesma pílula, versão clara para o card de foto escura ("Juntos por um futuro...") */
+.st-card .st-card-links--claro { margin-left: 0; }
+.st-card .st-card-links--claro a {
+    color: var(--st-creme);
+    background: rgba(235, 235, 215, .14);
+    border-color: rgba(235, 235, 215, .4);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+.st-card .st-card-links--claro a:hover { background: rgba(235, 235, 215, .24); }
 
 /* card 2: Juntos por um futuro mais sustentável */
 .st-card-join {
@@ -503,7 +515,7 @@ body.st-body {
 .st-card-join .st-content {
     position: relative;
     z-index: 2;
-    padding: calc(56 * var(--u)) 0 0 calc(44 * var(--u));
+    padding: calc(46 * var(--u)) 0 0 calc(44 * var(--u));
 }
 
 .st-card-join h3 {
@@ -515,14 +527,15 @@ body.st-body {
 }
 
 .st-card-join p {
-    margin-top: calc(18 * var(--u));
+    margin-top: calc(16 * var(--u));
+    max-width: calc(270 * var(--u));
     font-size: calc(13.7 * var(--u));
     line-height: calc(19.2 * var(--u));
     color: rgba(255, 255, 255, .94);
 }
 
 .st-card-join .st-btn-outline {
-    margin-top: calc(19 * var(--u));
+    margin-top: calc(16 * var(--u));
     height: calc(40 * var(--u));
     padding: 0 calc(25 * var(--u)) 0 calc(28 * var(--u));
     font-size: calc(13.4 * var(--u));
@@ -1089,7 +1102,7 @@ body.st-body {
     .st-card-join { min-height: clamp(320px, 40vw, 420px); background-position: 65% 50%; }
     .st-card-join .st-content { padding: 34px 24px 30px; }
     .st-card-join h3 { font-size: 22px; line-height: 27px; }
-    .st-card-join p { font-size: 14.5px; line-height: 21px; margin-top: 14px; max-width: 220px; }
+    .st-card-join p { font-size: 14.5px; line-height: 21px; margin-top: 14px; max-width: 320px; }
     .st-card-join .st-btn-outline { height: 44px; font-size: 14px; padding: 0 24px; margin-top: 20px; }
 
     .st-footer { height: auto; padding: 28px 14px 30px; flex-direction: column; gap: 18px; }
