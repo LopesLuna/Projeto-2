@@ -15,30 +15,20 @@
   const porId = new Map(relatorios.map(r => [String(r.id), r]));
 
   /* ---------- baixar o PDF de novo ---------- */
-  const erroBaixar = document.getElementById('baixar-erro');
+  // (a confirmação antes de excluir é o pop-up do site: stitch-ui.js, form[data-confirmar])
   document.querySelectorAll('.st-rel-baixar').forEach(botao => {
     botao.addEventListener('click', async () => {
       const dados = porId.get(botao.dataset.relatorio);
       if (!dados) return;
-      if (erroBaixar) erroBaixar.hidden = true;
       botao.disabled = true;
       try {
+        if (!window.StitchPDF) throw new Error('sem gerador de PDF');
         await window.StitchPDF.gerar(dados, { logoUrl: raiz.dataset.logo });
       } catch (e) {
-        if (erroBaixar) {
-          erroBaixar.textContent = 'Não foi possível gerar o PDF agora. Confira a conexão com a internet e tente de novo.';
-          erroBaixar.hidden = false;
-        }
+        window.Stitch.aviso('Não foi possível gerar o PDF agora. Confira a internet e tente de novo.', 'erro');
       } finally {
         botao.disabled = false;
       }
-    });
-  });
-
-  /* ---------- confirmar antes de excluir um relatório ---------- */
-  document.querySelectorAll('form[data-confirmar]').forEach(form => {
-    form.addEventListener('submit', e => {
-      if (!window.confirm(form.dataset.confirmar)) e.preventDefault();
     });
   });
 

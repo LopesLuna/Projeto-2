@@ -56,7 +56,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
                         <span>PDF</span>
                     </button>
-                    <form method="post" action="{% url 'excluir_relatorio' r.id %}" data-confirmar="Excluir este relatório da sua biblioteca? O PDF que você já baixou continua com você.">
+                    <form method="post" action="{% url 'excluir_relatorio' r.id %}" data-confirmar-titulo="Excluir este relatório?" data-confirmar="Ele sai da sua biblioteca. O PDF que você já baixou continua com você." data-confirmar-botao="Excluir relatório" data-confirmar-perigo>
                         {% csrf_token %}
                         <button type="submit" class="st-rel-excluir" aria-label="Excluir o relatório de {{ r.empresa }}{% if r.ano %} ({{ r.ano }}){% endif %}" title="Excluir">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
@@ -66,7 +66,6 @@
             </li>
             {% endfor %}
         </ul>
-        <p class="st-conta-erro" id="baixar-erro" role="alert" hidden></p>
         <div class="st-conta-rodape">
             {% if relatorios|length == 1 %}
             <p class="st-conta-dica">Faça outro diagnóstico (de outro ano, por exemplo) para ver a evolução aqui.</p>
@@ -81,15 +80,15 @@
         {% endif %}
     </section>
 
-    <details class="st-conta-perigo">
-        <summary>Excluir conta</summary>
-        <form method="post" action="{% url 'excluir_conta' %}">
-            {% csrf_token %}
-            <p>Apaga a sua conta e todos os relatórios.</p>
-            <label class="st-conta-confirma"><input type="checkbox" name="confirmar" required> Entendo que isso é para sempre.</label>
-            <button class="st-btn st-btn--perigo" type="submit">Confirmar exclusão</button>
-        </form>
-    </details>
+    {% comment %} a confirmação é o pop-up do site (stitch-ui.js), que manda confirmar=on;
+       sem JavaScript o servidor recusa e pede a confirmação {% endcomment %}
+    <form method="post" action="{% url 'excluir_conta' %}" class="st-conta-perigo"
+          data-confirmar-titulo="Excluir sua conta?"
+          data-confirmar="Isso apaga a sua conta e todos os relatórios, para sempre. Não dá para desfazer."
+          data-confirmar-botao="Excluir conta" data-confirmar-perigo data-confirmar-envia="confirmar">
+        {% csrf_token %}
+        <button class="st-btn st-btn--perigo" type="submit">Excluir conta</button>
+    </form>
 
 </div>
 

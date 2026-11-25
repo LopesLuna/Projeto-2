@@ -25,6 +25,18 @@
     --st-erro-fundo: #fff4f2;
     --st-erro-borda: #e6b8b0;
 
+    /* BOTÕES VERDES — padrão único do site (cores da logo).
+       Sem brilho, nem parado nem no hover: o mouse em cima só faz o botão subir um pouco. */
+    --st-btn-fundo: #19401f;                       /* verde-escuro da logo */
+    --st-btn-borda: var(--st-btn-fundo);           /* sem borda clara: a borda tem a cor do próprio botão */
+    --st-btn-texto: #ebebd7;                       /* creme da logo */
+    --st-btn-sobe: translateY(-2px);               /* único efeito do mouse em cima: o botão sobe 2px, sem brilho */
+
+    /* vidro leve em CSS (sem biblioteca): desfoque pequeno, cor viva e sem contorno branco */
+    --vidro-filtro: blur(4px) saturate(180%) brightness(1.04);
+    --vidro-borda: transparent;
+    --vidro-reflexo: inset 0 1px 14px rgba(255, 255, 255, .10);
+
     /* imagens (caminhos relativos a este arquivo: static/css -> static/img) */
     --img-slide-1: url('../img/slide-1.jpg');
     --img-slide-2: url('../img/slide-2.jpg');
@@ -44,7 +56,7 @@ body.st-body {
     align-items: stretch;
     min-height: 100vh;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: var(--st-cream);
+    background: transparent;   /* o creme fica no <html>; assim a arte de fundo aparece */
     color: var(--st-text);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
@@ -61,7 +73,7 @@ body.st-body {
 .st-footer a:focus-visible,
 .st-card a:focus-visible,
 .st-btn:focus-visible {
-    outline: 2px solid #cfe8a6;
+    outline: 2px solid var(--st-verde);
     outline-offset: 3px;
 }
 
@@ -132,28 +144,16 @@ body.st-body {
     grid-template-columns: 1fr auto;
     align-items: center;
     border-radius: calc(43 * var(--u));
-    background: linear-gradient(180deg, rgba(120, 170, 80, .40), rgba(25, 64, 31, .42));
-    -webkit-backdrop-filter: blur(calc(10 * var(--u))) saturate(115%);
-    backdrop-filter: blur(calc(10 * var(--u))) saturate(115%);
-    border: calc(1.2 * var(--u)) solid rgba(235, 235, 215, .42);
-    box-shadow:
-        inset 0 0 0 calc(1 * var(--u)) rgba(255, 255, 255, .06),
-        inset 0 calc(1 * var(--u)) calc(10 * var(--u)) rgba(255, 255, 220, .12),
-        0 calc(4 * var(--u)) calc(20 * var(--u)) rgba(0, 0, 0, .14);
+    /* transparente com fosco leve: dá para ver a foto atrás, mas o menu continua legível.
+       Sem contorno branco. */
+    background: linear-gradient(180deg, rgba(40, 90, 40, .38), rgba(18, 48, 24, .50));
+    -webkit-backdrop-filter: blur(calc(9 * var(--u))) saturate(140%);
+    backdrop-filter: blur(calc(9 * var(--u))) saturate(140%);
+    border: 0;
+    box-shadow: 0 calc(4 * var(--u)) calc(20 * var(--u)) rgba(0, 0, 0, .14);
     z-index: 10;
 }
 
-/* brilho fino na borda inferior */
-.st-navbar::after {
-    content: "";
-    position: absolute;
-    left: 24%; right: 24%;
-    bottom: calc(-1 * var(--u));
-    height: calc(1.5 * var(--u));
-    background: linear-gradient(90deg, transparent, rgba(190, 225, 130, .9), transparent);
-    filter: blur(calc(.8 * var(--u)));
-    pointer-events: none;
-}
 
 .st-logo-nav { display: block; justify-self: start; }
 .st-logo-nav img { width: auto; height: calc(54 * var(--u)); }
@@ -184,22 +184,8 @@ body.st-body {
 .st-nav-links a:hover { background: rgba(255, 255, 255, .09); }
 
 .st-nav-links a.active {
-    background: linear-gradient(180deg, rgba(25, 64, 31, .82), rgba(18, 50, 24, .86));
-    box-shadow:
-        0 0 0 calc(1 * var(--u)) rgba(160, 210, 100, .22),
-        0 0 calc(14 * var(--u)) rgba(150, 200, 90, .30);
-}
-.st-nav-links a.active::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: calc(-1 * var(--u));
-    width: calc(36 * var(--u));
-    height: calc(1.6 * var(--u));
-    transform: translateX(-50%);
-    border-radius: 2px;
-    background: #cfe8a6;
-    box-shadow: 0 0 calc(5 * var(--u)) rgba(190, 225, 130, .8);
+    /* página atual: só o redondo no verde-escuro dos botões, sem borda nem tracinho claro */
+    background: var(--st-btn-fundo);
 }
 
 .st-nav-right { justify-self: end; display: flex; align-items: center; }
@@ -213,18 +199,16 @@ body.st-body {
     font: inherit;
     font-size: calc(14.4 * var(--u));
     font-weight: 500;
-    color: #fff;
+    color: var(--st-btn-texto);
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(25, 64, 31, .72), rgba(18, 50, 24, .78));
-    border: calc(1.4 * var(--u)) solid rgba(185, 220, 140, .72);
-    box-shadow:
-        0 0 calc(14 * var(--u)) rgba(150, 200, 90, .42),
-        inset 0 0 calc(10 * var(--u)) rgba(150, 200, 90, .16);
+    background: var(--st-btn-fundo);
+    border: calc(1.4 * var(--u)) solid var(--st-btn-borda);
+    box-shadow: none;
     cursor: pointer;
     text-decoration: none;
-    transition: .25s;
+    transition: transform .25s;
 }
-.st-btn-login:hover { box-shadow: 0 0 calc(22 * var(--u)) rgba(150, 200, 90, .65), inset 0 0 calc(10 * var(--u)) rgba(150, 200, 90, .22); }
+.st-btn-login:hover { transform: var(--st-btn-sobe); }
 .st-btn-login svg { width: calc(18 * var(--u)); height: calc(18 * var(--u)); }
 
 /* ---------- conta logada: ícone de perfil + menu ---------- */
@@ -236,22 +220,18 @@ body.st-body {
     width: calc(43 * var(--u));
     height: calc(43 * var(--u));
     padding: 0;
-    color: #fff;
+    color: var(--st-btn-texto);
     border-radius: 50%;
-    background: linear-gradient(180deg, rgba(25, 64, 31, .72), rgba(18, 50, 24, .80));
-    border: calc(1.4 * var(--u)) solid rgba(185, 220, 140, .72);
-    box-shadow:
-        0 0 calc(14 * var(--u)) rgba(150, 200, 90, .42),
-        inset 0 0 calc(10 * var(--u)) rgba(150, 200, 90, .16);
+    background: var(--st-btn-fundo);
+    border: calc(1.4 * var(--u)) solid var(--st-btn-borda);
+    box-shadow: none;
     cursor: pointer;
-    transition: .25s;
+    transition: transform .25s;
 }
-.st-btn-perfil:hover,
-.st-btn-perfil[aria-expanded="true"],
-.st-btn-perfil.active {
-    box-shadow: 0 0 calc(22 * var(--u)) rgba(150, 200, 90, .65), inset 0 0 calc(10 * var(--u)) rgba(150, 200, 90, .22);
-}
-.st-btn-perfil:focus-visible { outline: 2px solid #cfe8a6; outline-offset: 3px; }
+/* na página "Minha conta": só fica mais escuro, sem brilho parado */
+.st-btn-perfil.active { background: var(--st-btn-fundo); }
+.st-btn-perfil:hover { transform: var(--st-btn-sobe); }
+.st-btn-perfil:focus-visible { outline: 2px solid var(--st-creme); outline-offset: 3px; }
 .st-btn-perfil svg { width: calc(20 * var(--u)); height: calc(20 * var(--u)); }
 
 .st-perfil-menu {
@@ -319,12 +299,16 @@ body.st-body {
     margin-left: 8px;
     padding: 0;
     align-items: center; justify-content: center;
-    color: #fff;
+    color: var(--st-btn-texto);
     border-radius: 50%;
-    background: linear-gradient(180deg, rgba(25, 64, 31, .72), rgba(18, 50, 24, .78));
-    border: 1.4px solid rgba(185, 220, 140, .6);
+    background: var(--st-btn-fundo);
+    border: 1.4px solid var(--st-btn-borda);
+    box-shadow: none;
     cursor: pointer;
+    transition: transform .25s;
 }
+.st-menu-btn:hover { transform: var(--st-btn-sobe); }
+.st-menu-btn:focus-visible { outline: 2px solid var(--st-creme); outline-offset: 3px; }
 .st-menu-btn svg { width: 20px; height: 20px; }
 
 /* ---------- texto do hero ---------- */
@@ -360,19 +344,19 @@ body.st-body {
     padding: 0 calc(26 * var(--u)) 0 calc(28 * var(--u));
     font-size: calc(14.7 * var(--u));
     font-weight: 500;
-    color: #fff;
+    color: var(--st-btn-texto);
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(45, 95, 40, .55), rgba(25, 64, 31, .62));
-    border: calc(1.4 * var(--u)) solid rgba(185, 220, 140, .78);
-    box-shadow:
-        0 0 calc(16 * var(--u)) rgba(150, 200, 90, .40),
-        inset 0 0 calc(12 * var(--u)) rgba(150, 200, 90, .16);
-    -webkit-backdrop-filter: blur(calc(6 * var(--u)));
-    backdrop-filter: blur(calc(6 * var(--u)));
-    transition: .25s;
+    background: var(--st-btn-fundo);
+    border: calc(1.4 * var(--u)) solid var(--st-btn-borda);
+    box-shadow: none;
+    transition: transform .25s, background .25s, box-shadow .25s;
 }
-.st-btn-outline:hover { transform: translateY(calc(-2 * var(--u))); box-shadow: 0 0 calc(24 * var(--u)) rgba(150, 200, 90, .65), inset 0 0 calc(12 * var(--u)) rgba(150, 200, 90, .22); }
+.st-btn-outline:hover { transform: var(--st-btn-sobe); }
+.st-btn-outline:focus-visible { outline: 2px solid var(--st-creme); outline-offset: 3px; }
 .st-btn-outline svg { width: calc(17 * var(--u)); height: calc(17 * var(--u)); }
+/* o "a { color: inherit }" do topo e dos cards deixava o texto branco: fica o creme, como nas setas */
+.st-hero .st-btn-outline,
+.st-card .st-btn-outline { color: var(--st-btn-texto); }
 
 .st-hero-content .st-btn-outline { margin-top: calc(31 * var(--u)); margin-left: calc(3 * var(--u)); }
 
@@ -761,13 +745,15 @@ body.st-body {
     border-radius: 24px;
     color: var(--st-creme);
     text-decoration: none;
-    background: rgba(235, 235, 215, .12);
-    border: 1.5px solid rgba(235, 235, 215, .35);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
+    /* vidro líquido sobre o fundo verde */
+    background: rgba(235, 235, 215, .10);
+    border: 1px solid var(--vidro-borda);
+    -webkit-backdrop-filter: var(--vidro-filtro);
+    backdrop-filter: var(--vidro-filtro);
+    box-shadow: var(--vidro-reflexo);
     transition: transform .25s, box-shadow .25s;
 }
-.st-ponte-qr:hover { transform: translateY(-3px); box-shadow: 0 0 26px rgba(150, 200, 90, .45); }
+.st-ponte-qr:hover { transform: translateY(-3px); }
 .st-ponte-qr:focus-visible { outline: 2px solid #cfe8a6; outline-offset: 4px; }
 .st-ponte-qr-codigo {
     position: relative;
@@ -804,15 +790,16 @@ body.st-body {
     font: inherit;
     font-size: 15px;
     font-weight: 600;
-    color: #fff;
+    color: var(--st-btn-texto);
+    text-decoration: none;
     border-radius: 999px;
-    background: linear-gradient(180deg, #2f5f27, #19401f);
-    border: 1.4px solid rgba(185, 220, 140, .8);
-    box-shadow: 0 0 16px rgba(150, 200, 90, .4), inset 0 0 12px rgba(150, 200, 90, .16);
+    background: var(--st-btn-fundo);
+    border: 1.4px solid var(--st-btn-borda);
+    box-shadow: none;
     cursor: pointer;
-    transition: transform .25s, box-shadow .25s;
+    transition: transform .25s, box-shadow .25s, background .25s, color .25s, border-color .25s;
 }
-.st-btn:hover { transform: translateY(-2px); box-shadow: 0 0 24px rgba(150, 200, 90, .65), inset 0 0 12px rgba(150, 200, 90, .22); }
+.st-btn:hover { transform: var(--st-btn-sobe); }
 
 /* ---------- formulários (contato + login) ---------- */
 .st-form { max-width: 640px; margin: 0 auto; }
@@ -830,6 +817,7 @@ body.st-body {
 
 .st-form input[type="text"],
 .st-form input[type="email"],
+.st-form input[type="tel"],
 .st-form select,
 .st-form textarea,
 .st-modal-painel input {
@@ -1002,7 +990,7 @@ body.st-body {
     border: 1.2px solid rgba(105, 158, 47, .45);
 }
 .st-modal-erro {
-    margin: 16px 0 0;
+    margin: 0 0 16px;
     padding: 10px 14px;
     border-radius: 12px;
     font-size: 14px;
@@ -1047,7 +1035,6 @@ body.st-body {
     }
     .st-navbar.menu-aberto .st-nav-links { display: flex; }
     .st-nav-links a { height: 44px; padding: 0 18px; font-size: 15px; }
-    .st-nav-links a.active::after { display: none; }
 
     .st-hero-content { left: 24px; right: 24px; top: 150px; }
     .st-hero-content h1 { font-size: 56px; line-height: .9; }
@@ -1116,30 +1103,215 @@ body.st-body {
     flex: 0 1 auto;
 }
 
-.st-mensagens {
-    position: fixed; top: 90px; left: 50%; transform: translateX(-50%);
-    z-index: 1000;
+/* ==========================================================================
+   BOTÕES SECUNDÁRIO E DE PERIGO
+   ========================================================================== */
+/* secundário: claro com borda verde (ex.: "Cancelar") */
+.st-btn--sec {
+    color: var(--st-verde-escuro);
+    background: rgba(255, 255, 255, .7);
+    border-color: rgba(25, 64, 31, .35);
 }
+/* (o hover do secundário é só o .st-btn:hover: sobe, sem mudar de cor e sem brilho) */
 
-.st-mensagens {
+/* perigo (excluir): claro em repouso; no hover as cores se invertem
+   e o botão fica com o vermelho de erro do site, sem brilho */
+.st-btn--perigo {
+    color: var(--st-erro);
+    background: var(--st-erro-fundo);
+    border-color: var(--st-erro-borda);
+}
+.st-btn--perigo:hover,
+.st-btn--perigo:focus-visible {
+    color: #fff;
+    background: var(--st-erro);
+    border-color: var(--st-erro);
+    box-shadow: none;
+}
+.st-btn--perigo:focus-visible { outline-color: var(--st-erro); }
+
+/* ==========================================================================
+   ERROS NOS CAMPOS (linha vermelha + frase curta embaixo)
+   ========================================================================== */
+.st-body .st-campo-erro,
+.st-body .st-campo-erro:hover {
+    border-color: var(--st-erro) !important;
+    background-color: #fffafa !important;
+}
+.st-body .st-campo-erro:focus {
+    border-color: var(--st-erro) !important;
+    box-shadow: 0 0 0 3px rgba(138, 44, 29, .18) !important;
+}
+.st-campo-msg {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 6px 0 0 !important;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--st-erro);
+}
+.st-campo-msg::before {
+    content: "!";
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 15px;
+    height: 15px;
+    margin-top: 1px;
+    border-radius: 50%;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--st-erro);
+}
+.st-opcional { font-weight: 400; color: var(--st-muted); }
+
+/* ==========================================================================
+   AVISOS (pop-up pequeno no topo; o tempo é a barrinha de baixo)
+   ========================================================================== */
+/* no canto direito, embaixo da navbar: não cobre o formulário (que fica no centro) */
+.st-avisos {
+    position: fixed;
+    top: calc(125 * var(--u) + 12px);
+    right: 24px;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
     width: max-content;
     max-width: calc(100vw - 32px);
-    text-align: center;
-    transition: opacity .5s;
+    pointer-events: none;
 }
-.st-mensagens.saindo { opacity: 0; }
-
-.st-mensagem {
-    padding: 12px 20px;
-    border: 1px solid var(--st-erro-borda); border-radius: 10px;
-    background: var(--st-erro-fundo); color: var(--st-erro);
+.st-aviso {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 440px;
+    padding: 12px 44px 14px 14px;
+    border-radius: 14px;
+    border: 1px solid var(--st-erro-borda);
+    background: var(--st-erro-fundo);
+    color: var(--st-erro);
+    font-size: 14.5px;
+    font-weight: 500;
+    line-height: 1.45;
+    box-shadow: 0 10px 28px rgba(25, 64, 31, .18);
+    pointer-events: auto;
+    animation: st-aviso-entra .25s ease;
 }
-
-/* avisos que não são erro (ex.: "Conta criada!") */
-.st-mensagem--success,
-.st-mensagem--info {
+.st-aviso::before {
+    content: "!";
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--st-erro);
+}
+.st-aviso--sucesso,
+.st-aviso--info {
     border-color: rgba(105, 158, 47, .45);
     background: #eef5e4;
     color: var(--st-verde-escuro);
-    box-shadow: 0 8px 24px rgba(25, 64, 31, .15);
 }
+.st-aviso--sucesso::before { content: "✓"; background: var(--st-verde); }
+.st-aviso--info::before { content: "i"; background: var(--st-verde); }
+.st-aviso p { margin: 0; }
+.st-aviso-fechar {
+    position: absolute;
+    top: 7px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: .7;
+    transition: background .2s, opacity .2s;
+}
+.st-aviso-fechar:hover { opacity: 1; background: rgba(25, 64, 31, .08); }
+.st-aviso-fechar:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; opacity: 1; }
+.st-aviso-tempo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: currentColor;
+    opacity: .3;
+    transform-origin: left;
+    animation: st-aviso-tempo var(--tempo, 6000ms) linear forwards;
+}
+/* com o mouse em cima (ou foco no X) o tempo para */
+.st-aviso:hover .st-aviso-tempo,
+.st-aviso:focus-within .st-aviso-tempo { animation-play-state: paused; }
+.st-aviso.saindo { opacity: 0; transform: translateY(-6px); transition: opacity .25s, transform .25s; }
+@keyframes st-aviso-entra { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes st-aviso-tempo { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+@media (max-width: 1100px) {
+    .st-avisos { top: 96px; right: 16px; }
+}
+/* celular: embaixo, de lado a lado (o campo com erro costuma ficar em cima) */
+@media (max-width: 700px) {
+    .st-avisos { top: auto; bottom: 16px; left: 16px; right: 16px; width: auto; align-items: stretch; }
+    .st-aviso { max-width: none; }
+    @keyframes st-aviso-entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+}
+
+/* ==========================================================================
+   CONFIRMAÇÃO (pop-up do site no lugar do confirm() do navegador)
+   ========================================================================== */
+.st-confirmar { z-index: 1100; }
+.st-confirmar-painel { max-width: 400px; padding: 30px 28px 24px; }
+.st-confirmar-painel h2 { font-size: 22px; }
+.st-confirmar-painel p { margin-top: 10px; font-size: 15px; line-height: 1.55; color: var(--st-muted); }
+.st-confirmar-acoes { display: flex; gap: 10px; margin-top: 24px; }
+.st-modal-painel .st-confirmar-acoes .st-btn {
+    flex: 1;
+    width: auto;
+    height: 44px;
+    margin-top: 0;
+    padding: 0 18px;
+}
+@media (max-width: 420px) {
+    .st-confirmar-acoes { flex-direction: column-reverse; }
+}
+
+
+/* a página não "estica" além do topo nem do fim */
+html, body { overscroll-behavior: none; }
+
+/* ==========================================================================
+   FUNDO DO SITE: trama de tecido bem sutil (img/trama.svg, fios passando por cima e
+   por baixo, como linho visto de perto) e tons de verde suaves nas bordas, para o
+   creme não ficar chapado. Fica parado atrás de tudo enquanto a página rola.
+   ========================================================================== */
+.st-body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 55% 45% at 0% 0%, rgba(105, 158, 47, .14), transparent 70%),
+        radial-gradient(ellipse 50% 50% at 100% 100%, rgba(25, 64, 31, .10), transparent 70%),
+        radial-gradient(ellipse 40% 40% at 100% 10%, rgba(185, 215, 150, .18), transparent 70%),
+        url('../img/trama.svg') 0 0 / 24px 24px repeat;
+}
+

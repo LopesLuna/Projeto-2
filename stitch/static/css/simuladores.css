@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Página Simuladores — cards Simule / Veja (Estilo Vidro Fosco Verde)
+   Página Simuladores — cards Simule / Veja (vidro líquido verde)
 
    O leiaute é controlado por data-attributes que o simuladores.js escreve:
      .duo-stage[data-state]  = neutral | simule | veja
@@ -31,7 +31,7 @@
   color: var(--st-text, #1e3322);
 }
 
-/* Pontos de luz oliva ao fundo para realçar a transparência do vidro fosco */
+/* Pontos de luz oliva ao fundo para realçar a transparência do vidro */
 .simulacao::before,
 .simulacao::after {
   content: "";
@@ -103,8 +103,8 @@
   color: var(--sim-fg);
   border: 1.5px solid var(--sim-border);
   box-shadow: var(--sim-shadow);
-  -webkit-backdrop-filter: blur(18px) saturate(125%);
-  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: var(--vidro-filtro);
+  backdrop-filter: var(--vidro-filtro);
   transition:
     left var(--sim-dur) var(--sim-ease),
     top var(--sim-dur) var(--sim-ease),
@@ -132,28 +132,16 @@
   pointer-events: none;
 }
 
-/* Reflexo interno sutil na borda superior do vidro */
-.duo-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
-  pointer-events: none;
-  z-index: 3;
-}
+/* (o reflexo das bordas vem de --vidro-reflexo, em base.css) */
 
-/* 1) Neutro: lado a lado em vidro fosco verde translúcido */
+/* 1) Neutro: lado a lado em vidro líquido verde */
 .duo-card--simule {
   --card-photo: url('../img/bg-simule.jpeg');
   --card-photo-pos: center 20%;
   --sim-bg: linear-gradient(145deg, rgba(105, 158, 47, 0.26) 0%, rgba(65, 111, 39, 0.17) 100%);
   --sim-fg: var(--sim-ink);
-  --sim-border: rgba(255, 255, 255, 0.78);
-  --sim-shadow:
-    0 0 0 1px rgba(105, 158, 47, 0.25),
-    0 16px 38px rgba(25, 64, 31, 0.12),
-    0 0 18px rgba(225, 240, 200, 0.45);
+  --sim-border: var(--vidro-borda);
+  --sim-shadow: var(--vidro-reflexo), 0 16px 38px rgba(25, 64, 31, 0.12);
   left: 0;
   top: 0;
   width: calc(50% - var(--gap) / 2);
@@ -165,11 +153,8 @@
   --card-photo-pos: center 25%;
   --sim-bg: linear-gradient(145deg, rgba(25, 64, 31, 0.62) 0%, rgba(16, 42, 22, 0.54) 100%);
   --sim-fg: #fffdf7;
-  --sim-border: rgba(185, 220, 140, 0.52);
-  --sim-shadow:
-    0 0 0 1px rgba(25, 64, 31, 0.25),
-    0 16px 38px rgba(18, 48, 24, 0.18),
-    0 0 18px rgba(150, 200, 90, 0.22);
+  --sim-border: var(--vidro-borda);
+  --sim-shadow: var(--vidro-reflexo), 0 16px 38px rgba(18, 48, 24, 0.18);
   left: calc(50% + var(--gap) / 2);
   top: 0;
   width: calc(50% - var(--gap) / 2);
@@ -206,14 +191,12 @@
   height: 100%;
 }
 
-/* card ativo ganha fundo claro fosco (o jogo e o quiz foram feitos para fundo creme) */
+/* card ativo ganha fundo claro (o jogo e o quiz foram feitos para fundo creme) */
 .duo-card[data-role="active"] {
   --sim-bg: var(--sim-paper);
   --sim-fg: var(--sim-ink);
   --sim-border: rgba(255, 255, 255, 0.92);
-  --sim-shadow:
-    0 0 0 1px rgba(185, 215, 150, 0.45),
-    0 20px 50px rgba(25, 64, 31, 0.16);
+  --sim-shadow: var(--vidro-reflexo), 0 20px 50px rgba(25, 64, 31, 0.16);
 }
 
 /* Ativa a foto meio transparente de fundo na tela de abertura do simulador */
@@ -223,22 +206,12 @@
 }
 
 .duo-stage[data-state="neutral"] .duo-card--simule:hover {
+  /* hover: só sobe (sem luz em volta) */
   transform: translateY(-5px);
-  --sim-bg: linear-gradient(145deg, rgba(105, 158, 47, 0.34) 0%, rgba(65, 111, 39, 0.24) 100%);
-  --sim-shadow:
-    0 0 0 1px rgba(105, 158, 47, 0.35),
-    0 22px 44px rgba(25, 64, 31, 0.16),
-    0 0 22px rgba(225, 240, 200, 0.65);
 }
 
 .duo-stage[data-state="neutral"] .duo-card--veja:hover {
   transform: translateY(-5px);
-  --sim-bg: linear-gradient(145deg, rgba(25, 64, 31, 0.72) 0%, rgba(16, 42, 22, 0.64) 100%);
-  --sim-border: rgba(207, 232, 166, 0.72);
-  --sim-shadow:
-    0 0 0 1px rgba(25, 64, 31, 0.35),
-    0 22px 44px rgba(18, 48, 24, 0.24),
-    0 0 24px rgba(150, 200, 90, 0.35);
 }
 
 .duo-card[data-role="min"]:hover { filter: brightness(1.06); }
@@ -312,8 +285,8 @@
 
 .duo-card[data-role="active"] .duo-icon {
   background: rgba(255, 253, 247, 0.92);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: var(--vidro-filtro);
+  backdrop-filter: var(--vidro-filtro);
   border: 1px solid rgba(25, 64, 31, 0.24);
   color: var(--sim-olive);
   box-shadow: 0 4px 14px rgba(18, 48, 24, 0.10);
@@ -378,11 +351,11 @@
   margin-top: 14px;
   height: 48px;
   padding: 0 34px;
-  border: 1.4px solid rgba(185, 220, 140, .8);
+  border: 1.4px solid var(--st-btn-borda);
   border-radius: 999px;
-  background: linear-gradient(180deg, #2f5f27, #19401f);
-  box-shadow: 0 4px 18px rgba(18, 48, 24, 0.25), 0 0 16px rgba(150, 200, 90, .4), inset 0 0 12px rgba(150, 200, 90, .16);
-  color: #fff;
+  background: var(--st-btn-fundo);
+  box-shadow: none;
+  color: var(--st-btn-texto);
   font: inherit;
   font-size: 1rem;
   font-weight: 600;
@@ -391,11 +364,8 @@
 }
 
 .duo-card[data-role="active"][data-started="false"] .duo-play { display: inline-flex; }
-.duo-play:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(18, 48, 24, 0.3), 0 0 24px rgba(150, 200, 90, .65), inset 0 0 12px rgba(150, 200, 90, .22);
-}
-.duo-play:focus-visible { outline: 2px solid #cfe8a6; outline-offset: 3px; }
+.duo-play:hover { transform: translateY(-2px); }
+.duo-play:focus-visible { outline: 2px solid var(--st-verde); outline-offset: 3px; }
 
 /* depois de iniciado, o cabeçalho some e entra o conteúdo (jogo / quiz) */
 .duo-card[data-role="active"][data-started="true"] .duo-head { display: none; }
@@ -413,8 +383,8 @@
   border: 1.4px solid rgba(25, 64, 31, 0.35);
   border-radius: 999px;
   background: rgba(255, 253, 247, 0.90);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: var(--vidro-filtro);
+  backdrop-filter: var(--vidro-filtro);
   color: var(--sim-ink);
   font: inherit;
   font-size: 14px;
@@ -455,7 +425,7 @@
   to   { opacity: 1; transform: none; }
 }
 
-/* ---------- Botão "simule com seus dados reais!" ---------- */
+/* ---------- Botão "Diagnostique sua empresa" ---------- */
 .duo-cta {
   position: relative;
   z-index: 1;
@@ -468,10 +438,10 @@
   padding: 12px 26px;
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.48));
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: var(--vidro-filtro);
+  backdrop-filter: var(--vidro-filtro);
   border: 1.4px solid rgba(25, 64, 31, 0.28);
-  box-shadow: 0 6px 20px rgba(25, 64, 31, 0.12);
+  box-shadow: var(--vidro-reflexo), 0 6px 20px rgba(25, 64, 31, 0.12);
   font-family: inherit;
   font-size: 15px;
   font-weight: 600;
@@ -480,13 +450,8 @@
   transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
 }
 
-.duo-cta:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(180deg, #2f5f27, #19401f);
-  border-color: rgba(185, 220, 140, .8);
-  color: #fff;
-  box-shadow: 0 0 20px rgba(150, 200, 90, .55);
-}
+/* continua branco no hover: só sobe, igual aos outros botões */
+.duo-cta:hover { transform: translateY(-2px); }
 
 .duo-cta:focus-visible { outline: 2px solid var(--sim-olive); outline-offset: 4px; }
 
@@ -572,10 +537,11 @@
 .quiz-restart {
   margin-top: 16px;
   padding: 12px 28px;
-  border: 1.4px solid rgba(185, 220, 140, .8);
+  border: 1.4px solid var(--st-btn-borda);
   border-radius: 999px;
-  background: linear-gradient(180deg, #2f5f27, #19401f);
-  color: #fff;
+  background: var(--st-btn-fundo);
+  box-shadow: none;
+  color: var(--st-btn-texto);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
@@ -583,10 +549,7 @@
 }
 
 .quiz-next:hover,
-.quiz-restart:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(150, 200, 90, .55);
-}
+.quiz-restart:hover { transform: translateY(-2px); }
 
 .result-highlight { margin: 6px 0 14px; font-size: 1.2rem; font-weight: 600; }
 

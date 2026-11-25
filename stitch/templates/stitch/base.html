@@ -56,13 +56,18 @@
             <path d="M57 75 C 70 63, 84 54, 92 47" stroke="#7f9136" stroke-opacity=".55" stroke-width="1.1"/>
         </svg>
     </footer>
-    {% if messages %}
-    <div class="st-mensagens" id="st-mensagens" role="status">
+    <!-- Avisos (pop-ups pequenos no topo): somem sozinhos, param com o mouse em cima
+         e têm o X para fechar. As mensagens do servidor (messages) chegam aqui;
+         o JavaScript usa a mesma caixa com Stitch.aviso() (static/js/stitch-ui.js). -->
+    <div class="st-avisos" id="st-avisos">
         {% for m in messages %}
-        <p class="st-mensagem st-mensagem--{{ m.level_tag }}">{{ m }}</p>
+        <div class="st-aviso st-aviso--{% if m.level_tag == 'error' or m.level_tag == 'warning' %}erro{% elif m.level_tag == 'success' %}sucesso{% else %}info{% endif %}" role="{% if m.level_tag == 'error' or m.level_tag == 'warning' %}alert{% else %}status{% endif %}">
+            <p>{{ m }}</p>
+            <button type="button" class="st-aviso-fechar" aria-label="Fechar aviso">×</button>
+            <span class="st-aviso-tempo" aria-hidden="true"></span>
+        </div>
         {% endfor %}
     </div>
-    {% endif %}
 
     {% if not user.is_authenticated %}
     {% popup_login as pl %}
@@ -90,11 +95,11 @@
                 {% if pl.aba == 'entrar' and pl.erro %}<p class="st-modal-erro" role="alert">{{ pl.erro }}</p>{% endif %}
                 <div class="st-campo">
                     <label for="login-email">E-mail</label>
-                    <input id="login-email" name="email" type="email" placeholder="seu@email.com" autocomplete="email" required{% if pl.aba == 'entrar' and pl.email %} value="{{ pl.email }}"{% endif %}>
+                    <input id="login-email" name="email" type="email" placeholder="seu@email.com" autocomplete="email" required data-msg-obrigatorio="Digite seu e-mail."{% if pl.aba == 'entrar' and pl.email %} value="{{ pl.email }}"{% endif %}{% if pl.aba == 'entrar' and 'email' in pl.campos %} class="st-campo-erro" aria-invalid="true"{% endif %}>
                 </div>
                 <div class="st-campo">
                     <label for="login-senha">Senha</label>
-                    <input id="login-senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password" required>
+                    <input id="login-senha" name="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password" required data-msg-obrigatorio="Digite sua senha."{% if pl.aba == 'entrar' and 'senha' in pl.campos %} class="st-campo-erro" aria-invalid="true"{% endif %}>
                 </div>
                 <button class="st-btn" type="submit">Entrar</button>
             </form>
@@ -102,23 +107,28 @@
             <form method="post" action="{% url 'cadastrar' %}" id="painel-cadastro" role="tabpanel" aria-labelledby="aba-cadastro" hidden>
                 {% csrf_token %}
                 <input type="hidden" name="voltar" value="{{ request.get_full_path }}">
-                {% if pl.aba == 'cadastro' and pl.erro %}<p class="st-modal-erro" role="alert">{{ pl.erro }}</p>{% endif %}
+                {# erro de um campo só: a mensagem vai embaixo dele; de vários: no topo #}
+                {% if pl.aba == 'cadastro' and pl.erro and pl.campos|length != 1 %}<p class="st-modal-erro" role="alert">{{ pl.erro }}</p>{% endif %}
                 <div class="st-campo">
                     <label for="cad-nome">Seu nome</label>
-                    <input id="cad-nome" name="nome" type="text" placeholder="Como quer ser chamado(a)" autocomplete="name" maxlength="150" required{% if pl.aba == 'cadastro' and pl.nome %} value="{{ pl.nome }}"{% endif %}>
+                    <input id="cad-nome" name="nome" type="text" placeholder="Como quer ser chamado(a)" autocomplete="name" maxlength="150" required data-msg-obrigatorio="Digite seu nome."{% if pl.aba == 'cadastro' and pl.nome %} value="{{ pl.nome }}"{% endif %}{% if pl.aba == 'cadastro' and 'nome' in pl.campos %} class="st-campo-erro" aria-invalid="true"{% if pl.campos|length == 1 %} aria-describedby="cad-nome-erro"{% endif %}{% endif %}>
+                    {% if pl.aba == 'cadastro' and pl.campos|length == 1 and 'nome' in pl.campos %}<p class="st-campo-msg" id="cad-nome-erro" role="alert">{{ pl.erro }}</p>{% endif %}
                 </div>
                 <div class="st-campo">
                     <label for="cad-email">E-mail</label>
-                    <input id="cad-email" name="email" type="email" placeholder="seu@email.com" autocomplete="email" required{% if pl.aba == 'cadastro' and pl.email %} value="{{ pl.email }}"{% endif %}>
+                    <input id="cad-email" name="email" type="email" placeholder="seu@email.com" autocomplete="email" required data-msg-obrigatorio="Digite seu e-mail."{% if pl.aba == 'cadastro' and pl.email %} value="{{ pl.email }}"{% endif %}{% if pl.aba == 'cadastro' and 'email' in pl.campos %} class="st-campo-erro" aria-invalid="true"{% if pl.campos|length == 1 %} aria-describedby="cad-email-erro"{% endif %}{% endif %}>
+                    {% if pl.aba == 'cadastro' and pl.campos|length == 1 and 'email' in pl.campos %}<p class="st-campo-msg" id="cad-email-erro" role="alert">{{ pl.erro }}</p>{% endif %}
                 </div>
                 <div class="st-campo">
                     <label for="cad-senha">Senha</label>
-                    <input id="cad-senha" name="senha" type="password" placeholder="Crie uma senha" autocomplete="new-password" minlength="8" required aria-describedby="cad-senha-dica">
+                    <input id="cad-senha" name="senha" type="password" placeholder="Crie uma senha" autocomplete="new-password" minlength="8" required data-msg-obrigatorio="Crie uma senha." aria-describedby="cad-senha-dica{% if pl.aba == 'cadastro' and pl.campos|length == 1 and 'senha' in pl.campos %} cad-senha-erro{% endif %}"{% if pl.aba == 'cadastro' and 'senha' in pl.campos %} class="st-campo-erro" aria-invalid="true"{% endif %}>
+                    {% if pl.aba == 'cadastro' and pl.campos|length == 1 and 'senha' in pl.campos %}<p class="st-campo-msg" id="cad-senha-erro" role="alert">{{ pl.erro }}</p>{% endif %}
                     <p class="st-modal-dica" id="cad-senha-dica">Pelo menos 8 caracteres, sem ser só números.</p>
                 </div>
                 <div class="st-campo">
                     <label for="cad-confirmar">Confirme a senha</label>
-                    <input id="cad-confirmar" name="confirmar" type="password" placeholder="Digite a senha de novo" autocomplete="new-password" minlength="8" required>
+                    <input id="cad-confirmar" name="confirmar" type="password" placeholder="Digite a senha de novo" autocomplete="new-password" minlength="8" required data-msg-obrigatorio="Digite a senha de novo."{% if pl.aba == 'cadastro' and 'confirmar' in pl.campos %} class="st-campo-erro" aria-invalid="true"{% if pl.campos|length == 1 %} aria-describedby="cad-confirmar-erro"{% endif %}{% endif %}>
+                    {% if pl.aba == 'cadastro' and pl.campos|length == 1 and 'confirmar' in pl.campos %}<p class="st-campo-msg" id="cad-confirmar-erro" role="alert">{{ pl.erro }}</p>{% endif %}
                 </div>
                 <button class="st-btn" type="submit">Criar conta</button>
             </form>
@@ -146,9 +156,11 @@
                 }
 
                 function focarPrimeiroCampo(nome) {
-                    // com erro, foca o primeiro campo vazio (ex.: a senha); senão, o primeiro campo
+                    // com erro, foca o campo marcado em vermelho ou o primeiro vazio; senão, o primeiro campo
                     const campos = Array.from(painel(nome).querySelectorAll('input:not([type="hidden"])'));
-                    const alvo = campos.find(c => !c.value) || campos[0];
+                    const alvo = campos.find(c => c.classList.contains('st-campo-erro') && c.type !== 'email' && !c.value)
+                        || campos.find(c => c.classList.contains('st-campo-erro') && c.type !== 'password')
+                        || campos.find(c => !c.value) || campos[0];
                     if (alvo) alvo.focus();
                 }
 
@@ -246,17 +258,10 @@
                 if (menuBtn) menuBtn.addEventListener('click', () => setPerfil(false));
             }
 
-            /* ---- avisos do topo somem depois de alguns segundos ---- */
-            const avisos = document.getElementById('st-mensagens');
-            if (avisos) {
-                setTimeout(() => {
-                    avisos.classList.add('saindo');
-                    setTimeout(() => avisos.remove(), 500);
-                }, 6000);
-            }
-
         })();
     </script>
+
+    <script src="{% static 'js/stitch-ui.js' %}"></script>
 
     {% block extra_js %}
     {% endblock %}

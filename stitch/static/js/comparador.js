@@ -92,16 +92,29 @@
     zona.addEventListener('drop', () => zona.classList.remove('arrastando'));
   });
 
+  // erros e sucesso aparecem no pop-up de aviso do site (stitch-ui.js)
   function mensagem(erro, ok) {
-    $('cmp-erro').textContent = erro; $('cmp-erro').hidden = !erro;
-    $('cmp-ok').textContent = ok; $('cmp-ok').hidden = !ok;
+    if (erro) window.Stitch.aviso(erro, 'erro');
+    if (ok) window.Stitch.aviso(ok, 'sucesso');
   }
+
+  // área de arquivo sem PDF fica com a borda vermelha até a pessoa escolher um
+  function marcarZona(input, erro) {
+    const zona = input.closest('.cmp-zona');
+    if (zona) zona.classList.toggle('st-zona-erro', erro);
+  }
+  ['pdfA', 'pdfB'].forEach(id => $(id).addEventListener('change', () => marcarZona($(id), false)));
 
   /* ---------- botão Comparar ---------- */
   $('comparar').addEventListener('click', async () => {
     mensagem('', '');
     const fa = $('pdfA').files[0], fb = $('pdfB').files[0];
-    if (!fa || !fb) { mensagem('Escolha os dois relatórios em PDF.', ''); return; }
+    if (!fa || !fb) {
+      marcarZona($('pdfA'), !fa);
+      marcarZona($('pdfB'), !fb);
+      mensagem(!fa && !fb ? 'Escolha os dois relatórios em PDF.' : `Falta escolher o Relatório ${fa ? 2 : 1}.`, '');
+      return;
+    }
     if (!window.StitchPDF) { mensagem('O gerador de PDF não carregou. Verifique a conexão com a internet.', ''); return; }
 
     const botao = $('comparar');

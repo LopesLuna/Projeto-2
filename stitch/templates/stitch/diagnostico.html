@@ -4,7 +4,7 @@
 {% block title %}Diagnóstico ESG | Stitch{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/questionario.css' %}?v=2">
+<link rel="stylesheet" href="{% static 'css/questionario.css' %}?v=3">
 {% endblock %}
 
 {% block content %}
@@ -40,7 +40,7 @@
 
     <div class="qz-nav">
       <button type="button" class="qz-btn qz-btn--sec" id="back" disabled>Voltar</button>
-      <button type="button" class="qz-btn" id="next" disabled>Próxima</button>
+      <button type="button" class="qz-btn" id="next">Próxima</button>
     </div>
   </div>
 
@@ -66,5 +66,5 @@
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="{% static 'js/relatorio-pdf.js' %}"></script>
-<script src="{% static 'js/questionario.js' %}?v=2"></script>
+<script src="{% static 'js/questionario.js' %}?v=3"></script>
 {% endblock %}
