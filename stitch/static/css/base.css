@@ -32,6 +32,13 @@
     --st-btn-texto: #ebebd7;                       /* creme da logo */
     --st-btn-sobe: translateY(-2px);               /* único efeito do mouse em cima: o botão sobe 2px, sem brilho */
 
+    /* sombra única dos cards do site (a mesma do "O que é Stitch?"): anel verde-claro, sombra e brilho em volta */
+    --st-sombra-card:
+        0 0 0 1px rgba(185, 215, 150, .35),
+        0 8px 24px rgba(25, 64, 31, .14),
+        0 0 16px rgba(225, 240, 200, .45);
+    --st-brilho-card: inset 0 0 14px rgba(255, 255, 255, .32);   /* luz suave por dentro da borda */
+
     /* vidro leve em CSS (sem biblioteca): desfoque pequeno, cor viva e sem contorno branco */
     --vidro-filtro: blur(4px) saturate(180%) brightness(1.04);
     --vidro-borda: transparent;
@@ -405,10 +412,7 @@ body.st-body {
     height: calc(313 * var(--u));
     border-radius: calc(23 * var(--u));
     border: calc(1.5 * var(--u)) solid rgba(255, 255, 255, .88);
-    box-shadow:
-        0 0 0 calc(1 * var(--u)) rgba(185, 215, 150, .4),
-        0 calc(8 * var(--u)) calc(28 * var(--u)) rgba(25, 64, 31, .16),
-        0 0 calc(18 * var(--u)) rgba(225, 240, 200, .55);
+    box-shadow: var(--st-sombra-card);
 }
 
 /* brilho suave sobre o card */
@@ -416,7 +420,7 @@ body.st-body {
     content: "";
     position: absolute; inset: 0;
     border-radius: inherit;
-    box-shadow: inset 0 0 calc(14 * var(--u)) rgba(255, 255, 255, .38);
+    box-shadow: var(--st-brilho-card);
     pointer-events: none;
     z-index: 3;
 }
@@ -466,6 +470,29 @@ body.st-body {
     line-height: calc(20.4 * var(--u));
     color: var(--st-muted);
 }
+
+/* atalhos do card: levam às três ferramentas do site */
+.st-card-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(8 * var(--u));
+    margin: calc(14 * var(--u)) 0 0 calc(3.5 * var(--u));
+    padding: 0;
+    list-style: none;
+}
+.st-card .st-card-links a {
+    display: inline-block;
+    padding: calc(6 * var(--u)) calc(14 * var(--u));
+    border-radius: 999px;
+    border: 1px solid rgba(25, 64, 31, .28);
+    background: rgba(25, 64, 31, .07);
+    color: var(--st-verde-escuro);
+    font-size: calc(12.5 * var(--u));
+    font-weight: 600;
+    line-height: 1.3;
+    transition: transform .2s ease, background-color .2s ease;
+}
+.st-card .st-card-links a:hover { transform: var(--st-btn-sobe); background: rgba(25, 64, 31, .13); }
 
 /* card 2: Juntos por um futuro mais sustentável */
 .st-card-join {
@@ -598,10 +625,7 @@ body.st-body {
     border: 1.5px solid rgba(255, 255, 255, .9);
     border-radius: 23px;
     padding: 36px 40px;
-    box-shadow:
-        0 0 0 1px rgba(185, 215, 150, .4),
-        0 8px 28px rgba(25, 64, 31, .16),
-        0 0 18px rgba(225, 240, 200, .55);
+    box-shadow: var(--st-sombra-card), var(--st-brilho-card);
 }
 
 /* ---------- quem somos ---------- */
@@ -632,10 +656,7 @@ body.st-body {
         radial-gradient(circle at 30% 18%, rgba(255, 255, 255, .6), transparent 55%),
         linear-gradient(160deg, #dfe6cf, #b8c99b);
     border: 1.5px solid rgba(255, 255, 255, .9);
-    box-shadow:
-        0 0 0 1px rgba(185, 215, 150, .4),
-        0 6px 18px rgba(25, 64, 31, .16),
-        0 0 14px rgba(225, 240, 200, .5);
+    box-shadow: var(--st-sombra-card), var(--st-brilho-card);
 }
 .st-member-photo img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -679,10 +700,7 @@ body.st-body {
         radial-gradient(circle at 8% 110%, rgba(105, 158, 47, .35), transparent 42%),
         linear-gradient(135deg, #19401f, #11301a);
     border: 1.5px solid rgba(185, 220, 140, .45);
-    box-shadow:
-        0 0 0 1px rgba(185, 215, 150, .25),
-        0 18px 44px rgba(25, 64, 31, .25),
-        0 0 24px rgba(150, 200, 90, .18);
+    box-shadow: var(--st-sombra-card), var(--st-brilho-card);
 }
 .st-ponte-etiqueta {
     display: block;
@@ -745,13 +763,13 @@ body.st-body {
     border-radius: 24px;
     color: var(--st-creme);
     text-decoration: none;
-    /* vidro líquido sobre o fundo verde */
-    background: rgba(235, 235, 215, .10);
-    border: 1px solid var(--vidro-borda);
-    -webkit-backdrop-filter: var(--vidro-filtro);
-    backdrop-filter: var(--vidro-filtro);
-    box-shadow: var(--vidro-reflexo);
-    transition: transform .25s, box-shadow .25s;
+    /* vidro fosco, igual ao header: verde translúcido com desfoque leve */
+    background: linear-gradient(180deg, rgba(40, 90, 40, .38), rgba(18, 48, 24, .50));
+    border: 1px solid rgba(235, 235, 215, .14);
+    -webkit-backdrop-filter: blur(9px) saturate(140%);
+    backdrop-filter: blur(9px) saturate(140%);
+    box-shadow: var(--st-sombra-card), var(--st-brilho-card);
+    transition: transform .25s;
 }
 .st-ponte-qr:hover { transform: translateY(-3px); }
 .st-ponte-qr:focus-visible { outline: 2px solid #cfe8a6; outline-offset: 4px; }
@@ -909,10 +927,7 @@ body.st-body {
     border-radius: 26px;
     background: linear-gradient(180deg, #f4f4e6, #ebebd7);
     border: 1.5px solid rgba(255, 255, 255, .95);
-    box-shadow:
-        0 0 0 1px rgba(185, 215, 150, .45),
-        0 24px 60px rgba(10, 28, 14, .35),
-        0 0 24px rgba(225, 240, 200, .5);
+    box-shadow: var(--st-sombra-card), var(--st-brilho-card);
     animation: st-pop .25s ease;
     /* o formulário de cadastro é mais alto: rola por dentro em telas baixas */
     max-height: calc(100vh - 40px);
@@ -1048,12 +1063,23 @@ body.st-body {
     .st-card { height: auto; border-radius: 22px; }
     .st-card p br { display: none; }
 
-    .st-card-about { display: flex; flex-direction: column-reverse; background: linear-gradient(180deg, #ebebd7 0%, #e5e5cf 45%, #c3d2a6 78%, #a9bf8a 100%); }
-    .st-recycle { position: static; width: 78%; max-width: 320px; margin: 0 auto -6px; -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); }
-    .st-card-about .st-content { padding: 26px 24px 0; }
+    /* tela média (janela estreita ou aba do Claude aberta): mesmo fundo e mesmo símbolo do card em
+       tela cheia (degradê creme -> verde-oliva e símbolo mesclado ao tecido); o texto fica à esquerda
+       e o símbolo à direita */
+    .st-card-about { display: block; height: auto; min-height: 300px; }
+    .st-card-about .st-content { padding: 34px 0 34px 36px; max-width: 58%; }
+    .st-recycle {
+        top: 50%; left: auto; right: 3%;
+        width: min(340px, 42%);
+        transform: translateY(-50%);
+        -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+        mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+    }
     .st-logo-card { width: 170px; margin-left: 0; }
-    .st-card-about h2 { font-size: 22px; margin-left: 0; margin-top: 10px; }
-    .st-card-about p { font-size: 14.5px; line-height: 22px; margin-left: 0; margin-top: 8px; }
+    .st-card-about h2 { font-size: 24px; margin-left: 0; margin-top: 12px; }
+    .st-card-about p { font-size: 16px; line-height: 1.55; font-weight: 500; margin-left: 0; margin-top: 8px; max-width: 46ch; }
+    .st-card-links { margin-left: 0; margin-top: 16px; gap: 8px; }
+    .st-card .st-card-links a { font-size: 13px; padding: 7px 14px; }
 
     .st-card-join { min-height: clamp(320px, 40vw, 420px); background-position: 65% 50%; }
     .st-card-join .st-content { padding: 34px 24px 30px; }
@@ -1293,6 +1319,23 @@ body.st-body {
     .st-confirmar-acoes { flex-direction: column-reverse; }
 }
 
+
+/* celular (bem estreito): o símbolo vai para baixo do texto. O fundo é o mesmo tecido do card em tela
+   cheia: creme embaixo do texto, passando para o verde-oliva onde fica o símbolo */
+@media (max-width: 520px) {
+    .st-card-about {
+        display: flex; flex-direction: column; min-height: 0;
+        background:
+            linear-gradient(180deg, #ebebd7 0%, #e9e8d3 36%, rgba(235, 235, 215, 0) 72%),
+            var(--img-card-fondo) 100% center / auto 100% no-repeat #8f9a68;
+    }
+    .st-card-about .st-content { order: 1; max-width: none; padding: 26px 24px 0; }
+    .st-recycle {
+        order: 2; position: relative; top: 0; right: auto; transform: none;
+        width: 78%; max-width: 300px; margin: 14px auto 10px;
+    }
+    .st-card-about p { font-size: 15px; }
+}
 
 /* a página não "estica" além do topo nem do fim */
 html, body { overscroll-behavior: none; }

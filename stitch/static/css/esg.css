@@ -27,8 +27,8 @@
     overscroll-behavior-x: contain;    /* o arraste lateral não vira "voltar página" */
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-    padding: 12px 2px 24px;            /* espaço para a sombra dos cards */
-    margin: -12px -2px -24px;
+    padding: 24px 2px 40px;            /* espaço para a sombra dos cards (a faixa rola e cortaria a sombra) */
+    margin: -24px -2px -40px;
     cursor: grab;
 }
 .ec-trilho::-webkit-scrollbar { display: none; }
@@ -44,7 +44,8 @@
     overflow: hidden;
     border-radius: calc(23 * var(--u));
     border: calc(1.5 * var(--u)) solid rgba(255, 255, 255, .88);
-    box-shadow: 0 calc(8 * var(--u)) calc(28 * var(--u)) rgba(25, 64, 31, .16);
+    /* mesmas sombras dos cards "O que é Stitch?" e "Juntos por um futuro mais sustentável" */
+    box-shadow: var(--st-sombra-card);
     background: #19401f;
     color: #fff;
     text-decoration: none;
@@ -61,6 +62,17 @@
     object-fit: cover;
     pointer-events: none;
     -webkit-user-drag: none;
+}
+
+/* brilho suave por dentro da borda, igual ao dos outros cards */
+.ec-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: var(--st-brilho-card);
+    pointer-events: none;
+    z-index: 3;
 }
 
 /* escurece o pé da foto para o texto */

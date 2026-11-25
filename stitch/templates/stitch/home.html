@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/esg.css' %}">
+<link rel="stylesheet" href="{% static 'css/esg.css' %}?v=5">
 {% endblock %}
 
 {% block title %}Stitch | Sustentabilidade e Inovação{% endblock %}
@@ -50,6 +50,11 @@
                 Ajudamos pequenas e médias empresas <br>
                 a implementar estratégias sustentáveis e viáveis.
             </p>
+            <ul class="st-card-links" aria-label="Ferramentas do Stitch">
+                <li><a href="{% url 'diagnostico' %}">Diagnóstico ESG</a></li>
+                <li><a href="{% url 'simuladores' %}">Simuladores</a></li>
+                <li><a href="{% url 'comparador_pdf' %}">Comparador de relatórios</a></li>
+            </ul>
         </div>
     </section>
 
@@ -139,7 +144,7 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/esg-carrossel.js' %}"></script>
+<script src="{% static 'js/esg-carrossel.js' %}?v=5"></script>
 <script>
     (function () {
         var interval = 8000;

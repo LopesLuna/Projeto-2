@@ -18,9 +18,7 @@
     border-radius: 23px;
     background: linear-gradient(180deg, rgba(255, 255, 255, .74), rgba(255, 255, 255, .5));
     border: 1.5px solid rgba(255, 255, 255, .9);
-    box-shadow:
-        0 0 0 1px rgba(185, 215, 150, .4),
-        0 8px 28px rgba(25, 64, 31, .10);
+    box-shadow: var(--st-sombra-card), var(--st-brilho-card);
 }
 
 .st-conta-cab {
