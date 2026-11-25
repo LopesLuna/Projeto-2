@@ -151,19 +151,20 @@
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: background .2s, box-shadow .2s;
+    transition: background .2s, box-shadow .2s, transform .2s, color .2s, border-color .2s;
 }
 .st-rel-baixar {
     padding: 0 14px;
-    color: #fff;
-    background: linear-gradient(180deg, #2f5f27, #19401f);
-    border: 1.2px solid rgba(185, 220, 140, .8);
-    box-shadow: 0 0 10px rgba(150, 200, 90, .3);
+    color: var(--st-btn-texto);
+    background: var(--st-btn-fundo);
+    border: 1.2px solid var(--st-btn-borda);
+    box-shadow: none;
 }
-.st-rel-baixar:hover { box-shadow: 0 0 16px rgba(150, 200, 90, .6); }
+.st-rel-baixar:hover { transform: translateY(-2px); }
 .st-rel-baixar:disabled { opacity: .6; cursor: progress; }
-.st-rel-excluir { width: 34px; padding: 0; color: #873a35; background: transparent; border: 1px solid transparent; }
-.st-rel-excluir:hover { background: #f8e6e3; border-color: #e6b8b0; }
+.st-rel-excluir { width: 34px; padding: 0; color: var(--st-erro); background: transparent; border: 1px solid transparent; }
+/* ações de perigo: no hover as cores se invertem (fundo vermelho, ícone claro) */
+.st-rel-excluir:hover { background: var(--st-erro); border-color: var(--st-erro); color: #fff; }
 .st-rel-baixar svg,
 .st-rel-excluir svg { width: 16px; height: 16px; }
 .st-rel-baixar:focus-visible,
@@ -198,44 +199,11 @@
     color: #4a5a4b;
 }
 
-/* ---------- excluir conta (discreto, no fim da página) ---------- */
-.st-conta-perigo { margin: 26px auto 0; text-align: center; font-size: 13.5px; }
-/* "Excluir conta" é um botão (contorno vermelho); abre a confirmação embaixo */
-.st-conta-perigo summary {
-    display: inline-flex;
-    align-items: center;
-    height: 40px;
-    padding: 0 22px;
-    border-radius: 999px;
-    border: 1.4px solid #e6b8b0;
-    background: rgba(255, 255, 255, .7);
-    color: #873a35;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    list-style: none;
-    transition: background .2s, box-shadow .2s;
-}
-.st-conta-perigo summary:hover { background: #fff4f2; box-shadow: 0 0 12px rgba(198, 83, 77, .2); }
-.st-conta-perigo summary:focus-visible { outline: 2px solid #c6534d; outline-offset: 3px; }
-.st-conta-perigo[open] summary { background: #fff4f2; }
-.st-conta-perigo summary::-webkit-details-marker { display: none; }
-.st-conta-perigo form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 12px;
-    color: #4a5a4b;
-}
-.st-conta-confirma { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
-.st-conta-confirma input { accent-color: #873a35; }
-.st-btn--perigo {
-    background: linear-gradient(180deg, #a5443d, #873a35);
-    border-color: rgba(230, 184, 176, .9);
-    box-shadow: 0 0 12px rgba(198, 83, 77, .25);
-}
-.st-btn--perigo:hover { box-shadow: 0 0 18px rgba(198, 83, 77, .45); }
+/* ---------- excluir conta (discreto, no fim da página) ----------
+   Mesmo padrão de perigo do site (.st-btn--perigo em base.css): claro em repouso,
+   vermelho de erro no hover. A confirmação é o pop-up do site (stitch-ui.js). */
+.st-conta-perigo { margin: 26px auto 0; text-align: center; }
+.st-conta-perigo .st-btn { height: 40px; padding: 0 22px; font-size: 14px; }
 
 /* ---------- celular ---------- */
 @media (max-width: 640px) {

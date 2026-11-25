@@ -90,6 +90,7 @@ const S=[...PERFIL,...Q], NP=PERFIL.length;
 // Utilitários e estado
 // ------------------------------------------------------------
 const $=id=>document.getElementById(id);
+let motivo=()=>"";   // definida a cada pergunta em show()
 const fmt=n=>n.toLocaleString("pt-BR",{maximumFractionDigits:2});
 const stateOf=v=>STATES.find(s=>v<=s.max)||STATES[3];
 let ans=[],i=0;
@@ -130,8 +131,19 @@ function show(){
   $("qtext").textContent=q.t;
   const adj=q.por?` Faixas ajustadas para ${fmt(P[q.por])} ${q.por==="funcionarios"?"funcionários":"mil reais de faturamento mensal"}.`:"";
   $("qhint").textContent=((q.aj||"")+adj).trim();
-  const box=$("input");box.innerHTML="";
-  const ok=()=>{const v=ans[i];$("next").disabled=v===undefined||(q.k==="t"?!String(v).trim():q.k==="n"&&!q.p?(isNaN(v)||(i>=3&&v<=0)):false)};
+  const box=$("input");box.innerHTML="";box.classList.remove("st-zona-erro");
+  // por que a pessoa ainda não pode avançar (vazio = pode). Em vez de deixar o
+  // "Próxima" desativado sem explicação, o clique mostra a frase em vermelho.
+  const anoAtual=new Date().getFullYear();
+  motivo=()=>{
+    const v=ans[i];
+    if(q.p||q.k==="c")return v===undefined?"Escolha uma das opções para continuar.":"";
+    if(q.k==="t")return String(v??"").trim()?"":"Digite o nome da empresa para continuar.";
+    if(v===undefined||isNaN(v))return "Digite um número para continuar.";
+    if(q.c==="ano"&&(v<1990||v>anoAtual||!Number.isInteger(v)))return `Digite um ano entre 1990 e ${anoAtual}.`;
+    if(i>=3&&v<=0)return "Digite um número maior que zero.";
+    return "";
+  };
   if(q.p||q.k==="c"){
     opts(q).forEach((o,k)=>{
       const b=document.createElement("button");
@@ -141,19 +153,36 @@ function show(){
       box.append(b);
     });
   }else{
-    const w=document.createElement("div");w.className="num";
+    const w=document.createElement("div");w.className="num";w.setAttribute("data-erro-aqui","");
     const inp=document.createElement("input");
-    inp.type=q.k==="t"?"text":"number";inp.step="any";inp.setAttribute("aria-label",q.t);
+    inp.type=q.k==="t"?"text":"number";inp.step="any";inp.setAttribute("aria-label",q.t);inp.dataset.validacaoPropria="";
     if(q.k==="t")inp.style.width="100%";
     if(ans[i]!==undefined)inp.value=ans[i];
-    inp.oninput=()=>{ans[i]=q.k==="t"?inp.value:inp.value===""?undefined:parseFloat(inp.value);if(i===3||i===4)ans.length=5;ok()};
+    inp.oninput=()=>{
+      ans[i]=q.k==="t"?inp.value:inp.value===""?undefined:parseFloat(inp.value);if(i===3||i===4)ans.length=5;
+      // número fora do esperado avisa na hora; campo vazio só avisa no clique do "Próxima"
+      const m=motivo();
+      if(m&&inp.value!=="")window.Stitch.erroCampo(inp,m);else window.Stitch.limparErro(inp);
+    };
+    inp.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();$("next").click()}};
     w.append(inp);
     if(q.u){const u=document.createElement("span");u.className="unit";u.textContent=q.u;w.append(u)}
     box.append(w);
   }
   $("back").disabled=i===0;
   $("next").textContent=i===S.length-1?"Ver resultado":"Próxima";
-  ok();
+  $("next").disabled=false;
+}
+
+// mostra o motivo embaixo da resposta: linha vermelha no campo ou borda vermelha nas opções
+function avisarResposta(m){
+  const box=$("input"),inp=box.querySelector("input");
+  if(inp){window.Stitch.erroCampo(inp,m);inp.focus();return}
+  box.classList.add("st-zona-erro");
+  let p=document.getElementById("input-erro");
+  if(!p){p=document.createElement("p");p.id="input-erro";p.className="st-campo-msg qz-msg";p.setAttribute("role","alert");box.append(p)}
+  p.textContent=m;
+  const primeira=box.querySelector(".opt");if(primeira)primeira.focus();
 }
  
 // ------------------------------------------------------------
@@ -242,7 +271,8 @@ async function baixarPdf(){
     try{
       await window.StitchPDF.gerar(relatorioAtual,{logoUrl:raiz.dataset.logo});
     }catch(e){
-      avisoPdf("Não foi possível gerar o PDF agora. Tente de novo.");
+      avisoPdf("");
+      window.Stitch.aviso("Não foi possível gerar o PDF agora. Confira a internet e tente de novo.","erro");
       return;
     }finally{
       botao.disabled=false;botao.textContent=rotulo;
@@ -256,18 +286,22 @@ async function baixarPdf(){
       headers:{"Content-Type":"application/json","X-CSRFToken":raiz.dataset.csrf},
       body:JSON.stringify(relatorioAtual)
     });
+    if(r.status===401)throw new Error("sessao");
     if(!r.ok)throw new Error(String(r.status));
     salvoEm=(await r.json()).biblioteca;
     avisoPdf("PDF baixado e guardado na sua biblioteca.",salvoEm);
   }catch(e){
-    avisoPdf("PDF baixado, mas não foi possível guardar na sua biblioteca agora.");
+    avisoPdf("PDF baixado, mas não foi guardado na sua biblioteca.");
+    window.Stitch.aviso(e.message==="sessao"
+      ?"Sua sessão expirou. Entre de novo e baixe o PDF outra vez para guardar o relatório."
+      :"PDF baixado, mas não deu para guardar na sua biblioteca agora. Tente baixar de novo.","erro");
   }
 }
  
 // ------------------------------------------------------------
 // Navegação e inicialização
 // ------------------------------------------------------------
-$("next").onclick=()=>{if(i<S.length-1){i++;show()}else finish()};
+$("next").onclick=()=>{const m=motivo();if(m){avisarResposta(m);return}if(i<S.length-1){i++;show()}else finish()};
 $("back").onclick=()=>{if(i>0){i--;show()}};
 $("skip").onclick=finish;
 $("restart").onclick=()=>{ans=[];i=0;relatorioAtual=null;salvoEm=null;avisoPdf("");$("report").classList.add("hidden");$("quiz").classList.remove("hidden");show()};

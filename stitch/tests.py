@@ -414,3 +414,89 @@ class EstaticosTest(SimpleTestCase):
         for caminho in LOGOS:
             with self.subTest(arquivo=caminho):
                 self.assertIsNotNone(finders.find(caminho), f"{caminho} não encontrado")
+
+# ------------------------------------------------------------------
+# Erros nos formulários, avisos e confirmações
+# ------------------------------------------------------------------
+@override_settings(STORAGES=STORAGE_TESTE)
+class ErrosEAvisosTest(TestCase):
+    def contato(self, **troca):
+        dados = {"tem_empresa": "nao", "nome": "Ana", "email": "ana@empresa.com", "telefone": "",
+                 "assunto": "Perguntas relacionadas a ESG", "assunto_outro": "", "mensagem": "Oi"}
+        dados.update(troca)
+        return dados
+
+    def test_contato_valido_salva_e_avisa_com_pop_up(self):
+        from .models import Contato
+        resp = self.client.post(reverse("contato"), self.contato(), follow=True)
+        self.assertEqual(Contato.objects.count(), 1)
+        self.assertContains(resp, "st-aviso--sucesso")
+        self.assertContains(resp, "Mensagem enviada!")
+
+    def test_contato_com_erro_marca_o_campo_e_guarda_o_que_foi_digitado(self):
+        from .models import Contato
+        resp = self.client.post(reverse("contato"), self.contato(email="sem-arroba", mensagem=""))
+        self.assertEqual(Contato.objects.count(), 0)
+        html = resp.content.decode()
+        self.assertIn('id="email-erro"', html)
+        self.assertIn('id="mensagem-erro"', html)
+        self.assertIn("Digite um e-mail válido", html)
+        self.assertIn('value="Ana"', html)                      # não perde o que digitou
+        self.assertIn("Confira os 2 campos destacados em vermelho.", html)
+
+    def test_contato_nome_grande_nao_quebra(self):
+        resp = self.client.post(reverse("contato"), self.contato(nome="A" * 300))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "no máximo 100 caracteres")
+
+    def test_contato_telefone_e_assunto_outros(self):
+        resp = self.client.post(reverse("contato"), self.contato(telefone="12", assunto="outros"))
+        self.assertContains(resp, 'id="telefone-erro"')
+        self.assertContains(resp, 'id="input_assunto_outro-erro"')
+
+    def test_cadastro_marca_so_o_campo_com_erro(self):
+        self.client.post(reverse("cadastrar"), {"nome": "Ana", "email": "ana@x.com", "senha": "senhaforte1",
+                                                "confirmar": "outra12345", "voltar": reverse("home")})
+        html = self.client.get(reverse("home")).content.decode()
+        self.assertIn('id="cad-confirmar-erro"', html)
+        self.assertEqual(html.count('class="st-campo-erro"'), 1)
+
+    def test_login_errado_marca_email_e_senha(self):
+        self.client.post(reverse("entrar"), {"email": "x@x.com", "senha": "errada123", "voltar": reverse("home")})
+        html = self.client.get(reverse("home")).content.decode()
+        self.assertEqual(html.count('class="st-campo-erro"'), 2)
+
+    def test_excluir_conta_sem_confirmar_nao_apaga(self):
+        user = User.objects.create_user(username="a@a.com", email="a@a.com", password="senhaforte1")
+        self.client.force_login(user)
+        self.client.post(reverse("excluir_conta"))
+        self.assertTrue(User.objects.filter(pk=user.pk).exists())
+        html = self.client.get(reverse("minha_conta")).content.decode()
+        self.assertIn("Confirme a exclusão", html)
+        self.assertIn('data-confirmar-envia="confirmar"', html)   # o pop-up do site manda a confirmação
+
+    def test_minha_conta_nome_grande_nao_quebra(self):
+        user = User.objects.create_user(username="b@b.com", email="b@b.com", password="senhaforte1")
+        self.client.force_login(user)
+        resp = self.client.post(reverse("minha_conta"), {"nome": "B" * 300}, follow=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "no máximo 150 caracteres")
+
+    def test_todas_as_paginas_carregam_o_script_de_avisos(self):
+        self.assertIsNotNone(finders.find("js/stitch-ui.js"))
+        for nome in PAGINAS:
+            with self.subTest(pagina=nome):
+                self.assertIn("js/stitch-ui.js", self.client.get(reverse(nome)).content.decode())
+
+    def test_botao_da_simulacao_leva_ao_diagnostico(self):
+        html = self.client.get(reverse("simuladores")).content.decode()
+        self.assertIn("Diagnostique sua empresa", html)
+        self.assertNotIn("Simule com seus dados reais", html)
+
+    def test_comentario_do_template_nao_aparece_na_pagina(self):
+        # {# ... #} de várias linhas não é comentário no Django: aparece como texto
+        user = User.objects.create_user(username="c@c.com", email="c@c.com", password="senhaforte1")
+        self.client.force_login(user)
+        for nome in PAGINAS + ["minha_conta", "diagnostico"]:
+            with self.subTest(pagina=nome):
+                self.assertNotIn("{#", self.client.get(reverse(nome)).content.decode())

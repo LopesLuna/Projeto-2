@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <!-- Trama de tecido (sarja simples): em cada quadradinho de 12px um fio passa por cima,
+       ora na horizontal (trama), ora na vertical (urdume). Repete para cobrir o fundo. -->
+  <g fill="#19401f">
+    <!-- fios horizontais por cima -->
+    <rect x="0"  y="1.5"  width="12" height="2" rx="1" fill-opacity=".042"/>
+    <rect x="0"  y="5"    width="12" height="2" rx="1" fill-opacity=".034"/>
+    <rect x="0"  y="8.5"  width="12" height="2" rx="1" fill-opacity=".042"/>
+    <rect x="12" y="13.5" width="12" height="2" rx="1" fill-opacity=".042"/>
+    <rect x="12" y="17"   width="12" height="2" rx="1" fill-opacity=".034"/>
+    <rect x="12" y="20.5" width="12" height="2" rx="1" fill-opacity=".042"/>
+    <!-- fios verticais por cima -->
+    <rect x="13.5" y="0"  width="2" height="12" rx="1" fill-opacity=".024"/>
+    <rect x="17"   y="0"  width="2" height="12" rx="1" fill-opacity=".024"/>
+    <rect x="20.5" y="0"  width="2" height="12" rx="1" fill-opacity=".024"/>
+    <rect x="1.5"  y="12" width="2" height="12" rx="1" fill-opacity=".024"/>
+    <rect x="5"    y="12" width="2" height="12" rx="1" fill-opacity=".024"/>
+    <rect x="8.5"  y="12" width="2" height="12" rx="1" fill-opacity=".024"/>
+  </g>
+</svg>

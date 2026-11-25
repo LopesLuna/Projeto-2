@@ -6,56 +6,62 @@
 <h1 class="st-title">Fale Conosco</h1>
 <p class="st-lead">Tem dúvidas sobre os simuladores ou ESG? Fale com a gente.</p>
 
-{% if enviado %}
-<p class="msg-sucesso st-alert" role="status">Mensagem enviada com sucesso! Entraremos em contato em breve.</p>
-{% endif %}
-
+{% comment %} Erros: o campo fica com a linha vermelha e a frase curta embaixo (id = id do campo + "-erro").
+   O stitch-ui.js faz o mesmo antes de enviar; o servidor confere de novo (views._erros_do_contato). {% endcomment %}
 <div class="st-panel">
-    <form method="post" class="st-form">
+    <form method="post" class="st-form" novalidate>
         {% csrf_token %}
 
         <span class="st-label" id="label_tem_empresa">Representa alguma empresa?</span>
         <div class="radio-group st-radio-group" role="radiogroup" aria-labelledby="label_tem_empresa">
             <div class="radio-item st-radio-item">
-                <input type="radio" id="empresa_sim" name="tem_empresa" value="sim" onchange="toggleEmpresa()" checked>
+                <input type="radio" id="empresa_sim" name="tem_empresa" value="sim" onchange="toggleEmpresa()"{% if dados.tem_empresa != 'nao' %} checked{% endif %}>
                 <label for="empresa_sim">Sim</label>
             </div>
             <div class="radio-item st-radio-item">
-                <input type="radio" id="empresa_nao" name="tem_empresa" value="nao" onchange="toggleEmpresa()">
+                <input type="radio" id="empresa_nao" name="tem_empresa" value="nao" onchange="toggleEmpresa()"{% if dados.tem_empresa == 'nao' %} checked{% endif %}>
                 <label for="empresa_nao">Não, sou apenas visitante</label>
             </div>
         </div>
 
         <div id="div_empresa">
             <label for="input_empresa">Nome da Empresa</label>
-            <input type="text" name="empresa" id="input_empresa" maxlength="150">
+            <input type="text" name="empresa" id="input_empresa" maxlength="150" value="{{ dados.empresa|default:'' }}"{% if erros.empresa %} class="st-campo-erro" aria-invalid="true" aria-describedby="input_empresa-erro"{% endif %}>
+            {% if erros.empresa %}<p class="st-campo-msg" id="input_empresa-erro">{{ erros.empresa }}</p>{% endif %}
         </div>
 
         <label for="nome">Seu Nome</label>
-        <input type="text" name="nome" id="nome" required>
+        <input type="text" name="nome" id="nome" maxlength="100" required autocomplete="name" data-msg-obrigatorio="Digite seu nome." value="{{ dados.nome|default:'' }}"{% if erros.nome %} class="st-campo-erro" aria-invalid="true" aria-describedby="nome-erro"{% endif %}>
+        {% if erros.nome %}<p class="st-campo-msg" id="nome-erro">{{ erros.nome }}</p>{% endif %}
 
         <label for="email">E-mail para contato</label>
-        <input type="email" name="email" id="email" required>
+        <input type="email" name="email" id="email" required autocomplete="email" data-msg-obrigatorio="Digite seu e-mail." value="{{ dados.email|default:'' }}"{% if erros.email %} class="st-campo-erro" aria-invalid="true" aria-describedby="email-erro"{% endif %}>
+        {% if erros.email %}<p class="st-campo-msg" id="email-erro">{{ erros.email }}</p>{% endif %}
 
-        <label for="telefone">Telefone/Whatsapp</label>
-        <input type="text" name="telefone" id="telefone" maxlength="20">
+        <label for="telefone">Telefone/Whatsapp <span class="st-opcional">(opcional)</span></label>
+        <input type="tel" name="telefone" id="telefone" maxlength="20" autocomplete="tel" placeholder="(81) 99999-9999"
+               pattern="[\d\s\(\)\+\-]{10,20}" data-msg-formato="Digite o número com DDD. Ex.: (81) 99999-9999." value="{{ dados.telefone|default:'' }}"{% if erros.telefone %} class="st-campo-erro" aria-invalid="true" aria-describedby="telefone-erro"{% endif %}>
+        {% if erros.telefone %}<p class="st-campo-msg" id="telefone-erro">{{ erros.telefone }}</p>{% endif %}
 
         <label for="assunto">Assunto</label>
-        <select name="assunto" id="assunto" required onchange="toggleAssunto()">
-            <option value="" disabled selected>Indique motivo para contato</option>
-            <option value="Dúvida sobre os Simuladores">Dúvida sobre os Simuladores</option>
-            <option value="Privacidade e Uso de Dados">Privacidade e Uso de Dados</option>
-            <option value="Perguntas relacionadas a ESG">Perguntas relacionadas a ESG</option>
-            <option value="outros">Outros</option>
+        <select name="assunto" id="assunto" required data-msg-obrigatorio="Escolha o assunto." onchange="toggleAssunto()"{% if erros.assunto %} class="st-campo-erro" aria-invalid="true" aria-describedby="assunto-erro"{% endif %}>
+            <option value="" disabled{% if not dados.assunto %} selected{% endif %}>Indique motivo para contato</option>
+            <option value="Dúvida sobre os Simuladores"{% if dados.assunto == 'Dúvida sobre os Simuladores' %} selected{% endif %}>Dúvida sobre os Simuladores</option>
+            <option value="Privacidade e Uso de Dados"{% if dados.assunto == 'Privacidade e Uso de Dados' %} selected{% endif %}>Privacidade e Uso de Dados</option>
+            <option value="Perguntas relacionadas a ESG"{% if dados.assunto == 'Perguntas relacionadas a ESG' %} selected{% endif %}>Perguntas relacionadas a ESG</option>
+            <option value="outros"{% if dados.assunto == 'outros' %} selected{% endif %}>Outros</option>
         </select>
+        {% if erros.assunto %}<p class="st-campo-msg" id="assunto-erro">{{ erros.assunto }}</p>{% endif %}
 
         <div id="div_assunto_outro" style="display: none;">
             <label for="input_assunto_outro">Sobre:</label>
-            <input type="text" name="assunto_outro" id="input_assunto_outro" maxlength="100">
+            <input type="text" name="assunto_outro" id="input_assunto_outro" maxlength="100" data-msg-obrigatorio="Diga sobre o que é o contato." value="{{ dados.assunto_outro|default:'' }}"{% if erros.assunto_outro %} class="st-campo-erro" aria-invalid="true" aria-describedby="input_assunto_outro-erro"{% endif %}>
+            {% if erros.assunto_outro %}<p class="st-campo-msg" id="input_assunto_outro-erro">{{ erros.assunto_outro }}</p>{% endif %}
         </div>
 
         <label for="mensagem">Mensagem</label>
-        <textarea name="mensagem" id="mensagem" rows="4" required></textarea>
+        <textarea name="mensagem" id="mensagem" rows="4" required data-msg-obrigatorio="Escreva sua mensagem."{% if erros.mensagem %} class="st-campo-erro" aria-invalid="true" aria-describedby="mensagem-erro"{% endif %}>{{ dados.mensagem|default:'' }}</textarea>
+        {% if erros.mensagem %}<p class="st-campo-msg" id="mensagem-erro">{{ erros.mensagem }}</p>{% endif %}
 
         <button class="btn-enviar st-btn" type="submit">Enviar</button>
     </form>
@@ -72,6 +78,7 @@
         } else {
             divEmpresa.style.display = 'none';
             inputEmpresa.value = '';
+            if (window.Stitch) Stitch.limparErro(inputEmpresa);
         }
     }
 
@@ -87,6 +94,7 @@
             divAssuntoOutro.style.display = 'none';
             inputAssuntoOutro.required = false;
             inputAssuntoOutro.value = '';
+            if (window.Stitch) Stitch.limparErro(inputAssuntoOutro);
         }
     }
 
@@ -96,4 +104,3 @@
 </script>
 
 {% endblock %}
->>>>>>> 93a3e80 (Stitch 3)

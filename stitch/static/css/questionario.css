@@ -141,19 +141,19 @@
   margin-top: 30px;
 }
 
-/* mesmo estilo dos botões do resto do site (.st-btn em base.css):
-   verde da logo em degradê, borda clara e brilho verde */
+/* mesmo padrão dos botões verdes do site (.st-btn em base.css):
+   verde-escuro da logo, borda verde e brilho só no hover */
 .qz-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 46px;
   padding: 10px 26px;
-  border: 1.4px solid rgba(185, 220, 140, .8);
+  border: 1.4px solid var(--st-btn-borda);
   border-radius: 999px;
-  background: linear-gradient(180deg, #2f5f27, #19401f);
-  box-shadow: 0 0 16px rgba(150, 200, 90, .4), inset 0 0 12px rgba(150, 200, 90, .16);
-  color: #fff;
+  background: var(--st-btn-fundo);
+  box-shadow: none;
+  color: var(--st-btn-texto);
   cursor: pointer;
   font: inherit;
   font-weight: 600;
@@ -161,10 +161,7 @@
   transition: transform .25s, box-shadow .25s;
 }
 
-.qz-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 0 24px rgba(150, 200, 90, .65), inset 0 0 12px rgba(150, 200, 90, .22);
-}
+.qz-btn:hover:not(:disabled) { transform: translateY(-2px); }
 
 /* secundário: vidro claro com borda verde (como o "Voltar" de Simulações) */
 .qz-btn--sec {
@@ -174,10 +171,6 @@
   color: #19401f;
 }
 
-.qz-btn--sec:hover:not(:disabled) {
-  background: #fff;
-  box-shadow: 0 0 16px rgba(150, 200, 90, .35);
-}
 
 .qz-btn:disabled {
   cursor: not-allowed;
@@ -472,3 +465,8 @@
     box-shadow: none;
   }
 }
+
+/* área de arquivo sem PDF (comparador) e resposta pendente (diagnóstico): vermelho de erro do site */
+.cmp-zona.st-zona-erro { border-color: var(--st-erro); background: var(--st-erro-fundo); }
+.qz-respostas.st-zona-erro .opt { border-color: var(--st-erro-borda); }
+.qz-msg { margin-top: 10px !important; }
