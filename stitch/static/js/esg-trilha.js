@@ -1,8 +1,12 @@
 (function () {
-    var secoes = Array.prototype.slice.call(document.querySelectorAll('.ec-topico'));
+    var secoes = Array.prototype.slice.call(document.querySelectorAll('.ec-topico, .ec-fontes'));
     if (!secoes.length) return;
 
     var visitados = {};
+    var linksIndice = Array.prototype.slice.call(document.querySelectorAll('.ec-indice a'));
+
+    // ao abrir a página, o primeiro item do índice já aparece marcado
+    if (linksIndice.length && !location.hash) linksIndice[0].classList.add('ativo');
 
     function marcar(i) {
         if (i < 0) return;
@@ -11,10 +15,17 @@
             s.classList.toggle('ativo', k === i);
             s.classList.toggle('visitado', !!visitados[k]);
         });
+        var id = secoes[i].id;
+        linksIndice.forEach(function (a) {
+            var atual = a.getAttribute('href') === '#' + id;
+            a.classList.toggle('ativo', atual);
+            if (atual) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
     }
 
     function centralizar(el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // os tópicos viraram cards altos: rola até o começo do card (o espaço vem do scroll-margin-top)
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     function irPara(id) {

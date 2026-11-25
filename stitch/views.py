@@ -61,7 +61,12 @@ def login_obrigatorio(aviso):
 # Páginas
 # ------------------------------------------------------------------
 def home(request):
-    return render(request, 'stitch/home.html')
+    # quem está logado vê "Bem-vindo(a) de volta, <primeiro nome>!" no lugar do título da capa
+    primeiro_nome = ''
+    if request.user.is_authenticated:
+        partes = (request.user.first_name or '').split()
+        primeiro_nome = partes[0] if partes else ''
+    return render(request, 'stitch/home.html', {'primeiro_nome': primeiro_nome})
 
 def entenda_esg(request):
     return render(request, 'stitch/entenda_esg.html')
