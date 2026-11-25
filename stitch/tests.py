@@ -270,6 +270,14 @@ class QuemSomosTest(SimpleTestCase):
         self.assertGreaterEqual(html.count(f'href="{self.SITE}" target="_blank" rel="noopener"'), 2)
         self.assertIn("img/qr-google-site.svg", html)
 
+    def test_atalhos_levam_para_as_abas_do_site_do_projeto(self):
+        html = self.client.get(reverse("quem_somos")).content.decode()
+        base = "https://sites.google.com/cesar.school/projetos-2-g13"
+        for aba in ["sr1", "sr2", "declara%C3%A7%C3%A3o-de-ia"]:
+            with self.subTest(aba=aba):
+                self.assertIn(f'href="{base}/{aba}" target="_blank" rel="noopener"', html)
+        self.assertNotIn("<li>Equipe</li>", html)
+
     def test_nao_tem_mais_as_fotos_dos_membros(self):
         html = self.client.get(reverse("quem_somos")).content.decode()
         self.assertNotIn("st-member", html)
